@@ -1,0 +1,15 @@
+{% extends "all_content/base.html" %}
+
+{% block title_after %}Blogs{% endblock%}
+
+{% block content %}
+  <h1>{{ site.name }} Blogs</h1>
+  <div class="columned divided">
+    {% for obj in object_list %}
+      <a href="{{ obj.get_absolute_url }}">
+        <h2>{{ obj.title }}</a></h2>
+        <p>{{ obj.summary }}</p>
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}

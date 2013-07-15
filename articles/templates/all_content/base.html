@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% load amazontag article_tags %}
+
+{% block extrahead %}
+  {% if destination %}
+    <link rel="alternate" type="application/rss+xml" title="Gretsch Pages {{ destination.title }}" href="{{ destination.get_feed_url }}">
+  {% endif %}
+{% endblock %}
+
+{% block aside %}
+  {% show_recommended %}
+  {% get_latest_articles 3 brief=True as briefs %}
+  {% if briefs %}
+    <h2>News</h2>
+    <ul class="fancy">
+      {% for b in briefs %}
+        <li>
+          {% if b.link %}
+            <a href="{{ b.link }}">{{ b.text }}</a>
+          {% else %}
+            {{ b.text }}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

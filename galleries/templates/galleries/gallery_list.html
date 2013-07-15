@@ -1,0 +1,29 @@
+{% extends "articles/base.html" %}
+{% block title %}{% if cleancat %}{{cleancat}}: {% else %}Photo galleries| {% endif%} {%endblock %}
+{% block omniture %}Photo Galleries: {% endblock %}
+
+{% load cache typogrify thumbnail %}
+
+{% block bodyid %}gallery_list{% endblock %}
+
+
+{% block hdrimages %}
+{% for gal in gallery_list %}
+	{% with gal.get_image as image %}
+   <a href="{{ gal.get_absolute_url }}"><img src="{% thumbnail image 650x380 crop="smart" %}" alt="{{image.caption}}" title="{{image.caption}}"></a>
+	 {% endwith %}
+  {% endfor %}
+
+{% endblock %}
+{% block content %}
+<h1>Photo Galleries</h1>
+	<ul class="multi-col three-col">{% for gal in gallery_list|dictsort:"created" %}
+    <li>
+	 	<a href="{{ gal.get_absolute_url }}">
+	 	<img src="{% thumbnail gal.get_image 315x200 crop="smart" %}" alt="{{gal.get_image.caption}}" title="{{gal.get_image.caption}}">
+	 	<h3>{{ gal.sections.all.0 }}: {{ gal }}</h3>
+	 	</a>
+	</li>
+  {% endfor %}</ul>
+
+{% endblock %}

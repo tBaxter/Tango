@@ -1,0 +1,13 @@
+{% extends "all_content/base.html" %}
+{% block title %}Add image: {% endblock title %}
+
+{% block content %}
+  <h1>Add an image</h1>
+  <form class="boxedform" action="." enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p class="submit">
+      <input type="submit" value="Add image">
+    </p>
+  </form>
+{% endblock %}
