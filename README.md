@@ -18,3 +18,7 @@ Add the apps you want to installed_apps:
     )
 
 Run syncdb or South.
+
+##Dependencies:
+Python-Twitter: https://github.com/bear/python-twitter (if you want to auto-tweet news items)
+Easy-Thumbnails: https://github.com/SmileyChris/easy-thumbnails

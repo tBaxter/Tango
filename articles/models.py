@@ -11,8 +11,8 @@ from .managers import DestinationManager, BlogManager, ArticlesManager, Publishe
 from .signals import auto_tweet
 
 from autotagger.autotag_content import autotag
-from shared.models import ContentImage
-from sorl.thumbnail.fields import ImageWithThumbnailsField
+from tango_shared.models import ContentImage
+#from sorl.thumbnail.fields import ImageWithThumbnailsField
 
 
 ########## CONFIG ###########

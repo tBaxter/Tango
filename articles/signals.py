@@ -1,4 +1,7 @@
-import twitter
+try:
+    import twitter
+except:
+    pass
 
 from django.conf import settings
 
@@ -16,14 +19,14 @@ def auto_tweet(sender, instance, *args, **kwargs):
     and create an access token. Whew.
     """
 
+    if not twitter or getattr(settings, 'TWITTER_SETTINGS') is False:
+        print 'WARNING: Twitter account not configured.'
+        return False
+
     if not kwargs.get('created'):
         return False
 
-    try:
-        twitter_key = settings.TWITTER_SETTINGS
-    except AttributeError:
-        print 'WARNING: Twitter account not configured.'
-        return False
+    twitter_key = settings.TWITTER_SETTINGS
 
     try:
         api = twitter.Api(

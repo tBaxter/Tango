@@ -1,0 +1,63 @@
+{% comment %}
+  Builds generic "top assets" box.
+  Note that you must pass in object and the object model must have get_top_assets() defined.
+  And you really should slice top_assets down in get_top_assets().
+{% endcomment %}
+
+{% load typogrify markup social_tags video_tags %}
+
+{% with object.get_top_assets as top_assets %}
+  {% if top_assets or object.pullquote or object.geocode %}
+    <aside id="top_assets">
+      {% social_links object user %}
+      {% if top_assets %}
+        <div class="tabs">
+          {% for asset in top_assets|slice:"0:10" %}
+            {% if asset.image %}
+              <figure id="asset-{{ forloop.counter }}" {% if forloop.counter > 1 %}data-deferred-load="{{ asset.image.t_540.url }}"{% endif %}>
+                {% if forloop.first %}
+                  <img src="{{ asset.image.t_540.url }}" alt="">
+                {% endif %}
+                {% if asset.caption or asset.byline %}
+                  <figcaption>
+                    {% if asset.byline %}
+                      <span class="author">{{ asset.byline }}</span>
+                    {% endif %}
+                    {% if asset.caption %}{{ asset.caption|markdown }}{% endif %}
+                  </figcaption>
+                {% endif %}
+              </figure>
+            {% else %}
+              <figure id="asset-{{ forloop.counter }}" data-title="video" title="video">
+                {% show_video asset.video %}
+              </figure>
+            {% endif %}
+          {% endfor %}
+          {% if object.geocode %}
+            <figure id="mapholder" data-title="map">
+              <div id="map_canvas"></div>
+            </figure>
+          {% endif %}
+          <ul>
+            {% for i in top_assets|slice:"0:10" %}
+              <li{% if forloop.counter == 1 %} class="active"{% endif %}>
+                <a href="#asset-{{ forloop.counter }}">{{ forloop.counter }}</a>
+              </li>
+            {% endfor %}
+            {% if object.geocode %}
+               <li><a href="#mapholder" class="icon-map" title="map">Map</a></li>
+            {% endif %}
+            {% if top_assets|length >= 12  %}
+              <li><a href="{{ object.get_gallery_url }}" class="no-tab">More&hellip;</a></li>
+            {% endif %}
+          </ul>
+        </div><!-- /tabs -->
+      {% endif %}
+      {% if object.pull_quote %}
+        <blockquote class="pull-quote">
+          <p>{{object.pull_quote|typogrify }}</p>
+        </blockquote>
+      {% endif %}
+    </aside>
+  {% endif %}
+{% endwith %}

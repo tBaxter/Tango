@@ -45,12 +45,12 @@ class ContactFormController(models.Model):
         help_text="A unique identifier for this form used for the URL. Should prepopulate."
     )
     recipients = models.ManyToManyField(
-        "Staff recipients",
         UserModel,
         limit_choices_to={'is_staff': True},
         blank=True,
         null=True,
-        help_text="Select staffers the form should be emailed to. Optional"
+        help_text="Select staffers the form should be emailed to. Optional.",
+        verbose_name='Staff recipients'
     )
     other_recipients = models.ManyToManyField(
         Recipient,
