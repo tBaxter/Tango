@@ -77,6 +77,6 @@ class RecipientAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'found_on_form')
 
 
-admin.site.register(ContactForm, ContactFormControllerAdmin)
+admin.site.register(ContactFormController, ContactFormControllerAdmin)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(Recipient, RecipientAdmin)
