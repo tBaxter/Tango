@@ -4,7 +4,7 @@ import time
 from django.db import models
 
 from articles.models import Article
-from shared.models import ContentImage
+from tango_shared.models import ContentImage
 
 now = datetime.datetime.now()
 
@@ -26,13 +26,14 @@ class Gallery(models.Model):
     def __unicode__(self):
         return self.title
 
+    @models.permalink
     def get_absolute_url(self):
-        return "/photos/%s/" % (self.slug)
+        return ('gallery_detail', [self.slug])
 
     def get_image(self):
         try:
             return self.galleryimage_set.all()[0].image
-        except:
+        except IndexError():
             return None
 
     def save(self, *args, **kwargs):
