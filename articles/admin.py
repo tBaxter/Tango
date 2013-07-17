@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import *
 
-from shared.admin import TextCounterWidget
+from tango_shared.admin import TextCounterWidget
 
 if supports_video:
     from video.admin import VideoInline
