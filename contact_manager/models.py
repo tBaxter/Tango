@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.localflavor.us.models import PhoneNumberField, USStateField
 from django.contrib.sites.models import Site
 from django.db import models
 from django.template.defaultfilters import truncatewords
@@ -203,8 +202,12 @@ class Contact(models.Model):
         blank=True,
         help_text="For verification, not publication.")
     contact_city = models.TextField("City", blank=True)
-    contact_state = USStateField("State", blank=True)
-    contact_phone = PhoneNumberField(
+    contact_state = models.CharField(
+        "State/Province",
+        max_length=2,
+        blank=True
+    )
+    contact_phone = models.CharField(
         "Phone",
         blank=True,
         help_text="For verification, not publication."
