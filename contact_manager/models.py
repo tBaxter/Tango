@@ -209,6 +209,7 @@ class Contact(models.Model):
     )
     contact_phone = models.CharField(
         "Phone",
+        max_length=12,
         blank=True,
         help_text="For verification, not publication."
     )
