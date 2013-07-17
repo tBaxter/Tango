@@ -12,7 +12,6 @@ from .signals import auto_tweet
 
 from autotagger.autotag_content import autotag
 from tango_shared.models import ContentImage
-#from sorl.thumbnail.fields import ImageWithThumbnailsField
 
 
 ########## CONFIG ###########
@@ -202,13 +201,10 @@ class Article(models.Model):
 
 
 class Sidebar(models.Model):
-    # to do... replace image with ContentImages
     # make sidebars separate content or not. see happenings.
     article   = models.ForeignKey(Article, related_name="related_sidebars")
     headline  = models.CharField(max_length=200, blank=True)
     body      = models.TextField()
-    image     = ImageWithThumbnailsField(upload_to='img/articles/sidebars/',
-                                     thumbnail={'size': (80, 80), 'options': ['crop', 'upscale']}, blank=True, null=True)
 
 
 class Brief(models.Model):
@@ -229,5 +225,8 @@ class Brief(models.Model):
 class ArticleImage(ContentImage):
     article  = models.ForeignKey(Article)
 
+
+class SidebarImage(ContentImage):
+    sidebar  = models.ForeignKey(Sidebar)
 
 models.signals.post_save.connect(auto_tweet, sender=Brief)
