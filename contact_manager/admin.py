@@ -68,7 +68,7 @@ class ContactAdmin(admin.ModelAdmin):
     list_display = ('sender_name', 'controlling_form', 'subject', 'summary', 'submitted', 'has_photo', 'publish')
     # To-Do: add remove_bad_users to actions when it can be safely imported.
     actions = [publish_selected, unpublish_selected]
-    list_filter = ('publish', 'site', 'exported', 'contact_form')
+    list_filter = ('publish', 'site', 'controller')
     date_hierarchy = 'submitted'
     search_fields = ['sender_email', 'sender_name']
 
