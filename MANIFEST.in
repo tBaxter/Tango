@@ -1,5 +1,15 @@
 include README INSTALL LICENCE
 recursive-include tango *.py *.html *.js
 include docs/Makefile
-recursive-include docs/source *
-recursive-include fixtures/ *
+recursive-include articles/fixtures/ *
+recursive-include articles/static/ *
+recursive-include articles/templates/ *
+recursive-include contact_manager/fixtures/ *
+recursive-include contact_manager/templates/ *
+recursive-include galleries/static/ *
+recursive-include galleries/templates/ *
+recursive-include tango_shared/static/ *
+recursive-include tango_shared/templates/ *
+recursive-include user_profiles/templates/ *
+recursive-include templates/templates/ *
+recursive-include voting/templates/ *
