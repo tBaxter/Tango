@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact {{recipient_name}}{% endblock %}
+
+{% block content %}
+  <h2>Contact {{ recipient_name }}</h2>
+  <form action="." method="post" class="boxedform">{% csrf_token %}
+    <input type="hidden" id="id_name" name="name" value="{{ user.preferred_name }}" />
+    <input type="hidden" id="id_from_address" name="from_address" value="{{ user.email }}" />
+    <p class="row{% if form.message.errors %} error{% endif %}">
+      <label for="id_message">Message:</label>
+      {{ form.message }}
+      {% if form.message.errors %}
+        <div class="errormessage">{{ form.message.errors.0 }}</div>
+      {% endif %}
+    </p>
+    <p class="submit">
+      <input type="submit" value="Send message" />
+    </p>
+  </form>
+{% endblock %}

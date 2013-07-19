@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% load cache %}
+
+{% block extra_title %}Community{% endblock%}
+
+{% block community_nav %}
+    <li class="active">
+      <a href="{% url 'community_index' %}">Community</a>
+      <ul>
+        {% if authenticated_request %}
+          <li><a href="{% url 'view_profile' user.username %}">View your profile</a></li>
+          <li><a href="{% url 'edit_profile' %}">
+            Change profile &amp; settings</a>
+          </li>
+        {% endif %}
+        <li><a href="{% url 'contact_site' %}">Contact {{ site.name }}</a></li>
+      </ul>
+    </li>
+  {% endblock %}

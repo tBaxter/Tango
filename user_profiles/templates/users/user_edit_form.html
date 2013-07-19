@@ -1,0 +1,80 @@
+{% extends "users/base.html" %}{% load cache %}
+
+{% block title %}Edit profile: {% endblock %}
+
+{% block content %}  
+  {% if object.id != user.id %}
+    <h1>Sorry, you cannot edit someone else's profile.</h1>
+  {% else %}
+
+    <h1>Edit your profile</h1>
+    <p>All fields are entirely optional. 
+      Note that you can not change your username, real name, or e-mail address. 
+      If you wish to change these, please <a href="/contact/">contact the staff</a>.
+    </p>
+
+    {% if form.errors %}
+      <p class="error">Oops! There's a problem on your form:</p>
+        <ul>{% for field in form %}
+        <li>{{ field.errors|striptags }}</li>
+        {% endfor %}</ul>
+    {% endif %}
+
+    <form class="boxedform has-fieldsets" action="" enctype="multipart/form-data" method="post">
+      {% csrf_token %}
+      <fieldset>
+        <legend>Profile</legend>
+        {% for field in form %}
+          {% if field.label = 'Open board links' %}
+            </fieldset>
+            <fieldset>
+              <legend>Settings</legend>
+          {% endif %}
+          <p>
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+            <span class="helptext">{{ field.help_text }}</span>
+          </p>
+        {% endfor %}
+      </fieldset>
+
+      <p class='submit'>
+        <input type="submit" id="id_submit" value="Save Profile">
+      </p>
+    </form>
+  {% endif %}
+{% endblock %}
+
+{% block aside %}
+  {{ block.super }}
+  <hr class="fancy">
+
+  <form action="/members/{{ object.username }}/delete-songs/ " method="post">
+    {% csrf_token %}
+    <fieldset>
+      <legend>Your songs</legend>
+      <ul>
+        {% for song in object.member_songs.all %}
+          <li><input type="checkbox" name="user_songs" value="song{{ song.id }}" />
+            <label for="song{{ song.id }}" style="float:none">{{ song.song_title }}</label>
+          </li>
+        {% endfor %}
+      </ul>
+      <p class="submit">
+        <input type="submit" value="Delete checked songs">
+      </p>
+    </fieldset>
+  </form>
+
+  <hr class="fancy">
+  
+  <form action="{% url 'edit_settings' %}" method="post" class="boxedform">
+    {{ settings_form.non_field_errors }}
+    <h2>Settings</h2>
+    {% csrf_token %}
+    {{ settings_form.as_p }}
+    <p class="submit">
+      <input type="submit" value="Save settings">
+    </p>
+  </form>
+{% endblock %}

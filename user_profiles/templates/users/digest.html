@@ -1,0 +1,196 @@
+{% load article_tags fretboard_tags event_tags guitar_tags song_tags user_tags site_tags typogrify humanize %}
+
+  <h2>{{ subject }}</h2>
+
+  {% get_new_articles last_seen brief=True as news_briefs %}
+  {% if news_briefs %}
+    {% for brief in news_briefs %}
+      <h3>
+        {% if brief.link %}
+          <a href="{{ brief.link }}">{{ brief.text }}</a>
+        {% else %}
+          {{ brief.text}}
+        {% endif %}
+      </h3>
+    {% endfor %}
+  {% endif %}
+
+  {% if watchlist %}
+    {% with watchlist|length as count %}
+      <h3>{{ count|apnumber|capfirst }} item{{ count|pluralize }} on your watchlist 
+        {% if count == 1 %}has{% else %}have{% endif %} been updated.
+      </h3>
+      <ul class="fancy">
+        {% for obj in watchlist %}
+          <li>
+            <a href="{{ site_root }}{{ obj.get_absolute_url }}">
+              {{ obj }}
+            </a>
+            {% format_time d obj.get_last_modified %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endwith %}
+  {% else %}
+    {% if user.watch_set.count %}
+      <h3>Nothing on your watchlist has been updated lately.</h3>
+    {% endif %}
+  {% endif %}
+
+  {% get_events_by_date_range 21 3 3 as events %}
+  {% if events %}
+    {% with events.count as count %}
+    <h3>
+      <a href="{{ site_root }}{% url 'events_index' %}">
+        {{ count|apnumber|capfirst }} event{{ count|pluralize }} 
+        {% if count == 1 %} is {% else %} are {% endif %} coming up or happening now:</a>
+    </h3>
+    {% for event in events %}
+      <h4>
+        <a href="{{ site_root }}{{ event.get_absolute_url }}">
+          {{ event.subhead }} {{ event.name }}: {% format_time event.start_date %}
+        </a>
+      </h4>
+      <ul>
+        {% load_event_subnav event user=None use_domain=True %}
+      </ul>
+    {% endfor %}
+    {% endwith %}
+  {% else %}
+    {% get_upcoming_events 1 0 as next_events %}
+    {% with next_events.0 as next_event %}
+      {% if next_event %}
+        <h3>
+          <a href="{{ site_root }}{{ next_event.get_absolute_url }}">
+            {{ next_event.name }}
+          </a> is coming {{ next_event.start_date|date:"N j" }}.
+        </h3>
+        {% endif %}
+    {% endwith %}
+  {% endif %}
+
+  {% get_new_topics_count as new_count %}
+  {% get_active_topics_count as active_count %}
+  <h3>
+    <a href="{{ site_root }}{% url 'new_topics' %}">
+      Check out a few of the {{ new_count|apnumber|capfirst }} new topic{{ new_count|pluralize }} and 
+      {{ active_count|apnumber|capfirst }} active topic{{ active_count|pluralize }} today</a>:
+  </h3>
+
+  {% get_topic_list 6 top_items=True as topic_list %}
+    {% regroup topic_list by forum as topics %}
+    {% for forum in topics %}
+      <small>{{ forum.grouper }}</small>
+      <ul>
+        {% for t in forum.list %}
+          <li title="Started by {{ t.author }}">
+            <a href="{{ site_root }}{{ t.get_absolute_url }}">
+              {{ t.name|lower|capfirst|typogrify }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+
+  <section id="latest-guitars">
+    {% get_new_guitars_count as count %}
+    {% if count == 0 %}
+      <h3>No <a href="{{ site_root }}{% url 'guitars_index' %}">guitars</a>
+        were added today. Have you added yours?</h3>
+    {% else %}
+      <h3>
+        {{ count|apnumber|capfirst }} 
+         <a href="{{ site_root }}{% url 'latest_guitars' %}">new guitar{{ count|pluralize }}</a>
+         {% if count == 1 %} was{% else %} were{% endif %} added to the 
+         <a href="{{ site_root }}{% url 'guitars_index' %}">Gretsch-GEAR database.</a>
+      </h3>
+      <ul class="fancy">
+        {% get_latest_guitars 'today' as guitar_list %}
+        {% for g in guitar_list %}
+          <li><a href="{{ site_root }}{{ g.get_absolute_url }}">{{ g }}</a></li>
+        {% endfor %}
+        {% get_new_help_count as help_count %}
+        <li>
+          <a href="{{ site_root }}{% url 'help_guitars' %}">
+            {% if help_count %}
+              {{ help_count|apnumber|capfirst }} need{% if help_count == 1 %}s{% endif %} help
+            {% endif %}
+          </a>
+        </li>
+        {% get_new_market_count as mkt_count %}
+        <li>
+          <a href="{{ site_root }}{% url 'market_guitars' %}">
+            {% if mkt_count %}
+              {{ mkt_count|apnumber|capfirst }} on the market.
+            {% endif %}
+          </a>
+        </li>
+      </ul>
+    {% endif %}
+  </section>
+
+  {% get_new_articles last_seen as articles %}
+  {% if articles %}
+    {% with articles.count as count %}
+      <h3>
+        <a href="{{ site_root }}/words/">{{ count|apnumber|capfirst }} new article{{ count|pluralize }}</a>
+      </h3>
+    {% endwith %}
+    <ul class="fancy">
+      {% for a in articles %}
+        <li>
+          <a href="{{ site_root }}{{ a.get_absolute_url }}">{{ a.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% get_new_songs last_seen as new_songs %}
+  {% if new_songs %}
+    {% with new_songs.count as count %}
+      <h3>
+        <a href="{{ site_root }}{% url 'song_list' %}">
+          {{ count|apnumber|capfirst }} new song{{ count|pluralize }} 
+          {% if count == 1 %}was{% else %}were{% endif %} 
+          added to Gretsch Pages Radio.
+        </a>
+      </h3>
+    {% endwith %}
+    <ul class="fancy">
+      {% for song in new_songs %}
+        <li>
+          <a href="{{ site_root }}{{ song.get_absolute_url }}">
+            {{ song.song_title }} 
+            <small class="meta">{{ song.artist }}</small>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <h3>
+      No new songs were posted to <a href="{{ site_root }}{% url 'song_list' %}">Gretsch Pages Radio</a>.
+      You should add one.
+    </h3>
+  {% endif %}
+
+  {% get_birthday_list as birthday_list %}
+  {% if birthday_list %}
+    {% with birthday_list.count as count %}
+      <h3>We have {{ count|apnumber }} birthday{{ count|pluralize }} today</h3>
+    {% endwith %}
+    <ul class="fancy">
+      {% for b in birthday_list %}
+        <li><a href="{{ site_root }}{% url 'view_profile' b.username %}">{{ b.preferred_name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <h3>Say hello to some new people:</h3>
+  {% get_new_members 'today' as new_members %}
+  <ul class="fancy">
+    {% for i in new_members %}
+      <li>
+        <a href="{{ site_root }}{% url 'view_profile' i.username %}">{{ i.preferred_name }}</a>
+      </li>
+    {% endfor %}
+  </ul>

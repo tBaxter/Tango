@@ -1,0 +1,63 @@
+{% extends "users/base.html" %}
+
+{% block aside %}
+  {{ block.super }}
+  <form action="" method="get" class="boxedform sticky">
+    <legend>Search the community</legend>
+    {{ filter.form.as_p }}
+    <p class="submit"> <input type="submit" value="search"></p>
+  </form>
+{% endblock %}
+
+{% block content %}
+  {% if not filter.data %}
+    {% include 'includes/generic_pagination.html' %}
+  {% endif %}
+  <table class="striped">
+    <caption>{{ site.name }} Community</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if filter.data %}
+        {% if filter.qs %}{# uses filter #}
+          {% for profile in filter.qs|slice:"50" %}
+            <tr>
+              <td>
+                <a href="{{ profile.get_absolute_url }}">
+                  {{ profile.preferred_name }}
+                </a>
+              </td>
+              <td>{{ profile.city }}</td>
+              <td>{{ profile.state }}</td>
+              <td>{{ profile.country }}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr><th colspan="4">No results found</th></tr>
+        {% endif %}
+      {% else %}
+        {% for profile in object_list %}
+          <tr>
+            <td>
+              <a href="{{ profile.get_absolute_url }}">
+                {{ profile.preferred_name }}
+              </a>
+            </td>
+            <td>{{ profile.city }}</td>
+            <td>{{ profile.state }}</td>
+            <td>{{ profile.country }}</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
+  {% if not filter.data %}
+    {% include 'includes/generic_pagination.html' %}
+  {% endif %}
+{% endblock %}
