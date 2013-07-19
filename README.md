@@ -21,6 +21,12 @@ Add the apps you want to installed_apps. You really should add tango_shared, as 
 Run syncdb or South.
 
 ##Dependencies:
-Python-Twitter: https://github.com/bear/python-twitter (if you want to auto-tweet news items)
-Easy-Thumbnails: https://github.com/SmileyChris/easy-thumbnails
+[Easy-Thumbnails](https://github.com/SmileyChris/easy-thumbnails)
 PIL or Pillow
+Markdown
+Typogrify
+[Python-Twitter](https://github.com/bear/python-twitter) (if you want to auto-tweet news items)
+
+### Recommended
+South
+docutils

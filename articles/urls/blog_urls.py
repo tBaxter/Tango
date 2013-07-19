@@ -1,11 +1,8 @@
-from django.conf import settings
-from django.conf.urls import *
+from django.conf.urls import patterns, url
 from django.views.generic import TemplateView, ListView
 
-from articles.models import Assignment
+from articles.models import Destination
 from articles.views import ArticleDetail, ArticleList, EditBlogEntry, CreateBlogEntry
-
-page_by = settings.PAGINATE_BY
 
 
 urlpatterns = patterns(
@@ -35,7 +32,7 @@ urlpatterns = patterns(
         name="blog_list",
         regex=r'^$',
         view=ListView.as_view(
-            queryset=Assignment.blogs.all(),
+            queryset=Destination.blogs.all(),
             template_name='blogs/blog_list.html'
         )
     ),

@@ -12,10 +12,11 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
 
-from .models import Article, ArticleImage, Assignment
+from .models import Article, ArticleImage, Destination
 from .forms import BlogEntryForm, BlogEntryImageForm
 
 now = datetime.datetime.now()
+pagination_setting = getattr(settings, "PAGINATE_BY", 25)
 
 
 class ArticleList(ListView):
@@ -23,11 +24,11 @@ class ArticleList(ListView):
     Returns an article list, plus the related destination.
     """
     template_name = 'all_content/article_list.html'
-    paginate_by = settings.PAGINATE_BY
+    paginate_by = pagination_setting
 
     def dispatch(self, request, *args, **kwargs):
         self.destination_slug = kwargs.get('destination_slug', 'articles')
-        self.destination = Assignment.objects.get(slug=self.destination_slug)
+        self.destination = Destination.objects.get(slug=self.destination_slug)
         return super(ArticleList, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -111,7 +112,7 @@ class CreateBlogEntry(CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        self.destination = Assignment.objects.get(slug=kwargs.get('destination_slug'))
+        self.destination = Destination.objects.get(slug=kwargs.get('destination_slug'))
         if not request.user.has_perm('can_add_article'):
             return HttpResponse(
                 """

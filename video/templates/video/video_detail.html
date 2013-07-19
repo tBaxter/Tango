@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% load markup typogrify thumbnail cache social_tags %}
+
+{% block title %}{{video.name}}: {% endblock %}
+
+{% block extrahead %}
+  <style type="text/css">
+    ul.sociallinks li {float:none; width:100%; clear:left;}
+  </style>
+{% endblock %}
+
+{% block section %}video{%endblock%}
+{% block bodyclass %}widish{% endblock%}
+
+{% block content %}
+<h1>{{ video.title }}</h1>
+{% if video.yt_id %}
+ <iframe width="100%" height="60%" src="http://www.youtube.com/embed/{{ video.yt_id }}" frameborder="0" allowfullscreen></iframe>
+{% else %}
+
+  <video width="{{ video.video_width }}" height="{{ video.video_height }}" preload="" controls="" autoplay="true" poster="/media/{{ video.poster_frame }}">
+    <source src="/media/{{ video.video_file }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+    <source src="/media/{{ video.webm }}" type='video/webm; codecs="vp8, vorbis"'>
+    <object type="application/x-shockwave-flash" data="/media/swf/player.swf" width="{{ video.video_width }}" height="{{ video.video_height }}">
+      <param name="movie" value="/media/swf/player.swf">
+      <param name="allowfullscreen" value="true">
+      <param name="allowscriptaccess" value="always">
+      <param name="flashvars" value="file=http://gretschpages.com/media/{{ video.video_file }}&amp;skin=http://gretschpages.com/media/swf/playerskin.swf&amp;volume=60&type=video">
+      <param name="flashVersion" value="10"> 
+      <embed src="/media/{{video.video_file }}" pluginspage="http://www.apple.com/quicktime/" width="{{ video.video_width }}" height="{{ video.video_height }}" controller="true" loop="false" autoplay="false" name="Video">
+        <p>We're sorry, this video can not be played in your browser.</p>
+      </embed>
+    </object>
+  </video>
+{% endif %}
+
+{% if video.content_object %}
+  <h4>See More: <a href="{{video.content_object.get_absolute_url}}">{{video.content_object}}</a></h4>
+{% endif %}
+
+{% with video as object %}
+	{% include 'comments/inclusion/comments.html' %}
+{% endwith %}
+{% endblock %}
+
+{% block secondary %}
+  <h1>{{video.name }}</h1>
+  {{video.blurb|markdown|typogrify}}
+
+  {% social_links video user %}
+{% endblock %}
+

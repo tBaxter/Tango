@@ -43,19 +43,19 @@ offset = datetime.date.today() - datetime.timedelta(days=90)
 UserModel = getattr(settings, "AUTH_USER_MODEL", "auth.User")
 
 # News site settings.
-NEWS_SITE = False
-SOURCE      = getattr(settings, 'SOURCE', '')
+NEWS_SOURCE = getattr(settings, 'NEWS_SOURCE', False)
 
 
 ########## END CONFIG ###########
 
 
-class Assignment(models.Model):
+class Destination(models.Model):
     """
-    Defines destinations an article may be assigned to
-    and allow for routing to the correct destination.
+    Defines destinations content may be assigned to
+    and allows for routing to the correct destination.
 
-    Destination assignments can be blogs, article groups, etc.
+    Destinations are the top-level assignments.
+    This is where you would create a blog, an article groups, etc.
 
     To-do: add site(s)
     """
@@ -89,19 +89,21 @@ class Assignment(models.Model):
 class Category(models.Model):
     """
     Allows for content categorization.
+    Categories can be used by one or more destination.
+    They can also be limited to only blogs.
     """
-    category = models.CharField(max_length=200)
-    slug     = models.SlugField(max_length=200)
-    summary  = models.TextField(blank=True)
-    image    = models.ImageField(upload_to="img/content/cats", blank=True)
-    blog_cat = models.BooleanField(default=False, help_text="Only allow (and show) this category on blogs.")
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200)
+    summary = models.TextField(blank=True)
+    image = models.ImageField(upload_to="img/content/cats", blank=True)
+    is_for_blog = models.BooleanField(default=False, help_text="Limit this category to blogs.")
 
     class Meta:
-        verbose_name_plural = "categories"
-        ordering = ['category']
+        verbose_name_plural = "sub-categories"
+        ordering = ['name']
 
     def __unicode__(self):
-        return self.category
+        return self.name
 
 
 class Article(models.Model):
@@ -122,7 +124,7 @@ class Article(models.Model):
     sites           = models.ManyToManyField(Site, default=[settings.SITE_ID, ], blank=False, null=True)
     override_url    = models.URLField(blank=True, help_text="Direct link to story elsewhere.")
 
-    destination     = models.ForeignKey(Assignment)
+    destination     = models.ForeignKey(Destination)
     sections        = models.ManyToManyField(Category, blank=True, null=True)
 
     # RELATED
@@ -132,9 +134,9 @@ class Article(models.Model):
     created         = models.DateTimeField(auto_now_add=True)
     last_modified   = models.DateTimeField(auto_now=True)
 
-    if NEWS_SITE:
+    if NEWS_SOURCE:
         opinion  = models.BooleanField("Opinion/Editorial", default=False)
-        source   = models.CharField(max_length=200, default=SOURCE, blank=True, null=True)
+        source   = models.CharField(max_length=200, default=NEWS_SOURCE, blank=True, null=True)
         dateline = models.CharField(max_length=200, blank=True, null=True)
 
     if supports_video:

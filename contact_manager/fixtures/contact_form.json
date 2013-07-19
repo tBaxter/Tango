@@ -1,0 +1,31 @@
+[
+  {
+    "pk": 1, 
+    "model": "contact_manager.contactformcontroller", 
+    "fields": {
+      "override_subject": "", 
+      "subject_label": 
+      "Message Title", 
+      "limit_words": null, 
+      "name": "Test Contact Form", 
+      "recipients": [1], 
+      "store_in_db": true, 
+      "send_emails": true, 
+      "site": 1, 
+      "pre_form_msg": "", 
+      "ask_for_subject": true, 
+      "body_label": "", 
+      "thank_you": "", 
+      "allow_uploads": false, 
+      "other_recipients": [], 
+      "email_options": "1", 
+      "slug": "test-contact-form", 
+      "require_auth": false, 
+      "request_contact_info": false
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": 
+    "contact_manager.contact", 
+    "fields": {"body": "This is a test of the large contact form", "contact_address": "", "contact_state": "", "contact_city": "", "sender_name": "admin", "photo": "", "user": null, "send_a_copy": false, "submitted": "2013-07-19", "site": 1, "controller": 1, "publish": false, "sender_email": "mail.baxter@gmail.com", "contact_phone": "", "subject": "Testing the large contact form"}}]

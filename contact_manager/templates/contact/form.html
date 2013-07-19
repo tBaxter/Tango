@@ -1,11 +1,55 @@
 {% extends 'contact/base.html' %}
+{% load markup %}
 
-{% block title %}Contact {% endblock %}
+{% block title %}{{ controller.name }}{% endblock %}
 
 {% block content %}
-  <h1>Contact {{ site.name }}</h1>
-  <form action="." method="post" class="boxedform">{% csrf_token %}
-    {{ form.as_p }}
-    <p class="submit"><input type="submit" value="Send message" /></p>
-  </form>
+    <h1>{{ controller.name }}</h1>
+    {{ form.non_field_errors }}
+    {{ form.errors }}
+    <form action="." enctype="multipart/form-data" method="post" class="boxedform">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <p class="submit">
+        <input type="submit" value="Send message">
+      </p>
+    </form>
 {% endblock %}
+
+{% block aside %}
+  {{ controller.pre_form_msg|markdown }}
+{% endblock %}
+
+{% block extrascript %}
+  {% if controller.limit_words %}
+  {# to-do: make this reusable #}
+    <script>
+      $(document).ready(function(){ 
+        var $body = $('#id_body'),
+            count = $body.val().split(' ').length - 1,
+            $submitButton = $body.closest('form').find('input[type=submit'),
+            $countHolder = $('<span id="wordCount">' + count + '</span>');
+        //set status onload
+        $body.after('<span class="meta">' + 
+          'Please limit your message to {{ controller.limit_words }} words. ' +
+          'Current count:' + $countHolder + '</span>'
+        );
+
+        $body.keyup(function() {
+          count = $body.val().split(' ').length;
+          
+          if (count > {{ controller.limit_words }}) {
+            $submitButton.attr("disabled", "disabled");
+            $countHolder.addClass('alert');
+            $countHolder.html(count + '<br>You will not be able to submit your message if it is more than {{ controller.limit_words }} words.')
+          } else {
+            $countHolder.html(count).removeClass('alert');
+            $submitButton.attr("disabled", "");
+          }
+        }); 
+      });
+    </script>
+  {% endif %}
+{% endblock %}
+

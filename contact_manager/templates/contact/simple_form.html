@@ -1,0 +1,14 @@
+{% extends 'contact/base.html' %}
+
+{% block title %}Contact {% endblock %}
+
+{% block content %}
+  <h1>Contact {% firstof member.username site.name %}</h1>
+  <form action="." method="post" class="boxedform">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p class="submit">
+      <input type="submit" value="Send message">
+    </p>
+  </form>
+{% endblock %}

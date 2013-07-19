@@ -4,6 +4,8 @@ from django.db import models
 from django.template.defaultfilters import truncatewords
 
 UserModel = getattr(settings, "AUTH_USER_MODEL", "auth.User")
+current_site = Site.objects.get_current()
+
 
 EMAIL_CHOICES = (
     ('1', 'Send to all recipients'),
@@ -76,7 +78,6 @@ class ContactFormController(models.Model):
     email_options = models.CharField(
         max_length=1,
         choices=EMAIL_CHOICES,
-        blank=True,
         help_text="""
             Select whether contacts be automatically emailed to all recipients,
             or if the user should see a selectable list to choose from.
@@ -129,9 +130,10 @@ class ContactFormController(models.Model):
     )
     override_subject = models.CharField(
         "Subject Line",
-        blank=True,
         max_length=150,
-        null=True, help_text="""
+        blank=True,
+        null=True,
+        help_text="""
             Provides a default subject for submission emails.
             If left blank, the submitter can write their own.
             """)
@@ -163,7 +165,7 @@ class ContactFormController(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('contact_form', [self.slug])
+        return ('contact_form_builder', [self.slug])
 
 
 class Contact(models.Model):
@@ -196,7 +198,7 @@ class Contact(models.Model):
         null=True,
         help_text="In some cases, we may require submission from an authenticated user"
     )
-    site = models.ForeignKey(Site, default=settings.SITE_ID)
+    site = models.ForeignKey(Site, default=current_site)
     # if request_contact_info is True
     contact_address = models.TextField(
         blank=True,
@@ -225,16 +227,11 @@ class Contact(models.Model):
     def get_absolute_url(self):
         return ('contact_detail', [str(self.id)])
 
-    def controlling_form(self):
-        return self.contact_form.name
-
     def is_from_site(self):
         return settings.SITE_ID == self.site.id
 
     def has_photo(self):
-        if self.photo:
-            return True
-        return False
+        return hasattr(self, 'photo')
     has_photo.boolean = True
 
     def summary(self):

@@ -1,10 +1,10 @@
 {% extends "all_content/base.html" %}
-{% load markup typogrify cache social_tags site_tags %}
+{% load markup typogrify_tags cache social_tags site_tags %}
 
 {% block title %}{{ object.title }}: {% endblock %}
-{% block extra_title %}News &amp; Articles{% endblock %}
+{% block extra_title %}{{ destination }}{% endblock %}
 
-{% block description %}{{ object.title }}: {{ object.summary }} | {{ site.name }} Articles{% endblock description %}
+{% block description %}{{ object.title }}: {{ object.summary }} | {{ site.name }} {{ destination }}{% endblock description %}
 
 {% block extra_meta %}
   <meta property="og:title" content="{% if object.kicker %}{{ object.kicker }}: {% endif %}{{ object.headline }}">
@@ -161,7 +161,7 @@
 
     <footer class="clear">
       {% block comments %}
-        {% include 'comments/inclusion/comments.html' %}
+        {% include 'includes/comments/comments.html' %}
       {% endblock %}
     </footer>
   </article>

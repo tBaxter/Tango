@@ -33,6 +33,7 @@ class RecipientInline(admin.TabularInline):
 class ContactFormControllerAdmin(admin.ModelAdmin):
     list_display = ('name', 'site')
     filter_horizontal = ('recipients', 'other_recipients')
+    prepopulated_fields = {'slug': ('name',)}
     fieldsets = (
         ('The Form', {
             'fields': (
@@ -65,7 +66,7 @@ class ContactFormControllerAdmin(admin.ModelAdmin):
 
 
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('sender_name', 'controlling_form', 'subject', 'summary', 'submitted', 'has_photo', 'publish')
+    list_display = ('sender_name', 'controller', 'subject', 'summary', 'submitted', 'has_photo', 'publish')
     # To-Do: add remove_bad_users to actions when it can be safely imported.
     actions = [publish_selected, unpublish_selected]
     list_filter = ('publish', 'site', 'controller')

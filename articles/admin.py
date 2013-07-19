@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import *
+from .models import ArticleImage, Sidebar, Destination, Category, Brief, Article
+from .models import supports_video, supports_polls
 
 from tango_shared.admin import TextCounterWidget
 
@@ -41,17 +42,17 @@ class ArticleAdmin(admin.ModelAdmin):
         dateline        = models.CharField(max_length=200, blank=True, null=True)
     """
     related = ('Related', {
-            'fields': ['galleries', 'articles'],
-            'description': 'Other content directly related to this article'
+        'fields': ['galleries', 'articles'],
+        'description': 'Other content directly related to this article'
     })
     if supports_polls:
         related[1]['fields'].insert(0, 'polls')
 
     fieldsets = (
+        ('Routing', {'fields': ('destination', 'sections')}),
         ('Author info', {'fields': (('author', 'guest_author'))}),
         ('Header', {'fields': ('kicker', 'title', 'subhead')}),
         ('Content', {'fields': ('summary', 'body', 'pull_quote', 'endnote')}),
-        ('Routing', {'fields': ('destination', 'sections')}),
         ('Admin fields', {
             'description': 'You should rarely, if ever, need to touch these fields.',
             'fields': ('slug', 'enable_comments', 'sites', 'override_url'),
@@ -74,7 +75,7 @@ class BriefAdmin(admin.ModelAdmin):
         return super(BriefAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 
 
-admin.site.register(Assignment)
+admin.site.register(Destination)
 admin.site.register(Category)
 admin.site.register(Brief, BriefAdmin)
 admin.site.register(Article, ArticleAdmin)

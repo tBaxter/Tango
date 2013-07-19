@@ -1,4 +1,3 @@
-{% load sponsor_tags %}
 
 <h1>{{ destination.title }}</h1>
 <p>{{ destination.summary }}</p>
@@ -18,7 +17,6 @@
 
 {% load cache %}
 {% cache 120 'entry_extra' object.id object.last_modified 5 %}
-  {% show_sponsors object.destination.slug 3 %}
   {% if prev_update %}
     <aside class="related_story">
       {% if prev_update.has_image %}
