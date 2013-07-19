@@ -1,0 +1,154 @@
+// Common assets
+
+
+
+// basic form styling
+.boxedform {
+	border:1px solid @accent;
+	.radius(8px);
+	margin-bottom:1em;
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0, 0)), to(rgba(0,0,0, .1)));
+	background: -moz-linear-gradient(50% 50% 270deg,rgba(0,0,0, 0), rgba(0,0,0, .1));
+	> h2 {padding:0 10px;}
+	p {border-bottom:1px dotted @accent; padding:.5em 0; margin-bottom:0; clear:left}
+	label {float:left; padding: 10px; font-size:12px; font-weight:bold; width:32%}
+	label.nofloat {float:none; width:100%}
+		input[type=text], input[type=password], textarea {width:67%; border-radius:5px; border:1px solid #444; padding:5px 10px}
+	.submithold {text-align:center;}
+	.helptext {color:@inverse_alt; font-size:80%; display:block; margin-left:33%}
+}
+
+
+
+/****** GRIDDED CONTENT *******************************
+*  gridded content. Can have 2-5 columns. 3 is default.
+*  usage:  something class="columned"
+*  or   :  something class="columned four-col"
+*  Note media query overrides for small screens below
+*******************************************************/
+.columned { margin: 0; padding: 0; list-style: none; position: relative; 
+	> * { line-height: 1.25em; font-size: 85%; display: inline-block; vertical-align: top; border-top:2px solid @base_alt; position: relative; width: 32.9%; padding: .75em 2% 1.25em 1%; margin-right:-.25em;
+		&:hover {background-color: @base_alt}
+		img {border:1px solid @accent }
+	}
+}
+.one-col > * { width: auto; clear:none }
+.two-col > * { width: 49%;  }
+.four-col > * {width: 24.9%; }
+.five-col > * {width: 19.9%; }
+.six-col > * {width: 16.5%; }
+
+
+
+
+/*********** MIXINS *****************/
+
+.radius(@rad_px) {
+	-webkit-border-radius:@rad_px;
+	   -moz-border-radius:@rad_px;
+	        border-radius:@rad_px;
+}
+
+// Gradients
+.gradient_20(@start: #ccc, @grain:none) {
+	@end: darken(@start, 20%); 
+	background: darken(@start, 10%) @grain;
+	background: @grain, -webkit-gradient(linear, left top, left bottom, color-stop(0%, @start), color-stop(100%, @end));  /* Chrome, Safari 4+ */
+	background: @grain, -webkit-linear-gradient(top, @start 0%,  @end);                                                    /* Chrome 10+, Safari 5.1+ */
+	background: @grain, -moz-gradient(center top, @start 0%, @end 100%);                           /* FF 3 */
+	background: @grain, -moz-linear-gradient(center top, @start 0%, @end 100%);                    /* FF 3.6+ */
+	background: @grain, -ms-linear-gradient(top, @start 0%, @end 100%);                            /* IE 10+ */
+	background: @grain, -o-linear-gradient(top, @start 0%, @end 100%);                             /* Opera 11.10+ */
+	background: @grain, linear-gradient(top, @start 0%, @end 100%);                                /* W3C */
+	// If you're < IE10, screw it. It won't act right anyway, especially if there's a radius
+	//filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=@start, endColorstr=@end,GradientType=0 ); /* IE6-9 */
+	background: -ms-linear-gradient(top left,  @start 0%, @end 100%);
+}
+
+// box shadows
+.box-shadow(@x_axis:0, @y_axis:1px, @distance:2px, @opacity:0.5) {
+	-webkit-box-shadow: @x_axis @y_axis @distance rgba(0, 0, 0, @opacity);
+	   -moz-box-shadow: @x_axis @y_axis @distance rgba(0, 0, 0, @opacity);
+	        box-shadow: @x_axis @y_axis @distance rgba(0, 0, 0, @opacity);
+}
+
+// Transitions
+.trans(@property:all, @duration:.2s, @function:ease-in) {
+	// Values:
+	//    Property: all, background, color, height, weight or outline
+	//    Duration: time of the transition (in seconds or ms)
+	//    Function: linear, ease, ease-in, ease-out, ease-in-out
+	-webkit-transition: @property @duration @function;
+      -moz-transition: @property @duration @function;
+       -ms-transition: @property @duration @function;
+        -o-transition: @property @duration @function;
+           transition: @property @duration @function;
+}
+.kill_trans() {
+	/* Kills transitions */
+	-webkit-transition: none;
+      -moz-transition: none;
+       -ms-transition: none;
+        -o-transition: none;
+           transition: none;
+}
+
+
+.scroll_horiz() {
+	&::-webkit-scrollbar {
+		height: 8px;
+		border-radius: 10px;
+		margin:5px;
+	}
+	&::-webkit-scrollbar-track {
+		border-radius: 10px;
+		background: @base_alt;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		.gradient_20(@base); 
+		height:4px;
+		border:1px solid @inverse_alt;
+	}
+}
+
+.scroll_vert() {
+	&::-webkit-scrollbar {
+		width: 8px;
+		border-radius: 10px;
+		margin:5px;
+	}
+	&::-webkit-scrollbar-track {
+		border-radius: 10px;
+		background: @base_alt;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		.gradient_20(@base); 
+		width:4px;
+		border:1px solid @inverse_alt;
+	}
+}
+
+
+
+// screen provides a boxedform-like screened gradient background, using the gradient_20 mixin
+.screen {
+	border:1px solid @accent;
+	.gradient_20(@base);
+	.radius(8px);
+	padding:.25em 10px;
+	margin-bottom:1em;
+}
+
+
+
+/*************** MEDIA QUERY OVERRIDES ***********************/
+
+@media only screen and (max-width: 780px) {
+	.two-col > * { width: 48.5%;  }
+	.four-col > *, .five-col > * {width: 48.5%; }
+}
+@media only screen and (max-width: 940px) {
+	.six-col > * {width: 32.9%; }
+}

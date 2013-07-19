@@ -1,0 +1,129 @@
+@mixin radius($rad_px) {
+  -webkit-border-radius:$rad_px;
+     -moz-border-radius:$rad_px;
+          border-radius:$rad_px;
+}
+
+// Gradients
+@mixin gradient($start: #ccc, $amount:10%, $texture:none) {
+  $end: darken($start, $amount); 
+  background: $end $texture;
+  background: $texture, -webkit-gradient(linear, left top, left bottom, color-stop(0%, $start), color-stop(100%, $end));  /* Chrome, Safari 4+ */
+  background: $texture,    -moz-gradient(center top, $start 0%, $end 100%); 
+  background: $texture, -webkit-linear-gradient(top, $start 0%,  $end);                                                    /* Chrome 10+, Safari 5.1+ */
+  background: $texture,    -moz-linear-gradient(center top, $start 0%, $end 100%);                    /* FF 3.6+ */
+  background: $texture,     -ms-linear-gradient(top, $start 0%, $end 100%);                            /* IE 10+ */
+  background: $texture,      -o-linear-gradient(top, $start 0%, $end 100%);                             /* Opera 11.10+ */
+  background: $texture,         linear-gradient(top, $start 0%, $end 100%);                                /* W3C */
+}
+
+// Opacity
+@mixin opacity($value) {
+  filter: alpha(opacity=$value * 100);
+  -ms-filter: "alpha(opacity=" + $value * 100+ ")";
+  -khtml-opacity: $value;
+    -moz-opacity: $value;
+         opacity: $value;
+}
+
+
+@mixin box-shadow($x_axis:0, $y_axis:1px, $distance:2px, $opacity:0.5) {
+  -webkit-box-shadow: $x_axis $y_axis $distance rgba(0, 0, 0, $opacity);
+     -moz-box-shadow: $x_axis $y_axis $distance rgba(0, 0, 0, $opacity);
+          box-shadow: $x_axis $y_axis $distance rgba(0, 0, 0, $opacity);
+}
+
+// Transitions
+@mixin trans($property:all, $duration:.2s, $function:ease-in) {
+  // Property: all, background, color, height, weight or outline
+  // Duration: time of the transition (in seconds or ms)
+  // Function: linear, ease, ease-in, ease-out, ease-in-out
+  -webkit-transition: $property $duration $function;
+     -moz-transition: $property $duration $function;
+      -ms-transition: $property $duration $function;
+       -o-transition: $property $duration $function;
+          transition: $property $duration $function;
+}
+
+@mixin kill_trans() {
+  -webkit-transition: none;
+     -moz-transition: none;
+      -ms-transition: none;
+       -o-transition: none;
+          transition: none;
+}
+
+@mixin scroll_horiz() {
+  &::-webkit-scrollbar {
+    height: 8px;
+    @include radius(10px);
+    margin:5px;
+  }
+  &::-webkit-scrollbar-track {
+    @include radius(10px);
+    background: $base_alt;
+  }
+  &::-webkit-scrollbar-thumb {
+    @include radius(10px);
+    @include gradient($base); 
+    height:4px;
+    border:1px solid $inverse_alt;
+  }
+}
+
+@mixin scroll_vert() {
+  &::-webkit-scrollbar {
+    width: 8px;
+    @include radius(10px);
+    margin:5px;
+  }
+  &::-webkit-scrollbar-track {
+    @include radius(10px);
+    background: $base_alt;
+  }
+  &::-webkit-scrollbar-thumb {
+    @include gradient($base); 
+    @include radius(10px);
+    width:4px;
+    border:1px solid $inverse_alt;
+  }
+}
+
+// screen provides a boxedform-like screened gradient background, using the gradient_20 mixin
+@mixin screen {
+  border:1px solid $accent;
+  @include gradient($base);
+  @include radius(8px);
+  padding:.25em 10px;
+  margin-bottom:1em;
+}
+
+@mixin breakpoint($point) {
+  @if $point == xl {
+    @media (min-width: $xl + px) { @content; }
+  }
+  @if $point == l {
+    @media (min-width: $l + px) { @content; }
+  }
+  @if $point == m {
+    @media (min-width: $m + px) { @content; }
+  }
+  @else if $point == s {
+    @media (min-width: $s + px)  { @content; }
+  }
+  @else if $point == xs {
+    @media (max-width: $xs + px)  { @content; }
+  }
+}
+
+@mixin fancy_rule() {
+  content:"";
+  display:block;
+  clear:both;
+  height:5px; 
+  background: rgba(255,255,255,.2); 
+  border-radius:6px;
+  -webkit-box-shadow:inset 2px 2px 2px rgba(0,0,0,.5);
+  -moz-box-shadow:inset 2px 2px 2px rgba(0,0,0,.4);  
+  box-shadow:inset 2px 2px 2px rgba(0,0,0,.5);
+}

@@ -1,0 +1,10 @@
+#gallery_slides_hold figure.vertical { text-align: center; }
+#gallery_slides_hold figcaption { display: none; }
+@media (min-width: 780px) { #gallery_slides_hold { float: right; width: 420px; }
+  #gallery_slides_hold figure { width: 100%; cursor: e-resize; } }
+@media (min-width: 1220px) { #gallery_slides_hold { width: 620px; }
+  #gallery_slides_hold figure.vertical img { max-width: 420px; } }
+
+@media (min-width: 780px) { #gallery_info { float: left; width: 180px; }
+  #gallery_info #caption_hold { font-size: 80%; }
+  #gallery_info .next span, #gallery_info .prev span { display: none; } }
