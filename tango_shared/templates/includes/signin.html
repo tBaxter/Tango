@@ -1,0 +1,8 @@
+<!--googleoff: all-->
+  {% comment %} These links require django-registration 
+  <span class="button-bar divided">
+    <a href="{% url 'register' %}">Register</a>
+    <a href="{% url 'auth_login' %}?next={{ request.get_full_path }}">Sign in</a>
+  </span>
+  {% endcomment %}
+<!--googleon: all-->

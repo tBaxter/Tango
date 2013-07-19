@@ -1,0 +1,57 @@
+{% load voting_tags markup typogrify_tags site_tags cache %}
+
+{% if not comment_list %}
+  <p>No comments have been posted. Perhaps you'd like to be the first?</p>
+{% else %}
+  <div id="comment-list">
+    {% scores_for_objects comment_list as score_dict %}
+    {% for comment in comment_list %}
+      {% dict_entry_for_item comment from score_dict as score %}
+      <article class="{{ score|collapse_bad:"-2" }}" id="c{{ comment.id }}">
+        <header {% if comment.submit_date > last_seen %} class="newposts"{% endif %}>
+          {% cache 46800 'comment_fks' comment.id 3 %}
+            {% with comment.user as profile %}
+              <a href="{% url 'view_profile' profile.username %}" rel="author">
+                <span class="avatar" data-deferred-load="{{ MEDIA_URL }}{% firstof profile.avatar 'img/avatars/default.jpg' %}">
+                </span>
+                {{ profile.preferred_name }}
+              </a>
+            {% endwith %}
+            {% ifequal comment.object_pk object.id %}
+              {% with comment.content_object as content_obj %}
+                <a href="{{ content_obj.get_absolute_url }}" class="meta">
+                  On {% firstof content_obj.title content_obj.name content_obj %}
+                </a>
+              {% endwith %}
+            {% endifequal %}
+
+            <time datetime="{{ comment.submit_date|date:"Y-m-d\TH:i:00" }}" title="{{ comment.submit_date|date:"N j, Y g:i a" }}" >
+              <!--googleoff: all-->
+                {{ comment.submit_date|short_timesince }} ago
+              <!--googleon: all-->
+            </time>
+          {% endcache %}
+        </header>
+        
+        <div class="post clearfix">{{ comment.comment|markdown|typogrify }}</div>
+        {% if authenticated_request %}
+          <footer>
+            {% with comment.user as profile %}
+              {% if profile.show_signatures and profile.signature %}
+                <p class="meta signature">{{ profile.signature|striptags }}</p>
+              {% endif %}
+            {% endwith %}
+            <ul class="postcontrols button sub-nav thinline">
+              <li><a href="#reply" title="Quick reply to this topic">Reply</a></li>
+            </ul>
+            <span class="post-voting post-admin button thinline">
+              <a href="{% url 'generic_vote' 'comment' comment.id 'down' %}" data-confirm="use_title" title="Mark as no value, inflammatory or spam?">▼</a>
+              <span class="votes">{% firstof score|clean_score  '0' %}</span>
+              <a href="{% url 'generic_vote' 'comment' comment.id 'up' %}" title="Mark as helpful, informative or interesting.">▲</a>
+            </span>
+          </footer>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </div>
+{% endif %}

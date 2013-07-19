@@ -1,0 +1,23 @@
+{% if is_paginated or page_obj.has_other_pages %}
+  <nav class="pager clear">
+    <ul>    
+      {% if page_obj.has_previous %}
+        <li class="prev" title="Page {{ page_obj.previous_page_number }}">
+          <a href="?page={{ page_obj.previous_page_number }}">
+            <span>previous</span>
+          </a>
+        </li>
+      {% endif %}
+      <li class="current">
+         Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </li>
+      {% if page_obj.has_next %}
+        <li class="next" title="Page {{ page_obj.next_page_number }}">
+          <a href="?page={{ page_obj.next_page_number }}">
+            <span>next</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}

@@ -1,0 +1,13 @@
+<time datetime="{{ date_obj|date:"Y-m-d" }}{% if time_obj %}T{{ time_obj|time:"H:i" }}Z{% endif %}" class="{{ dt_type }} {{ datebox }}">
+  {% if time_obj and not datebox %}
+    <span class="t">{{ time_obj|date:"f a" }}</span>
+  {% endif %}
+  {% if datebox %}
+    <span class="w">{{ date_obj|date:"l" }}</span>
+  {% endif %}
+  <span class="mo">{{ date_obj|date:"N" }}</span>
+  <span class="d">{{ date_obj|date:"j" }}</span>
+  {% if current_year and current_year != date_obj.year %}
+    <span class="y">{{ date_obj.year }}</span>
+  {% endif %}
+</time>

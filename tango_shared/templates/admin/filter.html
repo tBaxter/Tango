@@ -1,9 +1,9 @@
 {% load i18n %}
-<script type="text/javascript">
-  var go_from_select = function(opt) { 
-    window.location = window.location.pathname + opt 
-  };
-</script>
+  <script>
+    var go_from_select = function(opt) { 
+      window.location = window.location.pathname + opt 
+    };
+  </script>
 
 <h3>{{ title }}</h3>
 <ul class="admin-filter-{{ title|cut:' ' }}">
@@ -11,8 +11,9 @@
     <li>
       <select onchange="go_from_select(this.options[this.selectedIndex].value)">
         {% for choice in choices %}
-          <option{% if choice.selected %} selected="selected"{% endif %}
-         value="{{ choice.query_string|iriencode }}">{{ choice.display }}</option>
+          <option{% if choice.selected %} selected="selected"{% endif %} value="{{ choice.query_string|iriencode }}">
+            {{ choice.display }}
+          </option>
         {% endfor %}
       </select>
     </li>

@@ -1,0 +1,10 @@
+{% load comments %}
+
+<section id="comments">{% get_comment_list for object as comment_list %}
+  {% include 'includes/comments/comment_list.html' %}
+  {% if authenticated_request %}
+    {% render_comment_form for object %}
+  {% else %}
+    {% include "includes/signin.html" %}
+  {% endif %}
+</section>

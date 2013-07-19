@@ -4,7 +4,7 @@
   And you really should slice top_assets down in get_top_assets().
 {% endcomment %}
 
-{% load typogrify markup social_tags video_tags %}
+{% load typogrify_tags markup social_tags video_tags %}
 
 {% with object.get_top_assets as top_assets %}
   {% if top_assets or object.pullquote or object.geocode %}

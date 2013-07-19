@@ -6,9 +6,15 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>{% block title %}{% endblock %} {{ site.name }} {% block extra_title %}{% endblock %}</title>
-  <meta name="description" content="{% block description %}{% endblock %}"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>
+    {% block title %}{% endblock %} 
+    {{ site.name }} 
+    {% block extra_title %}{% endblock %}
+  </title>
+  <meta name="description" content="{% block description %}{% endblock %}">
+  {% block viewport_meta %} 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  {% endblock %}
   {% block extra_meta %}{% endblock extra_meta %}
   {% block canonical %}{% endblock %}
   <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png">
@@ -83,8 +89,9 @@
   </div> <!-- /#wrapper -->
   {# Javascript at the bottom for fast page loading #}
   {% block init_js %}{% endblock %}
-  <script src="{{ STATIC_URL }}js/site-combined-min.js?v=19"></script>
-  {% block site_js %}{% endblock %}
+  {% block site_js %}
+    <script src="{{ STATIC_URL }}js/site-combined-min.js"></script>
+  {% endblock %}
   {% block app_js %}{% endblock %}
   {% block extrascript %}{% endblock %}
 
