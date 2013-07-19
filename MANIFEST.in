@@ -11,5 +11,4 @@ recursive-include galleries/templates/ *
 recursive-include tango_shared/static/ *
 recursive-include tango_shared/templates/ *
 recursive-include user_profiles/templates/ *
-recursive-include templates/templates/ *
 recursive-include voting/templates/ *
