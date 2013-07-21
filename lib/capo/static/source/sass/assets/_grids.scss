@@ -1,0 +1,61 @@
+/****** GRIDDED CONTENT *******************************
+*  Gridded content. Can have 1-6 columns. 3 is default.
+*  Children can be any element: div, li, section, whatever.
+*  usage:  foo class="columned"
+*  or   :  foo class="columned four-col"
+*  Note: on small screens multiple columns will be reset to a more appropriate width.
+*  Experiment support for "auto" which sets the number of columns 
+*  according to available sensible width.
+*******************************************************/
+.columned { 
+  margin: 0; padding: 0; 
+  list-style: none; 
+  position: relative;
+  padding-right:0 !important; // in case it inherits from parent
+  > * {
+    position: relative; display: inline-block; vertical-align: top; 
+    padding-right: $gutter_width;
+    margin-right:-4px;
+    &:last-child {padding-right:0}
+
+    @include breakpoint(xs) {display:block; width:auto;}
+    @include breakpoint(s) { 
+      width: 33%;
+    }
+  }
+  &.divided > * {
+    border-left: 1px solid $base_alt2;
+    padding-left: $gutter_width;
+
+    &:first-child { // completely naive. Re-do
+      border-left: 0;
+      padding-left:0;
+    }
+  }
+  &.one-col  > * { width: auto; clear:none }
+  &.two-col  > * { width: 50%;  }
+  &.four-col > * { @include breakpoint(xs) {width: 49%;} 
+    @include breakpoint(s) {width: 25%;} 
+  }
+  &.five-col > * { width: 20%; }
+  &.six-col  > * { width: 16.5%; }
+  &.auto     > * {
+    @include breakpoint(xs) {width: auto;} 
+    @include breakpoint(s) {width: 49%;} 
+    @include breakpoint(m) {width: 33.0%;} 
+    @include breakpoint(l) {width: 19.9%;} 
+  }
+  &.phi > * { // loosely based on golden ratio
+    &:nth-child(odd) {width:64.8%;}
+    &:nth-child(even) {width:35.19%; 
+      //@include breakpoint(m) {padding-left:7%}
+      @include breakpoint(l) {padding-left: $gutter_width * 2}
+    }
+  }
+  &.phi.reverse > * {
+    &:nth-child(odd)  {width:38.19%}
+    &:nth-child(even) {width:61.8%; 
+      @include breakpoint(l) {padding-left: 0; padding-right: $gutter_width * 2}
+    }
+  }
+}

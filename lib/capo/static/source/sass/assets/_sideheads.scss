@@ -1,0 +1,18 @@
+@mixin sideheds() {
+  -webkit-transform: rotate(-90deg); 
+  -moz-transform: rotate(-90deg);
+  position:absolute; 
+  left:-2.5em;
+  top:2em;
+  line-height:1em;
+  height:1em;
+  width:5em;
+  white-space:nowrap;
+  font-size:2.5em;
+  cursor:pointer;
+  text-align:right;
+  margin:0 0 80px;
+
+  //&:hover {color:#914b07; opacity:1} /* mimicking normal link hover for parent hover */
+  &+* {margin-left:2em}
+}
