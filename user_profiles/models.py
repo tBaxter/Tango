@@ -1,14 +1,13 @@
 import os
 
-from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.html import strip_tags
 
-from tango_shared.maptools import get_geocode
+from tango_shared.utils.maptools import get_geocode
 
-THEME_CHOICES = [(theme, theme.capitalize()) for theme in settings.ALLOWABLE_THEMES]
+THEME_CHOICES = [(theme, theme.capitalize()) for theme in getattr('settings.ALLOWABLE_THEMES', None)]
 
 
 class Profile(AbstractUser):
@@ -35,10 +34,7 @@ class Profile(AbstractUser):
     display_on_map = models.BooleanField(default=True)
     open_links = models.BooleanField("Open links in new window", default=False, help_text="Check if you would like links to automatically open in a new window.")
     show_signatures  = models.BooleanField(default=False, help_text="Check if you would like to see signatures attached to forum posts.")
-    #collapse_header  = models.BooleanField(default=False, help_text="Check if you would like the site header collapsed by default. Note that you may miss important information.")
     #theme            = models.CharField(max_length=100, blank=True, choices=THEME_CHOICES)
-    #auto_load_forum  = models.BooleanField('Auto-load forum pages', default=True, help_text="If checked, forum topics will load automatically, so you don't have to click to go to the next page. Note: auto-loading is disabled on mobile devices.")
-    #get_digest       = models.BooleanField('Get daily email', default=False, help_text="If checked, you'll get a once-a-day email notifying you of new site activity. You can change this setting whenever you like.")
 
     class Meta:
         ordering = ('preferred_name',)

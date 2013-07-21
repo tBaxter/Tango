@@ -13,9 +13,9 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from django.db.models import signals
 
-from shared.models import ContentImage
+from tango_shared.models import ContentImage
+from tango_shared.utils.maptools import get_geocode
 
-from maptools import get_geocode
 from signals import update_time
 
 now = datetime.datetime.now()
