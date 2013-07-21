@@ -1,8 +1,20 @@
 # -*- coding: utf-8 -*-
 from distutils.core import setup
 from setuptools import find_packages
+from setuptools.command.develop import develop
+from subprocess import check_call
+from os import path
 
-setup(
+
+class update_submodules(develop):
+    def run(self):
+        print 1
+        if path.exists('.git'):
+            check_call(['git', 'submodule', 'update', '--init', '--recursive'])
+        develop.run(self)
+
+a = setup(
+    cmdclass = {"develop": update_submodules},
     name='django-tango',
     version='0.1',
     author=u'Tim Baxter',
@@ -14,5 +26,4 @@ setup(
     long_description=open('README.md').read(),
     include_package_data=True,
     zip_safe=False,
-    update_submodules=True,
 )
