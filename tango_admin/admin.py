@@ -28,10 +28,10 @@ class CustomGroupAdmin(GroupAdmin):
 class CustomSiteAdmin(SiteAdmin):
     """
     Custom Site admin
-    Adds three fields to list display
+    Adds fields to list display
     and breaks content into fieldsets.
     """
-    list_display = SiteAdmin.list_display + ('home_domain', 'description')
+    list_display = SiteAdmin.list_display + ('description',)
 
 
 class CustomCommentAdmin(CommentsAdmin):
