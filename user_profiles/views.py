@@ -12,9 +12,8 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView
 
-from misc.views import set_style
-from user_profiles.filters import ProfileFilter
-from user_profiles.forms import PublicProfileForm, ProfileSettingsForm
+from .filters import ProfileFilter
+from .forms import PublicProfileForm, ProfileSettingsForm
 
 
 UserModel = get_user_model()
