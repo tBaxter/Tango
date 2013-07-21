@@ -6,7 +6,7 @@ from django.contrib.sites.models import Site
 now = datetime.datetime.now()
 one_day_ago = now - datetime.timedelta(days=1)
 
-ALLOWABLE_THEMES = getattr('settings.ALLOWABLE_THEMES', None)
+ALLOWABLE_THEMES = getattr(settings, 'ALLOWABLE_THEMES', None)
 
 
 def site_processor(request):

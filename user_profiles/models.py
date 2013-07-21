@@ -1,5 +1,6 @@
 import os
 
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -7,34 +8,55 @@ from django.utils.html import strip_tags
 
 from tango_shared.utils.maptools import get_geocode
 
-THEME_CHOICES = [(theme, theme.capitalize()) for theme in getattr('settings.ALLOWABLE_THEMES', None)]
+THEME_CHOICES = [(theme, theme.capitalize()) for theme in getattr(settings, 'ALLOWABLE_THEMES', [])]
 
 
 class Profile(AbstractUser):
     """
     Subclasses AbstractUser to provide site-specific user fields.
     """
-    preferred_name = models.CharField('Display name', max_length=200, blank=True, null=True, help_text="If you would prefer a different screen name, enter it here. Spaces are allowed. Note: your username will not change.")
-    street_address = models.CharField(max_length=255, blank=True, help_text="Will never be shown publicly on the site.")
-    city           = models.CharField(max_length=200, blank=True)
-    state          = models.CharField(max_length=200, blank=True)
-    country        = models.CharField(max_length=200, blank=True)
-    zip            = models.CharField(max_length=10, blank=True, help_text="Will never be shown publicly on the site.")
-    interests      = models.CharField(max_length=200, blank=True)
-    occupation     = models.CharField(max_length=200, blank=True)
-    birthday       = models.DateField(blank=True, null=True)
-    homepage       = models.URLField('Your web site', blank=True)
-    bio            = models.TextField(help_text='Tell us a bit about yourself.', blank=True, null=True)
-    signature      = models.CharField(max_length=255, blank=True, help_text="You can have a short signature line on the board. Members who choose to view signatures can see it. HTML is not allowed.")
-    post_count     = models.IntegerField(default="0", editable=False)
-    geocode        = models.CharField(max_length=200, null=True, blank=True)
-    avatar         = models.ImageField(blank=True, null=True)
+    display_name = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True,
+        help_text="""
+            If you would prefer a different screen name, enter it here.
+            Spaces are allowed. Note: your username will not change.
+            """
+    )
+    street_address = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Will never be shown publicly on the site."
+    )
+    city = models.CharField(max_length=200, blank=True)
+    state = models.CharField(max_length=200, blank=True)
+    country = models.CharField(max_length=200, blank=True)
+    zipcode = models.CharField(max_length=10, blank=True, help_text="Will never be shown publicly on the site.")
+    occupation = models.CharField(max_length=200, blank=True)
+    birthday = models.DateField(blank=True, null=True)
+    website = models.URLField('Your web site', blank=True)
+    bio = models.TextField(help_text='Tell us a bit about yourself.', blank=True, null=True)
+    
+    signature = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="""
+            You can have a short signature line on the board.
+            Members who choose to view signatures can see it. HTML is not allowed."""
+    )
+    geocode = models.CharField(max_length=200, null=True, blank=True)
+    avatar = models.ImageField(blank=True, null=True, upload_to='img/avatars')
+    post_count = models.IntegerField(default="0", editable=False)
 
     #preferences
     display_on_map = models.BooleanField(default=True)
     open_links = models.BooleanField("Open links in new window", default=False, help_text="Check if you would like links to automatically open in a new window.")
-    show_signatures  = models.BooleanField(default=False, help_text="Check if you would like to see signatures attached to forum posts.")
     #theme            = models.CharField(max_length=100, blank=True, choices=THEME_CHOICES)
+    show_signatures = models.BooleanField(
+        default=False,
+        help_text="Check if you would like to see signatures attached to posts."
+    )
 
     class Meta:
         ordering = ('preferred_name',)
