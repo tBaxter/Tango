@@ -1,8 +1,0 @@
-@import '../_vars.scss';
-@import '../_mixins.scss';
-
-
-#mapholder {
-  height:240px; width:320px; margin-right:$gutter_width;
-  #map_canvas {height:240px}
-}

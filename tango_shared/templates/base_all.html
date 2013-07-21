@@ -52,7 +52,9 @@
           {% endblock %}
         </div>
         <nav class="clearfix" role="navigation">
-          {% block site_nav %}{% endblock %}
+          {% block site_nav %}
+            {% include 'includes/menu_nav.html' %}
+          {% endblock %}
         </nav>
       </div>
     </header>

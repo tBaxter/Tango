@@ -15,5 +15,4 @@ setup(
     include_package_data=True,
     zip_safe=False,
     dependency_links = ['https://github.com/tBaxter/capo.git']
-
 )

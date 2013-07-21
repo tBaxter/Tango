@@ -19,6 +19,15 @@ now = datetime.datetime.now()
 pagination_setting = getattr(settings, "PAGINATE_BY", 25)
 
 
+class DestinationList(ListView):
+    """
+    Returns a list of article/blog destinations
+    """
+    template_name = 'articles/index.html'
+    paginate_by = pagination_setting
+    model = Destination
+
+
 class ArticleList(ListView):
     """
     Returns an article list, plus the related destination.

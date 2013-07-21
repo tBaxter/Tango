@@ -1,5 +1,4 @@
 import datetime
-import StringIO
 
 from PIL import Image
 
@@ -13,6 +12,9 @@ now = datetime.datetime.now()
 
 
 def set_img_path(instance, filename):
+    """
+    Sets upload_to dynamically
+    """
     upload_path = '/'.join(['img', instance._meta.app_label, str(now.year), str(now.month), filename])
     return upload_path
 
