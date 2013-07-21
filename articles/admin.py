@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import ArticleImage, Sidebar, Destination, Category, Brief, Article
 from .models import supports_video, supports_polls
 
-from tango_shared.admin import TextCounterWidget
+from tango_admin.admin import TextCounterWidget
 
 if supports_video:
     from video.admin import VideoInline
