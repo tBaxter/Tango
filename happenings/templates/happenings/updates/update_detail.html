@@ -1,0 +1,48 @@
+{% extends "happenings/event_detail.html" %}
+
+{% load markup typogrify social_tags event_tags humanize %}
+
+{% block extra_title %}Events: {{ event.name }}: {{ object.title }}{% endblock %}
+
+{% block bodyclass %}detail{% endblock %}
+
+{% block content %}
+  <article>
+    <section class="content-body">
+      {% include "includes/top_assets.html" %}
+      
+      <h2 class="kicker">
+        <a href="{{ event.get_absolute_url }}">
+          {{ event.name }}
+        </a>
+      </h2>
+      <h1>{{ object.title }}</h1>
+      {{ object.update|safe|urlize|markdown|typogrify }}
+
+      {% with object.get_open_giveaways as giveaways %}
+        {% if giveaways %}
+          <h1>GDP Challenge{{ giveaways.count|pluralize }}!</h1>
+          <ul>
+            {% for g in giveaways %}
+              <li>
+                <a href="">
+                  <small class="meta block">For {{ g.number|apnumber }} {{ g.prize }}{{ g.number|pluralize }}:</small> 
+                  <strong>{{ g.question }}</strong>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+      
+      {% paginate_update object %}
+
+      <a href="{% url 'event_comments' event.slug %}" class="right">
+        View all comments
+      </a>
+      {% include 'comments/inclusion/comments.html' %}
+    </section>
+  </article>
+  <hr class="clear">
+{% endblock %}
+ 

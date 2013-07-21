@@ -1,0 +1,37 @@
+{% load humanize %}
+
+<div>
+  <h2 class="kicker">
+    For {{ giveaway.number|apnumber }} {{ giveaway.prize }}{{ giveaway.number|pluralize }},
+    {% if giveaway.closed %} 
+      we asked
+    {% else %}
+      we're asking
+    {% endif %}
+  </h2>
+
+  <h3>{{ giveaway.question }}</h3>
+  {% if not giveaway.closed and giveaway.long_q %}
+    <p class="meta">{{ giveaway.long_q }}</p>
+  {% endif %}
+
+  {% if authenticated_request %}
+    <form action="{% url 'giveaway_response_processing' giveaway.id %}" method="post" class="boxedform giveaway-form">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {{ form.as_p }}
+      <p class="submit">
+        <input type="submit" value="Submit your answer">
+      </p>
+    </form>
+  {% else %}
+    {% include "includes/signin_reg.html" %}
+    <small class="meta">to answer</small>
+  {% endif %}
+</div>
+<p class="meta">
+  {% if giveaway.giveawayresponse_set.count %}
+    We have answers from {{ giveaway.get_respondents_list }}.
+  {% endif %}
+  Winners will be posted when they have been decided.
+</p>

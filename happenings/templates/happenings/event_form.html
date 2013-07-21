@@ -1,0 +1,24 @@
+{% extends "happenings/base.html" %}
+
+{% block title %}{{ form_title }}: {% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/pickadate.css">
+{% endblock %}
+
+{% block content %}
+  <h1>{{ form_title }}</h1>
+  {% if authenticated_request %}
+      <form action="" enctype="multipart/form-data" method="post" class="boxedform">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p class="submit"><input type="submit" value="{{ form_title }}!"></p>
+      </form> 
+  {% else %}
+    {% include "includes/signin_reg.html" %}
+    <small class="meta">to {{ form_title }}</small>
+  {% endif %}
+{% endblock %}
+
+

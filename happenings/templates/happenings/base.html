@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ block.super }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/events.css">
+{% endblock %}
+
+{% block extrascript %}
+  <script src="{{ STATIC_URL }}js/jquery.hcal.js"></script>
+  {% include "happenings/includes/map.js" %}
+{% endblock %}
+
+{% block bodyid %}events{% endblock %}

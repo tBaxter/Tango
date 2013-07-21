@@ -1,0 +1,19 @@
+{% for e in events %}
+  <article class="vevent">
+    <section class="event_times">
+      {% format_time e.start_date e.start_time 'datebox' 'dtstart' %}
+    </section>
+    <section class="event_info">      
+      <h2 class="summary"><a href="{{ e.get_absolute_url }}" class="url">{{ e.name }}</a></h2>
+      <div class="hcard">
+        {% if e.venue %}
+          <h3 class="fn org kicker">{{ e.venue }}</h3>
+        {% endif %}
+        <span class="adr meta location">
+          {% if e.address %}<span class="street-address">{{ e.address }}</span>, {% endif %}
+          <span class="locality">{{ e.city.name }}</span>
+        </span>
+      </div>
+    </section>
+  </article>
+{% endfor %}

@@ -1,0 +1,80 @@
+{% extends "happenings/event_detail.html" %}
+{% load cache markup timesince_filters typogrify %}
+
+{% block content %}
+  <h2 class="kicker"><a href="{{ event.get_absolute_url }}">{{ event.name }}</a> updates</h2>
+  {% with object_list|slice:"0:4" as top_content %}
+    <div id="top_stories_hold">
+      {% for obj in top_content %}
+        {% if forloop.first %}
+          <article id="lead_item">
+            <a href="{{ obj.get_absolute_url }}">
+              <h1>{{ obj.title|typogrify }}</h1>
+              {% with obj.get_image as main_image %}
+                {% if main_image %}
+                  {% if main_image.is_vertical %}
+                    <figure class="vertical" data-deferred-load="{{ main_image.image.extra_thumbnails.t_360u }}">
+                  {% else %}
+                    <figure data-deferred-load="{{ main_image.image.extra_thumbnails.t_640 }}">
+                  {% endif %}
+                    <figcaption>{{ main_image.caption }}</figcaption>
+                    </figure>
+                {% endif %}
+                <section class="entry-body">
+                  <time datetime="{{ obj.pub_time|date:"Y-m-d" }}" pubdate="pubdate" class="meta">
+                   <span class="t">{{ obj.pub_time|date:"f a" }}</span>
+                   <span class="mo">{{ obj.pub_time|date:"N" }}</span>
+                    <span class="d">{{ obj.pub_time|date:"j" }}</span>
+                  </time>
+                  {% if main_image %}
+                    {{ obj.update|safe|markdown|truncatewords:"100" }}
+                  {% else %}
+                    {{ obj.update|safe|markdown|truncatewords:"150" }}
+                  {% endif %}
+                </section>
+              {% endwith %}
+            </a>
+          </article>
+          <div id="more_featured">
+        {% else %}
+          <article>
+            <a href="{{ obj.get_absolute_url }}">
+              {% if obj.get_image %}
+                <figure data-deferred-load="{{ obj.get_image.image.extra_thumbnails.t_180u }}" class="right"></figure>
+              {% endif %}
+              <h1>{{ obj.title|typogrify }}</h1>
+              <time datetime="{{ obj.pub_time|date:"Y-m-d" }}" pubdate="pubdate" class="meta">
+                <span class="t">{{ obj.pub_time|date:"f a" }}</span>
+                <span class="mo">{{ obj.pub_time|date:"N" }}</span>
+                <span class="d">{{ obj.pub_time|date:"j" }}</span>
+              </time>
+              <p>{{ obj.update|truncatewords:"25" }}</p>
+            </a>
+          </article>
+        {% endif %}
+      {% endfor %}
+      </div>
+    </div>
+  {% endwith %}
+  <hr class="clear">
+  <div id="more_articles" class="clear columned three-col">
+    {% for obj in object_list|slice:"4:" %}
+  <article>
+    <a href="{{ obj.get_absolute_url }}">
+      {% if obj.get_image %}<figure class="right" data-deferred-load="{{ obj.get_image.image.extra_thumbnails.t_180u }}"></figure>{% endif %}
+      <header>
+        <h1>{{ obj.title }}</h1>        
+      </header>
+      <time datetime="{{ obj.pub_time|date:"Y-m-d" }}" pubdate="pubdate" class="meta">
+        <span class="t">{{ obj.pub_time|date:"f a" }}</span>
+        <span class="mo">{{ obj.pub_time|date:"N" }}</span>
+        <span class="d">{{ obj.pub_time|date:"j" }}</span>
+      </time>
+      <p>
+        {{ obj.update|striptags|truncatewords:"60" }}
+      </p>
+    </a>
+  </article> 
+    {% endfor %}
+  </div>
+{% endblock %}

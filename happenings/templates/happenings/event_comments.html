@@ -1,0 +1,28 @@
+{% extends "happenings/event_detail.html" %}
+
+{% load cache markup %}
+
+{% block extra_title %}{{ block.super }}{{ event.name }} comments{% endblock %}
+
+{% block bodyid %}comments_detail{% endblock %}
+
+
+
+{% block content %}
+  <h2 class="kicker">
+    <a href="{{ event.get_absolute_url }}">{{ event.name }}</a>: 
+  </h2>
+  <h1>All comments</h1>
+  
+  {% include 'includes/generic_pagination.html' %}
+
+  {% with comment_list|length as c_count %}
+    {% cache 46800 'comments' event.id c_count page_obj authenticated_request 3 %}
+      {% with event as object %}
+        {% include 'comments/inclusion/for_object.html' %}
+      {% endwith %}
+    {% endcache %}
+  {% endwith %}
+  
+  {% include 'includes/generic_pagination.html' %}
+{% endblock %}

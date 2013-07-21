@@ -1,0 +1,47 @@
+{% extends "happenings/event_detail.html" %}
+
+{% load typogrify markup voting_tags %}
+
+{% block extra_title %}{{ event.name }} playlist suggestions{% endblock %}
+
+{% block content %}
+  <h2 class="kicker"><a href="{{ event.get_absolute_url }}">{{ event.name }}</a></h2>
+  <h1>Playlist suggestions</h1>
+  {% if playlist_items %}
+    <ul id="playlist" class="fancy">
+      {% for p in playlist_items %}
+        <li>
+          <a href="{% url 'generic_vote' 'playlistitem' p.id 'up' %}" title="I like it!" class="voting">
+            <img src="/media/img/icons/thumbsup-20.png" alt="Good" class="noscale left">
+          </a>
+          {% score_for_object p as score %}
+            <span class="right meta">
+              {{ score.score }} vote{{ score.score|pluralize }}
+            </span>
+          {% if p.link %}
+            <a href="{{ p.link }}">{{ p.title }}</a>
+          {% else %}
+            {{ p.title }}
+          {% endif %}
+          <span class="meta">suggested by {% firstof p.user.preferred_name p.user %}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <h2>No one has made an suggestions yet. Get to it!</h2>
+  {% endif %}
+{% endblock %}
+
+{% block aside %}
+  <form action="" method="post" class="boxedform has-fieldsets">
+    {% csrf_token %}
+    <fieldset>
+      <legend>Make your suggestion</legend>
+      {{ form.as_p }}
+      <p class="submit">
+        <input type="submit" value="make your suggestion">
+      </p>
+    </fieldset>
+  </form>
+  {{ block.super }}
+{% endblock %}

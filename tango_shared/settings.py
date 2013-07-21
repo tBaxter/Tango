@@ -17,8 +17,9 @@ TANGO_APPS = (
     'autotagger',
     'video',
     'typogrify',
-    'voting'
-    #'user_profiles',
+    'voting',
+    'happenings',
+    'user_profiles',
 )
 
 # Adds Context processors you know you'll want.

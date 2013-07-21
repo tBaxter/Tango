@@ -1,0 +1,124 @@
+{% with event.get_extra_pages as extra_pages %}
+  {% for page in extra_pages %}
+    <li>
+      <a href="{{ domain }}{% url 'special_event_extra' event.slug page.slug %}">{{ page.title }}</a>
+    </li>
+  {% endfor %}
+{% endwith %}
+
+{% if event.has_playlist and not event.has_started %}
+  <li>
+    {% with event.playlistitem_set.count as count %}
+      <a href="{{ domain }}{% url 'playlist' slug=event.slug %}" class="icon-audio">
+        <span class="counter">{{ count }}</span>
+        playlist suggestion{{ count|pluralize }}
+      </a>
+    {% endwith %}
+  </li>
+{% endif %}
+
+{% with event.update_set.count as u_count %}
+  {% if u_count %}
+    <li>
+      <a href="{{ domain }}{% url 'event_update_list' event.slug %}">
+        <span class="counter">{{ u_count }}</span>
+        updates{{ u_count|pluralize }}
+      </a>
+    </li>
+  {% endif %}
+{% endwith %}
+
+{% with event.get_all_comments_count as count %}
+  {% if count %}
+    <li>
+      <a href="{{ domain }}{% url 'event_comments' event.slug %}">
+        <span class="counter">{{ count }}</span>
+          comment{{ count|pluralize }}
+      </a>
+    </li>
+  {% endif %}
+{% endwith %}
+
+{% with event.giveaway_set.count as count %}
+  {% if count %}
+    <li>
+      <a href="{{ domain }}{% url 'giveaways' event.slug %}">
+        <span class="counter">{{ count }}</span>
+        giveaway{{ count|pluralize }}
+      </a>
+    </li>
+  {% endif %}
+{% endwith %}
+
+{% with event.get_all_images_count as i_count %}
+  {% if i_count %}
+    <li>
+      <a href="{{ domain }}{% url 'event_slides' event.slug %}" class="icon-photo">
+        <span class="counter">{{ i_count }}</span> 
+        photo{{ i_count|pluralize }}
+      </a>
+    </li>
+  {% endif %}
+{% endwith %}
+
+{% with event.eventvideo_set.count as count %}
+  {% if count %}
+    <li>
+      <a href="{{ domain }}{% url 'event_video_list' event.slug %}" class="icon-video">
+        <span class="counter">{{ count }}</span> 
+        video{{ count|pluralize }}
+      </a>
+    </li>
+  {% endif %}
+{% endwith %}
+
+{% if not event.ended %}
+  <li>
+    <a href="{{ domain }}{% url 'event_ical' event.slug %}" class="icon-cal">
+      Add to your calendar
+    </a>
+  </li>
+  <li>
+    <a href="{{ domain }}{{ event.get_absolute_url }}map/" class="icon-map">Map</a>
+  </li>
+  <li>
+    <a href="{{ domain }}{% url 'event_attending_list' slug=event.slug %}" class="icon-check">
+      Who's Going?
+    </a>
+    {% if user.is_authenticated %}
+      <a href="{{ domain }}{% url 'attending_add' event.slug %}" class="right button add clearfix" title="Add me to the list">I am</a>
+    {% endif %}
+  </li>
+  {% if event.offsite_tickets %}
+    <li><a href="{{ domain }}{{ event.offsite_tickets }}">Get Tickets</a></li>
+  {% endif %}
+  {% if event.hotel %}
+    <li><a href="{{ domain }}{{ event.get_absolute_url }}hotel/">Host Hotel</a></li>
+  {% endif %}
+  {% if event.schedule.count %}
+    <li><a href="{{ domain }}{{ event.get_absolute_url}}schedule/">Schedule</a></li>
+  {% endif %}
+{% endif %}
+
+{% if event.recently_ended %}
+  <li>
+    <a href="{{ domain }}{% url 'event_attending_list' slug=event.slug %}" class="icon-check">
+      Who went?
+    </a>
+    {% if user.is_authenticated %}
+      <a href="{{ domain }}{% url 'attending_add' event.slug %}" class="right button add clearfix" title="Add me to the list">I did</a>
+    {% endif %}
+  </li>
+{% endif %}
+
+{% if event.has_started and user in event.attending.all %}
+    <li>
+      <a href="{{ domain }}{{ event.get_absolute_url }}memories/add/" class="right button icon-add" title="Share your memories">
+        Add
+      </a>
+      <a href="{{ domain }}{% url 'event_memories' event.slug %}">
+        <span>{{ event.memories_set.count }}</span>
+        Memories
+      </a>
+    </li>
+{% endif %}

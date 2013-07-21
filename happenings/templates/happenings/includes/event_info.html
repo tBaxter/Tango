@@ -1,0 +1,55 @@
+{% load markup typogrify site_tags %}
+
+<article class="vevent{% if object_list and object.ended %} diminish{% endif %}" data-geocode="{{ object.geocode }}">
+  <section class="event_times">
+    {% ifchanged object.start_date %}
+      {% with object.start_date as d %}
+        <a href="{% url 'events_for_day' m=d|date:"m" d=d|date:"d" y=d|date:"Y" %}">
+          {% format_time d object.start_time 'datebox' 'dtstart' %}
+        </a>
+      {% endwith %}
+      {% if object.end_date and object.start_date != object.end_date %}
+        <span class="hide">-</span>
+        {% format_time object.end_date object.end_time 'datebox' 'dtend' %}
+      {% endif %}
+    {% else %}
+      <span class="dtstart hide" title="{{ object.start_date|date:"Y-m-d" }}">
+        {{ object.start_date }}
+      </span>
+    {% endifchanged %}
+  </section>
+  <section class="event_info">
+    {% if event.subhead %}
+      <h3 class="kicker">{{ event.subhead|typogrify }}</h3>
+    {% endif %}
+    <h2 class="summary{% if object.featured %} featured-event{% endif %}">
+      <a href="{{ object.get_absolute_url }}" class="url">{{ object.name }}</a>
+    </h2>
+    {% if object.start_time %}
+      <span class="meta time">
+        {{ object.start_time }}
+        {% if object.end_time %} to {{ object.end_time }}{% endif %}
+      </span> 
+    {% endif %}
+    <div class="hcard">
+      {% if object.venue %}<h3 class="fn org kicker">{{ object.venue }}</h3>{% endif %}
+      <span class="adr meta location block">
+        {% if object.address %}
+          <span class="street-address">{{ object.address }}</span>, 
+        {% endif %}
+        <span class="locality">{{ object.city }}</span>
+        <span class="region">{{ object.state }}</span>
+        {% if object.phone %}<span class="tel">{{ object.phone }}</span>{% endif %}
+      </span>
+      <div class="description">
+        {% if not object.ended %}
+          {% if object_list %}
+            <p>{{ object.info|striptags|truncatewords:"50" }}</p>
+          {% else %}
+            {{ object.info|markdown|typogrify }}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div><!-- /hcard -->
+  </section>
+</article>

@@ -1,0 +1,20 @@
+{% extends "happenings/event_detail.html" %}
+
+{% load typogrify %}
+
+{% block title %}Share your memories: {{ event.name }}{% endblock %}
+
+{% block content %}
+  {% if authenticated_request %}
+    <form action="." method="post" enctype="multipart/form-data" class="boxedform">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {{ form.as_p }}
+      <p class="submit">
+        <input type="submit" value="share">
+      </p>
+    </form>
+  {% else %}
+    {% include "includes/signin_reg.html" %}
+  {% endif %}
+{% endblock %}

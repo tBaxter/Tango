@@ -1,0 +1,36 @@
+{% load humanize typogrify %}
+
+<article class="giveaway_results">
+  {% if giveaway.explanation %}
+    <small class="meta">{{ giveaway.explanation }}</small> 
+  {% endif %}
+  <div class="columned two-col">
+    <section>
+      <div class="breakout">
+        <small class="meta">
+          For {{ giveaway.number|apnumber }} {{ giveaway.prize }}{{giveaway.number|pluralize }}, 
+          we asked:
+         </small>
+         <p>{{ giveaway.question|typogrify }}</p>
+      </div>
+    </section>
+    <section class="small">
+      <br>
+      {% if winners %}
+        <p>Congratulations, {% for winner in winners %}
+            {% if forloop.first %}{% else %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %}{{ winner.respondent.preferred_name }}{% endfor %}
+        <ul class="fancy">
+          {% for winner in winners %}
+            <li>
+              <small class="block meta">{{ winner.respondent.preferred_name }} said:</small>
+              “{{ winner.answer }}”
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No winner was chosen.</p>
+      {% endif %}
+    </section>
+  </div>
+  <hr class="fancy">
+</article>

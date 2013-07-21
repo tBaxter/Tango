@@ -1,0 +1,36 @@
+{% extends "happenings/event_detail.html" %}
+
+{% load typogrify markup thumbnail %}
+
+{% block title %}{{ object.name}} Memories: {% endblock %}
+
+{% block content %}
+  <article>
+    <h1>
+      {{ object.name}} Memories 
+      {% if user in object.attending.all  %}
+        <a href="/happenings/{{ object.slug }}/memories/add/" class="meta add">Share yours</a>
+      {% endif %}
+    </h1>
+    <div class="columned two-col">
+      {% for u in object.memories_set.all %}
+        <section>
+          <h2>{{ u.author.preferred_name }}</h2>
+          {{ u.thoughts|markdown|typogrify }}
+          {% if u.offsite_photos %}
+            <h3><a href="{{ u.offsite_photos }}">Photos</a></h3>
+          {% endif %}
+          {% if u.photos.count %}
+            <ul class="columned two-col">
+              {% for p in u.photos.all %}
+                <li>
+                  <img src="{{ p.image.extra_thumbnails.t_180u }}">
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </section>
+      {% endfor %}
+    </div>
+  </article>
+{% endblock %}
