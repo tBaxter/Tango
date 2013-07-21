@@ -1,4 +1,4 @@
-include INSTALL LICENCE README.md
+include INSTALL LICENSE README.md
 recursive-include tango *
 recursive-include articles/fixtures/ *
 recursive-include articles/static/ *
