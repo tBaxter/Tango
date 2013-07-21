@@ -7,6 +7,7 @@ from django.db import models
 from django.utils.html import strip_tags
 
 from tango_shared.utils.maptools import get_geocode
+from tango_shared.models import set_img_path
 
 THEME_CHOICES = [(theme, theme.capitalize()) for theme in getattr(settings, 'ALLOWABLE_THEMES', [])]
 
@@ -29,7 +30,7 @@ class Profile(AbstractUser):
     signature      = models.CharField(max_length=255, blank=True, help_text="You can have a short signature line on the board. Members who choose to view signatures can see it. HTML is not allowed.")
     post_count     = models.IntegerField(default="0", editable=False)
     geocode        = models.CharField(max_length=200, null=True, blank=True)
-    avatar         = models.ImageField(blank=True, null=True)
+    avatar         = models.ImageField(blank=True, null=True, upload_to=set_img_path)
 
     #preferences
     display_on_map = models.BooleanField(default=True)

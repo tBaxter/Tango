@@ -2,7 +2,7 @@
 Overrides Django contrib groups and sites for more control.
 
 Note that model-level changes to these django.contrib apps
-are made in supersites.models.
+are made in tango_admin.models.
 """
 from django import forms
 from django.contrib import admin
