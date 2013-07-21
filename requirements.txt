@@ -7,3 +7,6 @@ docutils==0.10
 easy-thumbnails==1.3
 smartypants==1.6.0.3
 typogrify==2.0.0
+python-dateutil==2.1
+six==1.3.0
+vobject==0.8.1c
