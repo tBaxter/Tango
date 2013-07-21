@@ -31,7 +31,7 @@ class CustomSiteAdmin(SiteAdmin):
     Adds three fields to list display
     and breaks content into fieldsets.
     """
-    list_display = SiteAdmin.list_display + ('featured', 'home_domain', 'description')
+    list_display = SiteAdmin.list_display + ('home_domain', 'description')
 
 
 class CustomCommentAdmin(CommentsAdmin):
