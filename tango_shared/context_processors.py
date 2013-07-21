@@ -13,7 +13,8 @@ def site_processor(request):
     if not theme:
         theme = getattr(request.user, "theme", None)
     if not theme or theme not in settings.ALLOWABLE_THEMES:
-        theme = getattr(settings, 'DEFAULT_THEME', 'dark')
+        theme = getattr(settings, 'DEFAULT_THEME', None)
+    
     last_seen = request.session.get('last_seen', now)
     last_seen_fuzzy = last_seen
     if last_seen > one_day_ago:
