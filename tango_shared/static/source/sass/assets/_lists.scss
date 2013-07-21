@@ -1,0 +1,22 @@
+ul.fancy {
+  list-style:none; padding-left:0;
+  li {margin-bottom:.5em; padding-bottom:.5em; border-bottom: 1px solid $base}
+}
+
+dl {font-size:95%;
+  clear:both; margin-bottom:1em;
+  dt { float:left;  display:block; font-weight:bold; clear:both; margin:2em 0 0; 
+      padding:0;
+      color: $meta;
+      border-bottom:1px dotted $base_alt2; 
+      width:25%;
+    }
+  dd { 
+    float:right; 
+    padding:.5em $gutter_width 0; 
+    min-height:2em; 
+    border-left:1px solid $base_alt2;
+    width:75%;
+  } 
+  dt+dd { margin-top:-2em; border-top:1px dotted $base_alt2; }
+}

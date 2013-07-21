@@ -1,0 +1,2 @@
+// Correct overflow not hidden in IE9
+svg:not(:root) { overflow: hidden; }

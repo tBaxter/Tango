@@ -1,0 +1,14 @@
+// Set vars as needed
+$base         : #101010;
+$base_alt     : lighten($base, 5%);
+$base_alt2    : lighten($base, 15%);
+$inverse      : #ddd;
+$inverse_alt  : darken($inverse, 15%);
+$accent_alt   : #d1b78b; // a goldy color for links and other places we don't want the orange.
+@import '../site.scss';
+
+#masthead {
+  background: #000 url('/static/img/site/6120-bg.jpg') no-repeat right;
+  &, hgroup, a, nav #main_menu a, .trigger, .navicon  {color:$inverse}
+  .navicon:before {color:$inverse_alt}
+}

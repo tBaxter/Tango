@@ -1,0 +1,9 @@
+// Set vars as needed
+
+
+@import '../site.scss';
+#fakebg {background-color: #fff; }
+#masthead { @include gradient($accent, 15%, $texture); 
+  nav li a {color:$base_alt}
+  > div .trigger { background: darken($accent, 15%) $texture;}
+}
