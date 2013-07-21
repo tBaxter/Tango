@@ -22,7 +22,7 @@ class CustomGroupAdmin(GroupAdmin):
     Custom Groups admin
     Adds "description" field to list display
     """
-    list_display = GroupAdmin.list_display + ('description')
+    list_display = GroupAdmin.list_display + ('description',)
 
 
 class CustomSiteAdmin(SiteAdmin):
