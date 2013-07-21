@@ -1,0 +1,3 @@
+[submodule "tango_capo"]
+	path = tango_capo
+	url = git://github.com/tBaxter/capo.git

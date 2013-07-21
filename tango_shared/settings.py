@@ -12,17 +12,18 @@ PROJECT_NAME = 'tango'
 TANGO_APPS = (
     'tango_shared',
     'articles',
-    'galleries',
-    'contact_manager',
     'autotagger',
+    'contact_manager',
+    'galleries',
+    'happenings',
+    'tango_capo',
+    'user_profiles',
     'video',
     'typogrify',
     'voting',
-    'happenings',
-    'user_profiles',
 )
 
-# Adds Context processors you know you'll want.
+# Adds Context processors you'll want.
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',
     'tango_shared.context_processors.site_processor',
