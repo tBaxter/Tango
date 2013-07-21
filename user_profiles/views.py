@@ -38,6 +38,7 @@ class MemberList(ListView):
             filter = ProfileFilter()
         context['filter'] = filter
         return context
+member_index = MemberList.as_view()
 
 
 class EditProfile(UpdateView):
@@ -56,6 +57,7 @@ class EditProfile(UpdateView):
         context = super(EditProfile, self).get_context_data(**kwargs)
         context['settings_form'] = ProfileSettingsForm(instance=self.get_object())
         return context
+edit_profile = EditProfile.as_view()
 
 
 class EditProfileSettings(EditProfile):
@@ -73,6 +75,7 @@ class EditProfileSettings(EditProfile):
         if theme:
             self.request.COOKIES['theme'] = theme
         return super(EditProfile, self).form_valid(form, *args, **kwargs)
+edit_settings = EditProfileSettings.as_view()
 
 
 def view_profile(request, slug='', pk=''):
