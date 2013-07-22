@@ -35,11 +35,7 @@ class ProfileSettingsForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
-            'open_board_links',
             'display_on_map',
-            'collapse_header',
             'show_signatures',
-            'auto_load_forum',
-            'get_digest',
             'theme'
         )
