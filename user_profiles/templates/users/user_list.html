@@ -30,7 +30,7 @@
             <tr>
               <td>
                 <a href="{{ profile.get_absolute_url }}">
-                  {{ profile.preferred_name }}
+                  {{ profile.display_name }}
                 </a>
               </td>
               <td>{{ profile.city }}</td>
@@ -46,7 +46,7 @@
           <tr>
             <td>
               <a href="{{ profile.get_absolute_url }}">
-                {{ profile.preferred_name }}
+                {{ profile.display_name }}
               </a>
             </td>
             <td>{{ profile.city }}</td>

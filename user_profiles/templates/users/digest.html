@@ -180,7 +180,7 @@
     {% endwith %}
     <ul class="fancy">
       {% for b in birthday_list %}
-        <li><a href="{{ site_root }}{% url 'view_profile' b.username %}">{{ b.preferred_name }}</a></li>
+        <li><a href="{{ site_root }}{% url 'view_profile' b.username %}">{{ b.display_name }}</a></li>
       {% endfor %}
     </ul>
   {% endif %}
@@ -190,7 +190,7 @@
   <ul class="fancy">
     {% for i in new_members %}
       <li>
-        <a href="{{ site_root }}{% url 'view_profile' i.username %}">{{ i.preferred_name }}</a>
+        <a href="{{ site_root }}{% url 'view_profile' i.username %}">{{ i.display_name }}</a>
       </li>
     {% endfor %}
   </ul>

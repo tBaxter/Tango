@@ -25,7 +25,7 @@ class MemberList(ListView):
     Renders either default user list (paginated) or search results.
     To-do: split search to separate view, make pagination work better.
     """
-    queryset = UserModel.objects.filter(preferred_name__gt="", is_active=1, last_login__gte=past_year, post_count__gte=1).order_by('preferred_name').values()
+    queryset = UserModel.objects.filter(display_name__gt="", is_active=1, last_login__gte=past_year, post_count__gte=1).order_by('display_name').values()
     template_name = "users/user_list.html"
     paginate_by = 100
 
@@ -89,7 +89,7 @@ def view_profile(request, slug='', pk=''):
         if user.state:
             location += ", %s" % user.state
         xhr_dict = {
-            'name': user.preferred_name,
+            'name': user.display_name,
             'posts': user.post_count,
             'username': user.username,
             'joined': user.date_joined.strftime('%m/%d/%Y'),

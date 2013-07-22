@@ -13,7 +13,7 @@ class PublicProfileForm(forms.ModelForm):
     class Meta:
         model = UserModel
         fields = (
-          'preferred_name',
+          'display_name',
           'street_address',
           'city',
           'state',

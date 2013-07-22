@@ -8,7 +8,7 @@
     <section>
       <div class="breakout">
         <small class="meta">
-          For {{ giveaway.number|apnumber }} {{ giveaway.prize }}{{giveaway.number|pluralize }}, 
+          For {{ giveaway.number|apnumber }} {{ giveaway.prize }}{{ giveaway.number|pluralize }}, 
           we asked:
          </small>
          <p>{{ giveaway.question|typogrify }}</p>
@@ -18,11 +18,11 @@
       <br>
       {% if winners %}
         <p>Congratulations, {% for winner in winners %}
-            {% if forloop.first %}{% else %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %}{{ winner.respondent.preferred_name }}{% endfor %}
+            {% if forloop.first %}{% else %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %}{{ winner.respondent.display_name }}{% endfor %}
         <ul class="fancy">
           {% for winner in winners %}
             <li>
-              <small class="block meta">{{ winner.respondent.preferred_name }} said:</small>
+              <small class="block meta">{{ winner.respondent.display_name }} said:</small>
               “{{ winner.answer }}”
             </li>
           {% endfor %}

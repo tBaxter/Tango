@@ -54,10 +54,10 @@
               <a href="{{ m.get_absolute_url }}">
                 {% if m.thoughts %}
                   <p>{{ m.thoughts|truncatewords:"30" }}<br>
-                    <cite class="right">&ndash; {{ m.author.preferred_name }}</cite>
+                    <cite class="right">&ndash; {{ m.author.display_name }}</cite>
                   </p>
                 {% else %}
-                  <small>{{ m.author.preferred_name }} shared some photos</small>
+                  <small>{{ m.author.display_name }} shared some photos</small>
                 {% endif %}
               </a>
             {% endfor %}

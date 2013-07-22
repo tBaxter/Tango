@@ -11,12 +11,9 @@ deactivate.short_description = "Deactivate selected users"
 class ProfileAdmin(UserAdmin):
     date_hierarchy = 'date_joined'
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups', 'date_joined')
-    list_display = ('username', 'preferred_name', 'first_name', 'last_name', 'email', 'is_active', 'is_staff')
-    search_fields = ('username', 'first_name', 'last_name', 'email', 'preferred_name')
+    list_display = ('username', 'display_name', 'first_name', 'last_name', 'email', 'is_active', 'is_staff')
+    search_fields = ('username', 'first_name', 'last_name', 'email', 'display_name')
     actions = [deactivate, ]
 
 
 admin.site.register(Profile, ProfileAdmin)
-
-# Figure this out later, if it's even used.
-#admin.site.register(Ban)

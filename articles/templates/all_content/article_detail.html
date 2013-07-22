@@ -42,7 +42,7 @@
         
         <p class="author vcard{% if destination.is_blog %} hide{% endif %}">
           <span class="email fn">
-            {% firstof object.author.preferred_name object.guest_author %}
+            {% firstof object.author.display_name object.guest_author %}
           </span>
         </p>
         

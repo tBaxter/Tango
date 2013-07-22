@@ -23,7 +23,7 @@
           {% else %}
             {{ p.title }}
           {% endif %}
-          <span class="meta">suggested by {% firstof p.user.preferred_name p.user %}</span>
+          <span class="meta">suggested by {{ p.user.display_name p.user }}</span>
         </li>
       {% endfor %}
     </ul>

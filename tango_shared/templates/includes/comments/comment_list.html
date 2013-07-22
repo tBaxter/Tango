@@ -14,7 +14,7 @@
               <a href="{% url 'view_profile' profile.username %}" rel="author">
                 <span class="avatar" data-deferred-load="{{ MEDIA_URL }}{% firstof profile.avatar 'img/avatars/default.jpg' %}">
                 </span>
-                {{ profile.preferred_name }}
+                {{ profile.display_name }}
               </a>
             {% endwith %}
             {% ifequal comment.object_pk object.id %}

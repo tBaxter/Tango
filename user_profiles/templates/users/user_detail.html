@@ -1,8 +1,8 @@
 {% extends "users/base.html" %}{% load markup cache timesince_filters %}
 
-{% block extra_title %}{{ block.super }}: {{ user.preferred_name }}{% endblock%}
+{% block extra_title %}{{ block.super }}: {{ user.display_name }}{% endblock%}
 
-{% block description %}{{ site.name }} Community: {{ user.preferred_name }} Profile{% endblock %}
+{% block description %}{{ site.name }} Community: {{ user.display_name }} Profile{% endblock %}
 
 {% block canonical %}
   <link rel="canonical" href="{% url 'view_profile' user.username %}">
@@ -22,7 +22,7 @@
         {% endif %}
       </h2>
     {% endif %}
-    <h1>{{ user.preferred_name }}</h1>
+    <h1>{{ user.display_name }}</h1>
     <dl class="clear">
       {% if user.bio %}
         <dt>About</dt>
@@ -64,33 +64,4 @@
       {% endif %}
     </dl>
   </article>
-{% endblock %}
-
-{% block aside %}
-  {{ block.super }}
-  <hr class="fancy">
-  <h2><a href="/radio/">Radio</a></h2>
-  {% if user.member_songs.count %}
-    <dl class="clearfix">
-      {% for song in user.member_songs.values %}
-        <dt><a href="/media/{{ song.song_file }}">{{ song.song_title }}</a></dt>
-        <dd>{{ song.description }}</dd>
-      {% endfor %}
-    </dl>
-  {% else %}
-    <h3>{{ user.preferred_name }} has not posted any songs&nbsp;yet.</h3>
-  {% endif %}
-
-  <hr class="fancy">
-  
-  <h2><a href="{% url 'guitars_index' %}">Guitars</a></h2>
-  {% if user.get_guitars.count %}
-    <ul class="fancy">
-      {% for guitar in user.get_guitars.all %}
-        <li><a href="{{ guitar.get_absolute_url }}">{{ guitar.model.fullname  }}</a></li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <h3>{{ user.preferred_name }} has not added any guitars&nbsp;yet.</h3>
-  {% endif %}
 {% endblock %}
