@@ -10,7 +10,6 @@ GOOGLE_ANALYTICS_ID = ''
 PROJECT_NAME = 'tango'
 
 TANGO_APPS = (
-    #'tango_admin',
     'tango_capo',
     'tango_shared',
     'articles',
@@ -18,7 +17,6 @@ TANGO_APPS = (
     'contact_manager',
     'galleries',
     'happenings',
-    'tango_capo',
     'user_profiles',
     'video',
     'typogrify',

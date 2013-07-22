@@ -61,11 +61,10 @@ class TextCounterWidget(forms.Textarea):
             attrs = {'data-counter': 'needs_counter'}
         return super(TextCounterWidget, self).render(name, value, attrs)
 
-admin.site.unregister(Site)
-admin.site.unregister(Group)
-
-admin.site.register(Site, CustomSiteAdmin)
-admin.site.register(Group, CustomGroupAdmin)
+#admin.site.unregister(Site)
+#admin.site.unregister(Group)
+#$admin.site.register(Site, CustomSiteAdmin)
+#admin.site.register(Group, CustomGroupAdmin)
 
 admin.site.unregister(Comment)
 admin.site.register(Comment, CustomCommentAdmin)
