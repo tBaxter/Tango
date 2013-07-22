@@ -5,7 +5,7 @@ urlpatterns = patterns(
     'contact_manager.views',
     url(
         regex=r'^$',
-        name="simple_contact_form",
+        name="site_contact_form",
         view='simple_contact'
     ),
     url(
