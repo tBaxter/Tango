@@ -1,15 +1,15 @@
 from django.conf import settings
-from django.conf.urls import *
-from django.views.generic import DetailView, TemplateView
+from django.conf.urls import patterns, url
+from django.views.generic import TemplateView
 
-from .models import *
-from .views import *
+from .views import EventDetail, EventUpdate, MemoryDetail, ExtraInfoDetail
 
 key = getattr(settings, 'GMAP_KEY', None)
 
+
+# CRUD and admin functions
 urlpatterns = patterns(
     'happenings.views',
-    # CRUD and admin functions
     url(
         regex=r'^add/$',
         view='add_event',
@@ -17,47 +17,47 @@ urlpatterns = patterns(
     ),
     url(
         regex=r'^(?P<slug>[-\w]+)/edit-event/$',
-        view=EditEvent.as_view(),
+        view='edit_event',
         name="edit-event"
     ),
     url(
         regex=r'^(?P<slug>[-\w]+)/add-recap/$',
-        view=AddRecap.as_view(),
+        view='add_recap',
         name="add_recap"
     ),
 
     # EVENT LISTS
     url(
+        name="events_index",
         regex=r'^$',
-        view=EventList.as_view(),
-        name="events_index"
+        view='event_list',
     ),
     url(
+        name="events_by_region",
         regex=r'^by-region/(?P<region>[-\w]+)/$',
-        view=EventList.as_view(),
-        name="events_by_region"
+        view='event_list',
     ),
     url(
+        name="events_by_state",
         regex=r'^by-state/(?P<state>[-\w]+)/$',
-        view=EventList.as_view(),
-        name="events_by_state"),
+        view='event_list',
+    ),
     url(
+        name="events_for_day",
         regex=r'^(?P<m>\d{2})/(?P<d>\d{2})/(?P<y>\d{4})/$',
-        view=EventsForPeriod.as_view(),
-        name="events_for_day"
+        view='events_for_period'
     ),
     url(
         name="events_for_month",
         regex=r'^(?P<m>\d{2})/(?P<y>\d{4})/$',
-        view=EventsForPeriod.as_view(),
+        view='events_for_period',
     ),
-
 
     # ************* EVENT DETAILS *************/
     url(
         name="event_detail",
         regex=r'^(?P<slug>[-\w]+)/$',
-        view=EventDetail.as_view(),
+        view='event_detail',
     ),
 
     # add to calendar
@@ -66,19 +66,42 @@ urlpatterns = patterns(
         regex=r'^(?P<slug>[-\w]+)/ical/$',
         view='create_ical',
     ),
-
-    # **************** Event children ************/
-    # slideshow
-    url(
-        name="event_slides",
-        regex=r'^(?P<slug>[-\w]+)/slides/$',
-        view=EventDetail.as_view(template_name="happenings/event_slides.html"),
-    ),
     # videos
     url(
         name="event_video_list",
         regex=r'^(?P<slug>[-\w]+)/videos/$',
         view='video_list',
+    ),
+    url(
+        name="event_comments",
+        regex=r'^(?P<slug>(\w|-)+)/all-comments/$',
+        view='event_all_comments_list',
+    ),
+    url(
+        name="attending_add",
+        regex=r'^(?P<slug>[-\w]+)/attending/add/$',
+        view='add_attending',
+    ),
+    url(
+        name="add_memory",
+        regex=r'^(?P<slug>[-\w]+)/memories/add/$',
+        view='add_memory',
+    ),
+    url(
+        name="event_update_list",
+        regex=r'^(?P<slug>[-\w]+)/updates/$',
+        view='event_update_list',
+    ),
+)
+
+# Special cases and event children
+urlpatterns += patterns(
+    '',
+    # slideshow
+    url(
+        name="event_slides",
+        regex=r'^(?P<slug>[-\w]+)/slides/$',
+        view=EventDetail.as_view(template_name="happenings/event_slides.html"),
     ),
     # map
     url(
@@ -86,38 +109,17 @@ urlpatterns = patterns(
         regex=r'^(?P<slug>[-\w]+)/map/$',
         view=EventDetail.as_view(template_name="happenings/event_map.html"),
     ),
-
-    url(
-        name="event_comments",
-        regex=r'^(?P<slug>(\w|-)+)/all-comments/$',
-        view='event_all_comments_list',
-    ),
-
     # attending
     url(
         name='event_attending_list',
         regex=r'^(?P<slug>[-\w]+)/attending/$',
         view=EventDetail.as_view(template_name="happenings/attending/list.html"),
     ),
-    url(
-        name="attending_add",
-        regex=r'^(?P<slug>[-\w]+)/attending/add/$',
-        view='add_attending',
-    ),
 
-    # memories
-    url(
-        name="add_memory",
-        regex=r'^(?P<slug>[-\w]+)/memories/add/$',
-        view='add_memory',
-    ),
     url(
         name="event_memories",
         regex=r'^(?P<slug>(\w|-)+)/memories/$',
-        view=DetailView.as_view(
-            queryset=Event.objects.all(),
-            template_name="happenings/memory_list.html",
-        ),
+        view=EventDetail.as_view(template_name="happenings/memory_list.html"),
     ),
     url(
         name="memory_detail",
@@ -130,13 +132,6 @@ urlpatterns = patterns(
         name="special_event_extra",
         regex=r'^(?P<event_slug>(\w|-)+)/extra/(?P<slug>(\w|-)+)/',
         view=ExtraInfoDetail.as_view(),
-    ),
-
-    # update list
-    url(
-        name="event_update_list",
-        regex=r'^(?P<slug>[-\w]+)/updates/$',
-        view='event_update_list',
     ),
 
     # update detail
@@ -166,12 +161,5 @@ urlpatterns = patterns(
         name="giveaway_response_recorded",
         regex=r'^giveaway/response-recorded/$',
         view=TemplateView.as_view(template_name="happenings/response_recorded.html"),
-    ),
-
-    # PLAYLIST
-    url(
-        name="playlist",
-        regex=r'^(?P<slug>[-\w]+)/playlist/$',
-        view='playlist',
     ),
 )

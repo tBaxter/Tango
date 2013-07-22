@@ -1,7 +1,7 @@
-from django.conf.urls import *
+from django.conf.urls import patterns, url
 from django.views.generic import ListView, DetailView
 
-from video.models import Video, VideoGallery
+from .models import Video, VideoGallery
 
 urlpatterns = patterns(
     '',

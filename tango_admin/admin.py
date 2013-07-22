@@ -14,7 +14,7 @@ from django.contrib.sites.admin import SiteAdmin
 from django.contrib.sites.models import Site
 
 from .admin_actions import nuke_users
-from .models import *
+from .models import Blacklist
 
 
 class CustomGroupAdmin(GroupAdmin):

@@ -10,4 +10,4 @@ class ProfileFilter(django_filters.FilterSet):
 
     class Meta:
         model = UserModel
-        fields = ['display_name', 'state']
+        fields = ['display_name']

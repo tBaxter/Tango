@@ -26,6 +26,7 @@ class DestinationList(ListView):
     template_name = 'articles/index.html'
     paginate_by = pagination_setting
     model = Destination
+destination_list = DestinationList.as_view()
 
 
 class ArticleList(ListView):
@@ -47,6 +48,7 @@ class ArticleList(ListView):
         context = super(ArticleList, self).get_context_data(**kwargs)
         context['destination'] = self.destination
         return context
+article_list = ArticleList.as_view()
 
 
 class ArticleDetail(DetailView):
@@ -81,6 +83,7 @@ class ArticleDetail(DetailView):
                 'prev_update' : prev_update
             })
         return context
+article_detail = ArticleDetail.as_view()
 
 
 @never_cache

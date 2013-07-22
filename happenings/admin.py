@@ -1,5 +1,7 @@
 from django.contrib import admin
-from happenings.models import *
+
+from .models import Image, BulkEventImageUpload, UpdateImage, EventVideo
+from .models import Event, Update, Memories, ExtraInfo, Giveaway, GiveawayResponse, Schedule
 
 
 class ExtraInfoAdmin(admin.ModelAdmin):
@@ -53,17 +55,15 @@ class GiveawayAdmin(admin.ModelAdmin):
         GiveawayResponseInline,
     ]
     fieldsets = (
-      ('', {'fields': ('event', )}),
-      ('Q and A', {'fields': ('question', 'long_q', 'explanation')}),
-      ('For', {'fields': (('number', 'prize'), 'closed', )}),
+        ('', {'fields': ('event', )}),
+        ('Q and A', {'fields': ('question', 'long_q', 'explanation')}),
+        ('For', {'fields': (('number', 'prize'), 'closed', )}),
     )
 
 
 class EventAdmin(admin.ModelAdmin):
     class Media:
-        js = (
-             '/static/js/admin/inline_reorder.js',
-        )
+        js = ('/static/js/admin/inline_reorder.js',)
 
     search_fields       = ['name', ]
     list_display        = ('name', 'approved', 'featured', 'submitted_by', 'start_date',)
@@ -95,9 +95,7 @@ class EventAdmin(admin.ModelAdmin):
 
 class UpdateAdmin(admin.ModelAdmin):
     class Media:
-        js = (
-             '/static/js/admin/inline_reorder.js',
-        )
+        js = ('/static/js/admin/inline_reorder.js',)
 
     list_display = ('title', 'pub_time',)
     list_filter = ('event',)
@@ -120,5 +118,4 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(Update, UpdateAdmin)
 admin.site.register(ExtraInfo, ExtraInfoAdmin)
 admin.site.register(Giveaway, GiveawayAdmin)
-admin.site.register(PlaylistItem)
 admin.site.register(Memories)
