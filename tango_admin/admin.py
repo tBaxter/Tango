@@ -25,13 +25,13 @@ class CustomGroupAdmin(GroupAdmin):
     list_display = GroupAdmin.list_display + ('description',)
 
 
-class CustomSiteAdmin(SiteAdmin):
-    """
-    Custom Site admin
-    Adds fields to list display
-    and breaks content into fieldsets.
-    """
-    list_display = SiteAdmin.list_display + ('description',)
+#class CustomSiteAdmin(SiteAdmin):
+#    """
+#    Custom Site admin
+#    Adds fields to list display
+#    and breaks content into fieldsets.
+#    """
+#    list_display = SiteAdmin.list_display + ('description',)
 
 
 class CustomCommentAdmin(CommentsAdmin):

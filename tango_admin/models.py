@@ -1,16 +1,16 @@
 from django.conf import settings
-from django.contrib.sites.models import Site
+#from django.contrib.sites.models import Site
 from django.contrib.auth.models import Group
 from django.db import models
 
 UserModel = getattr(settings, "AUTH_USER_MODEL", "auth.User")
 
 # Add some description and featured to Site and auth.Group models
-Site.add_to_class('description', models.CharField(
-    max_length=100,
-    blank=True,
-    help_text='A brief description to differentiate this site.')
-)
+#Site.add_to_class('description', models.CharField(
+#    max_length=100,
+#    blank=True,
+#    help_text='A brief description to differentiate this site.')
+#)
 
 Group.add_to_class('description', models.TextField(
     blank=True,
