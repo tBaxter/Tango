@@ -17,7 +17,7 @@ class PublicProfileForm(forms.ModelForm):
             'city',
             'state',
             'country',
-            'zip',
+            'zipcode',
             'occupation',
             'interests',
             'birthday',
