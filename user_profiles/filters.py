@@ -6,8 +6,8 @@ UserModel = get_user_model()
 
 
 class ProfileFilter(django_filters.FilterSet):
-    preferred_name = django_filters.CharFilter(lookup_type='icontains')
+    display_name = django_filters.CharFilter(lookup_type='icontains')
 
     class Meta:
         model = UserModel
-        fields = ['preferred_name', 'state']
+        fields = ['display_name', 'state']

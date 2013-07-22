@@ -31,7 +31,7 @@ class MemberList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MemberList, self).get_context_data(**kwargs)
-        if 'preferred_name' in self.request.GET:
+        if 'display_name' in self.request.GET or 'state' in self.request.GET:
             filter = ProfileFilter(self.request.GET, queryset=self.queryset)
         else:
             filter = ProfileFilter()
