@@ -4,7 +4,6 @@ from django.db import models
 from django.template.defaultfilters import truncatewords
 
 UserModel = getattr(settings, "AUTH_USER_MODEL", "auth.User")
-current_site = Site.objects.get_current()
 
 
 EMAIL_CHOICES = (
@@ -198,7 +197,7 @@ class Contact(models.Model):
         null=True,
         help_text="In some cases, we may require submission from an authenticated user"
     )
-    site = models.ForeignKey(Site, default=current_site)
+    site = models.ForeignKey(Site, default=settings.SITE_ID)
     # if request_contact_info is True
     contact_address = models.TextField(
         blank=True,

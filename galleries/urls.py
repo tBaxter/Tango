@@ -1,10 +1,7 @@
 from django.conf.urls import url, patterns
-from django.contrib.sites.models import Site
 from django.views.generic import DetailView, ListView
 
 from galleries.models import Gallery
-
-current_site = Site.objects.get_current()
 
 urlpatterns = patterns(
     '',
