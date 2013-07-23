@@ -9,14 +9,10 @@ Faster, simpler django content management.
 Install via pip:
     pip install git+https://github.com/tBaxter/Tango.git
 
-Add the apps you want to installed_apps. You really should add tango_shared, as a lot relies on it.
-    INSTALLED_APPS = (
-        ...
-        'articles',
-        'galleries',
-        'contact_manager',
-        'tango_shared'
-    )
+For a new project, run the [Tango Starter Kit](https://github.com/tBaxter/tango-starter-kit): 
+    django-admin.py startproject --template=https://github.com/tBaxter/tango-starter-kit/archive/master.zip test_project
+
+*Note: test_project should (of course) be the name of your project*
 
 Run syncdb or South.
 
