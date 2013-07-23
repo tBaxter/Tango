@@ -6,15 +6,19 @@ Faster, simpler django content management.
 
 ##Installation:
 
-Install via pip:
+###Install via pip:
+
     pip install git+https://github.com/tBaxter/Tango.git
 
-For a new project, run the [Tango Starter Kit](https://github.com/tBaxter/tango-starter-kit): 
+###For a new project, run the [Tango Starter Kit](https://github.com/tBaxter/tango-starter-kit): 
+
     django-admin.py startproject --template=https://github.com/tBaxter/tango-starter-kit/archive/master.zip test_project
 
 *Note: test_project should (of course) be the name of your project*
 
-Run syncdb or South.
+### Run syncdb or South.
+
+And that's it.
 
 ##Dependencies:
 [Easy-Thumbnails](https://github.com/SmileyChris/easy-thumbnails)
