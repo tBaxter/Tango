@@ -18,7 +18,7 @@ Faster, simpler django content management.
 
 ### Run syncdb or South.
 
-And that's it.
+And start adding content. That's it.
 
 ##Dependencies:
 [Easy-Thumbnails](https://github.com/SmileyChris/easy-thumbnails)
