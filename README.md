@@ -20,13 +20,13 @@ Faster, simpler django content management.
 
 And start adding content. That's it.
 
-##Dependencies:
-[Easy-Thumbnails](https://github.com/SmileyChris/easy-thumbnails)
-PIL or Pillow
-Markdown
-Typogrify
+##Dependencies (these should be installed for you)
+[Easy-Thumbnails](https://github.com/SmileyChris/easy-thumbnails)  
+PIL or Pillow  
+Markdown  
+Typogrify  
 [Python-Twitter](https://github.com/bear/python-twitter) (if you want to auto-tweet news items)
 
 ### Recommended
-South
-docutils
+South  
+docutils  
