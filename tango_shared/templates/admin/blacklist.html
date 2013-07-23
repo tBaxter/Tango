@@ -1,0 +1,26 @@
+{% extends "admin/change_form.html" %}
+
+{% block content %}
+<h1>Blacklist:</h1>
+<h2>{{ users|join:", " }}</h2>
+<p>When you blacklist these user(s), you will...</p>
+<ul>
+	<li>Deactivate their account.</li>
+	<li>Remove their session, so they can't log in.</li>
+	<li>Block re-entry via facebook accounts.</li>
+	<li>Remove all of their comments from all public pages.</li>
+</ul>
+<p>If you are sure you want to do this, please continue and give the reason for this blacklisting.</p>
+<form action="" method="post" class="form-row module aligned required">
+{% csrf_token %}
+<div>    {{ form.as_p }}
+
+</div>
+
+    <input type="hidden" name="action" value="remove_bad_users" />
+    <p class="submit-row">
+    <input type="submit" name="apply_blacklist" value="Apply blacklist" />
+    </p>
+</form>
+
+{% endblock %}
