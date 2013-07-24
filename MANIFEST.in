@@ -7,10 +7,12 @@ recursive-include contact_manager/fixtures/ *
 recursive-include contact_manager/templates/ *
 recursive-include galleries/static/ *
 recursive-include galleries/templates/ *
+recursive-include happenings/static/ *
+recursive-include happenings/templates/ *
 recursive-include tango_admin/templates/ *
-recursive-include tango_capo/ *
 recursive-include tango_capo/static/ *
 recursive-include tango_shared/static/ *
 recursive-include tango_shared/templates/ *
 recursive-include user_profiles/templates/ *
+recursive-include video/templates/ *
 recursive-include voting/templates/ *

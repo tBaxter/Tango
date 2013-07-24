@@ -6,7 +6,6 @@ PAGINATE_BY = 25
 # Google analytics GA code
 GOOGLE_ANALYTICS_ID = ''
 
-# The Project name. If this is set in your settings, remove it.
 PROJECT_NAME = 'tango'
 
 TANGO_APPS = (
