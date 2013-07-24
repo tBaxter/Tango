@@ -3,6 +3,7 @@ import os
 import datetime
 import time
 
+from django.conf.import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.core import mail
@@ -47,9 +48,9 @@ class Command(BaseCommand):
 
             body = tmpl.render(c)
             msg = EmailMultiAlternatives(
-                subject, 
+                subject,
                 body,
-                "admin@gretschpages.com",
+                settings.ADMINS[0]
                 [user.email]
             )
             msg.attach_alternative(body, "text/html")

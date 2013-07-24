@@ -6,7 +6,7 @@
 {% block bodyclass %}wide{% endblock %}
 
 {% block content %}
-  <h1>{{ site.name }} {{ cal_date }} {{ region }} Happenings</h1>
+  <h1>{{ site.name }} {{ cal_date }} {{ region }} Events</h1>
   <a href="{% url 'add_event' %}" class="button icon-add right">Add an event</a>
   {% if cal_date or region %}
     <a href="{% url 'events_index' %}" class="button right">All events</a>
