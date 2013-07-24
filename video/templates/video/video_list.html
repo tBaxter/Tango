@@ -1,7 +1,8 @@
 {% extends "video/base.html" %}
-{% load thumbnail markup typogrify cache %}
+{% load thumbnail markup typogrify_tags cache %}
 
-{% block extra_title %}Video: 
+{% block extra_title %}
+  Video: 
   {% if gallery or event %}
     {% firstof gallery.title event.name %}: 
   {% endif %}

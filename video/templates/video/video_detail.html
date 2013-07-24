@@ -1,17 +1,10 @@
 {% extends "base.html" %}
 
-{% load markup typogrify thumbnail cache social_tags %}
+{% load markup typogrify_tags thumbnail cache social_tags %}
 
-{% block title %}{{video.name}}: {% endblock %}
-
-{% block extrahead %}
-  <style type="text/css">
-    ul.sociallinks li {float:none; width:100%; clear:left;}
-  </style>
-{% endblock %}
+{% block title %}{{ video.name }}: {% endblock %}
 
 {% block section %}video{%endblock%}
-{% block bodyclass %}widish{% endblock%}
 
 {% block content %}
 <h1>{{ video.title }}</h1>
@@ -46,7 +39,7 @@
 
 {% block secondary %}
   <h1>{{video.name }}</h1>
-  {{video.blurb|markdown|typogrify}}
+  {{ video.blurb|markdown|typogrify }}
 
   {% social_links video user %}
 {% endblock %}

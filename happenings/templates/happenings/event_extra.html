@@ -1,11 +1,16 @@
-{% extends "happenings/event_detail.html" %}{% load typogrify markup %}
-
+{% extends "happenings/event_detail.html" %}
+{% load typogrify_tags markup %}
 
 {% block title %}{{ object.event }}: {{ object.title}} | {% endblock %}
+
 {% block content %}
-<h1><a href="{{ object.event.get_absolute_url }}">{{ object.event }}</a></h1>
-   <h2>{{ object.title }}</h2>
-   {{ object.text|markdown|typogrify}}
+  <h1>
+    <a href="{{ object.event.get_absolute_url }}">
+      {{ object.event }}
+    </a>
+  </h1>
+  <h2>{{ object.title }}</h2>
+  {{ object.text|markdown|typogrify }}
 {% endblock %}
 
 {% block secondary %}

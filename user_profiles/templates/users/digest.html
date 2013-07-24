@@ -1,4 +1,4 @@
-{% load article_tags fretboard_tags event_tags guitar_tags song_tags user_tags site_tags typogrify humanize %}
+{% load article_tags event_tags user_tags site_tags typogrify humanize %}
 
   <h2>{{ subject }}</h2>
 
@@ -92,43 +92,6 @@
       </ul>
     {% endfor %}
 
-  <section id="latest-guitars">
-    {% get_new_guitars_count as count %}
-    {% if count == 0 %}
-      <h3>No <a href="{{ site_root }}{% url 'guitars_index' %}">guitars</a>
-        were added today. Have you added yours?</h3>
-    {% else %}
-      <h3>
-        {{ count|apnumber|capfirst }} 
-         <a href="{{ site_root }}{% url 'latest_guitars' %}">new guitar{{ count|pluralize }}</a>
-         {% if count == 1 %} was{% else %} were{% endif %} added to the 
-         <a href="{{ site_root }}{% url 'guitars_index' %}">Gretsch-GEAR database.</a>
-      </h3>
-      <ul class="fancy">
-        {% get_latest_guitars 'today' as guitar_list %}
-        {% for g in guitar_list %}
-          <li><a href="{{ site_root }}{{ g.get_absolute_url }}">{{ g }}</a></li>
-        {% endfor %}
-        {% get_new_help_count as help_count %}
-        <li>
-          <a href="{{ site_root }}{% url 'help_guitars' %}">
-            {% if help_count %}
-              {{ help_count|apnumber|capfirst }} need{% if help_count == 1 %}s{% endif %} help
-            {% endif %}
-          </a>
-        </li>
-        {% get_new_market_count as mkt_count %}
-        <li>
-          <a href="{{ site_root }}{% url 'market_guitars' %}">
-            {% if mkt_count %}
-              {{ mkt_count|apnumber|capfirst }} on the market.
-            {% endif %}
-          </a>
-        </li>
-      </ul>
-    {% endif %}
-  </section>
-
   {% get_new_articles last_seen as articles %}
   {% if articles %}
     {% with articles.count as count %}
@@ -143,34 +106,6 @@
         </li>
       {% endfor %}
     </ul>
-  {% endif %}
-
-  {% get_new_songs last_seen as new_songs %}
-  {% if new_songs %}
-    {% with new_songs.count as count %}
-      <h3>
-        <a href="{{ site_root }}{% url 'song_list' %}">
-          {{ count|apnumber|capfirst }} new song{{ count|pluralize }} 
-          {% if count == 1 %}was{% else %}were{% endif %} 
-          added to Gretsch Pages Radio.
-        </a>
-      </h3>
-    {% endwith %}
-    <ul class="fancy">
-      {% for song in new_songs %}
-        <li>
-          <a href="{{ site_root }}{{ song.get_absolute_url }}">
-            {{ song.song_title }} 
-            <small class="meta">{{ song.artist }}</small>
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <h3>
-      No new songs were posted to <a href="{{ site_root }}{% url 'song_list' %}">Gretsch Pages Radio</a>.
-      You should add one.
-    </h3>
   {% endif %}
 
   {% get_birthday_list as birthday_list %}

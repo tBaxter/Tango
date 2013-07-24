@@ -1,5 +1,5 @@
 {% extends "happenings/base.html" %}
-{% load markup typogrify cache event_tags  %}
+{% load cache event_tags  %}
 
 {% block extra_title %}Happenings {% if cal_date %} for {{ cal_date }}{% endif %}{% endblock %}
 
@@ -41,6 +41,6 @@
       <div class="hcal_tables" id="big-calendar"></div>
     </div><!-- /tabs -->
   {% else %}
-    <h2>We were unable to find any upcoming {{ cal_date }} {{ region }} events.
+    <h2>We were unable to find any upcoming {{ cal_date }} {{ region }} events.</h2>
   {% endif %}
 {% endblock %}
