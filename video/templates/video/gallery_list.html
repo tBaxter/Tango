@@ -1,0 +1,25 @@
+{% extends "video/base.html" %}
+
+{% load typogrify_tags %}
+
+{% block extra_title %} Video Galleries {% endblock %} 
+
+{% block content %}
+  <h1>Video Galleries</h1>
+  <ul class="columned four-col grid">
+    {% for object in object_list %}
+      <li>
+        <a href="{{ object.get_absolute_url }}"> 
+          {% with object.video_collection.all.0 as video %}
+            <img src="{{ video.thumb_url }}" alt="view video" title="view video">
+          {% endwith %}
+          <h3>{{ object.title|typogrify }}</h3>
+          {% if object.gallery_credit %}
+            <span class="byline">{{ object.gallery_credit }}</span>
+          {% endif %}
+          <p>{{ object.summary|truncatewords:"30" }}</p>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

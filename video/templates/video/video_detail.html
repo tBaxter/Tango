@@ -1,34 +1,32 @@
 {% extends "base.html" %}
 
-{% load markup typogrify_tags thumbnail cache social_tags %}
+{% load markup typogrify_tags cache social_tags %}
 
 {% block title %}{{ video.name }}: {% endblock %}
+{% block extra_title %}{{ video.gallery }} Video {% endblock %} 
 
-{% block section %}video{%endblock%}
 
 {% block content %}
-<h1>{{ video.title }}</h1>
-{% if video.yt_id %}
- <iframe width="100%" height="60%" src="http://www.youtube.com/embed/{{ video.yt_id }}" frameborder="0" allowfullscreen></iframe>
-{% endif %}
+  <h1>{{ video.title }}</h1>
+  {% if video.embed_src %}
+    {{ video.embed_src|safe }}
 
-{% if video.content_object %}
-  <h4>
-    See More: 
-    <a href="{{video.content_object.get_absolute_url }}">
-    {{ video.content_object }}</a>
-  </h4>
-{% endif %}
+    {{ video.description|markdown|typogrify }}
 
-{% with video as object %}
-  {% include 'comments/inclusion/comments.html' %}
-{% endwith %}
-{% endblock %}
+  {% else %}
+    <h2>This video can not be shown here.</h2> 
+    <h3>It can be <a href="{{ video.url }}">seen at {{ video.source|capfirst }}</a></h3>
+  {% endif %}
 
-{% block secondary %}
-  <h1>{{video.name }}</h1>
-  {{ video.blurb|markdown|typogrify }}
+  {% if video.object_id %}
+    <h4>
+      See More: 
+      <a href="{{ video.content_object.get_absolute_url }}">
+        {{ video.content_object }}
+      </a>
+    </h4>
+  {% endif %}
 
   {% social_links video user %}
-{% endblock %}
 
+{% endblock %}

@@ -1,60 +1,84 @@
-from django.db import models
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.db import models
+
+from .helpers import get_youtube_data, get_vimeo_data, get_ustream_data
 
 
 class Video(models.Model):
-    name           = models.CharField(max_length=200)
-    video_title    = models.CharField(max_length=200, blank=True, editable=False)
-    slug           = models.SlugField(max_length=200, help_text="Will fill itself in")
-    poster_frame   = models.FileField(upload_to='video/', blank=True, help_text="Thumbnail to represent movie")
-    blurb          = models.TextField(blank=True, null=True)
-    video_file     = models.CharField(max_length=255, help_text="Path to M4V or MP4 file", blank=True)
-    webm           = models.CharField("WebM", max_length=255, blank=True, null=True, help_text="Path to alternate WebM version for Firefox and Chrome")
-    video_width    = models.CharField(max_length=4, blank=True)
-    video_height   = models.CharField(max_length=4, blank=True)
-    video_at_top   = models.BooleanField("Put video at top", default=False, help_text="If checked, the video will appear preceding the body instead of following.")
-
-    content_type   = models.ForeignKey(ContentType, blank=True, null=True)
-    object_id      = models.PositiveIntegerField(blank=True, null=True)
-    content_object = generic.GenericForeignKey()
-
-    ustream_id     = models.CharField("Ustream ID", max_length=10, blank=True,
+    title = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text="We'll attempt to fill this in from the video service."
+    )
+    slug = models.SlugField(
+        max_length=200,
+        blank=True,
+        help_text="We'll attempt to fill this in from the video title."
+    )
+    description = models.TextField(
+        blank=True,
+        null=True,
+        help_text="We'll attempt to fill this in from the video service."
+    )
+    video_at_top = models.BooleanField(
+        "Put video at top",
+        default=False,
         help_text="""
-            If it is an archived ustream video, insert the video ID.
-            Do not paste in the embed code.
-            The ID is the number at the end of the video URL.
+            If checked, the video will appear preceding the body
+            of any related content instead of following.
             """
     )
-    streaming_url  = models.URLField(blank=True, null=True, help_text="If this is a live streaming Ustream video, give the full URL to the video page.")
-    hide_info      = models.BooleanField("Hide title and description", default=False, help_text="If checked, the video title and description will not be shown. Left unchecked, the video will attempt to pull and display the title and description from youtube or Ustream.")
-    thumbnail      = models.CharField(blank=True, null=True, max_length=200, editable=False)
-    yt_url         = models.CharField("Youtube URL", max_length=200, blank=True, help_text="If it is a youtube video, insert the URL. Do not paste in the embed code.")
-    yt_id          = models.CharField('Youtube ID', blank=True, null=True, max_length=50, editable=False)
+    url = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text=""""
+            Acceptable sources are Youtube, Vimeo and Ustream.
+            Please give the link URL, not the embed code.
+            """
+    )
+    hide_info = models.BooleanField(
+        "Hide title and description",
+        default=False,
+        help_text="""
+            If checked, the video title and description will not be shown.
+            Left unchecked, the video will attempt to display the title and description
+            from the video source.
+            """
+    )
+    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    object_id = models.PositiveIntegerField(blank=True, null=True)
+    content_object = generic.GenericForeignKey()
 
-    def getThumb(self):
-        if self.yt_id:
-            thumb = "http://img.youtube.com/vi/" + self.yt_id + "/0.jpg"
-        else:
-            thumb = self.poster_frame  # Do we need to resize?
-        return thumb
+    key = models.CharField(max_length=20, blank=True, editable=False)
+    source = models.CharField(max_length=20, blank=True, editable=False)
+    embed_src = models.CharField(max_length=200, blank=True, editable=False)
+    thumb_url = models.CharField(max_length=200, blank=True, editable=False)
 
     def __unicode__(self):
-        return self.name
+        return '%s: %s' % (self.source, self.title)
 
+    @models.permalink
     def get_absolute_url(self):
-        return '/video/%s/' % (self.slug)
+        return ('video_detail', [self.slug])
 
     def save(self, *args, **kwargs):
-        """We want to store the thumbnail, because it's a good idea."""
-        if self.yt_url:
-            if self.yt_url.find('&') != -1:
-                self.yt_id = self.yt_url[self.yt_url.find("v=") + 2:self.yt_url.find("&")]
-            else:
-                self.yt_id = self.yt_url[self.yt_url.find("v=") + 2:]
-        self.thumbnail = self.getThumb()
-        super(Video, self).save(*args, **kwargs)
+        if not self.embed_src:
+            if 'youtube.com/watch' in self.url or 'youtu.be/' in self.url:
+                self = get_youtube_data(self)
+
+            if 'vimeo.com/' in self.url:
+                self = get_vimeo_data(self)
+
+            if 'ustream.tv/' in self.url:
+                self = get_ustream_data(self)
+
+        if self.key and self.embed_src:
+            self.embed_src = """
+                <iframe src="%s%s" height="360" width="100%%"></iframe>
+                """ % (self.embed_src, self.key)
+        super(Video, self).save()
 
 
 class VideoGallery(models.Model):
@@ -76,5 +100,6 @@ class VideoGallery(models.Model):
     def __unicode__(self):
         return self.title
 
+    @models.permalink
     def get_absolute_url(self):
-        return "/video/%s/" % (self.slug)
+        return ('video_gallery_detail', [self.slug])

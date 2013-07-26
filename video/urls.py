@@ -1,38 +1,29 @@
 from django.conf.urls import patterns, url
-from django.views.generic import ListView, DetailView
+from django.views.generic import DetailView
 
-from .models import Video, VideoGallery
+from .models import Video
 
 urlpatterns = patterns(
     '',
     url(
-        name="video_gallery_list",
+        name="video_list",
         regex=r'^$',
-        view=ListView.as_view(
-            queryset=VideoGallery.objects.all(),
-            template_name="video/video_list.html",
-            context_object_name="video_list",
-        )
+        view='video.views.video_list'
     ),
     url(
-        name='video_gallery_detail',
-        regex=r'^gallery/(?P<slug>[-\w]+)/$',
-        view=DetailView.as_view(
-            queryset=VideoGallery.objects.all(),
-            slug_field='slug',
-            template_name="video/video_list.html",
-            context_object_name="gallery",
-        ),
+        name="video_gallery_list",
+        regex=r'^galleries/$',
+        view='video.views.video_gallery_list'
     ),
     url(
-        name='video_detail',
         regex=r'^(?P<slug>[-\w]+)/$',
-        view=DetailView.as_view(
-            queryset=Video.objects.all(),
-            slug_field='slug',
-            template_name="video/video_detail.html",
-            context_object_name="video",
-        )
+        name='video_detail',
+        view='video.views.video_detail'
+    ),
+    url(
+        regex=r'^gallery/(?P<slug>[-\w]+)/$',
+        name='video_gallery_detail',
+        view='video.views.video_gallery_detail'
     ),
     url(
         name="video_detail_boxed",

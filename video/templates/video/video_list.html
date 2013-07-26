@@ -1,60 +1,28 @@
 {% extends "video/base.html" %}
-{% load thumbnail markup typogrify_tags cache %}
+{% load typogrify_tags %}
 
-{% block extra_title %}
-  Video: 
-  {% if gallery or event %}
-    {% firstof gallery.title event.name %}: 
-  {% endif %}
-{% endblock %} 
-
-{% block bodyclass %}wide{% endblock %}
+{% block extra_title %}{{ gallery }} Video {% endblock %} 
 
 {% block content %}
-  <h2 class="kicker">{{ site.name }} TV</h2>
-  {% if gallery or event %}
-    <h1>{% firstof gallery.title event.name %}</h1>
-    {% if gallery %}
-      {{ gallery.summary|markdown }}
-      {% if gallery.gallery_credit %}
-        <h2 class="kicker">Video by {{ gallery.gallery_credit }}</h2>
-      {% endif %}
+  <h1>{{ gallery }} Video</h1>
+  <ul class="columned four-col grid">
+    {% if gallery.gallery_credit or gallery.gallery_summary %}
+      <li>
+        {% if gallery.gallery_credit %}
+          <span class="byline">{{ gallery.gallery_credit }}</span>
+        {% endif %}
+        <p>{{ gallery.summary|truncatewords:"30" }}</p>
+      </li>
     {% endif %}
-  {% endif %}
-  <ul class="columned auto divided">
-    {% if gallery %}
-      {% for vid in gallery.video_collection.all %}
-        <li>
-          <a href="/video/{{ vid.slug }}/">
-            <img src="/media/{{ vid.thumbnail }}">
-            <p>{{ vid }}</p>
-          </a>
-        </li>
-      {% endfor %}
-    {% else %}
-      {% cache 43200 video_list 33 %}
-        {% for vid in video_list|dictsortreversed:"id" %}
-          <li>
-            {% if vid.video.yt_id %}
-              <a href="{{ vid.get_absolute_url }}">
-                {% if vid.video.thumbnail %}
-                  <img src="{{ vid.thumbnail }}" alt="view video" title="view video" class="right" style=" width:110px;">
-                {% endif %}
-                <h3>{{ vid.video.name|typogrify }}</h3>
-                <p>{{ vid.video.blurb|truncatewords:"25" }}</p>
-              </a>
-            {% else %}
-              <a href="{{ vid.get_absolute_url }}">
-                {% if vid.thumbnail %}
-                  <img src="/media/{{ vid.thumbnail }}" alt="view video" title="view video" class="right" style=" width:110px;">
-                {% endif %}
-                <h3>{{ vid.name|typogrify }}</h3>
-                <p>{{ vid.blurb|truncatewords:"25" }}</p>
-              </a>
-            {% endif %}
-          </li>
-        {% endfor %}
-      {% endcache %}
-    {% endif %}
+
+    {% for object in object_list %}
+      <li>
+        <a href="{{ object.get_absolute_url }}"> 
+          <img src="{{ object.thumb_url }}" alt="view video" title="view video">
+          <h3>{{ object.title|typogrify }}</h3>
+          <p>{{ object.description|truncatewords:"30" }}</p>
+        </a>
+      </li>
+    {% endfor %}
   </ul>
 {% endblock %}
