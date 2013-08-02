@@ -1,19 +1,12 @@
 {% extends "admin/base.html" %}
-{% load i18n %}
+{% load i18n admin_static %}
 
 {% block title %}
   {{ title }} | {{ site.name }} {% trans 'administration' %}
 {% endblock %}
 
-{% block stylesheet %}
-  {% load adminmedia %}
-  {% admin_media_prefix %}css/base.css
-{% endblock %}
-
 {% block extrahead %}
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js">
-  </script>
-  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/django-overrides.css" %}" />
 {% endblock %}
 
 {% block branding %}
@@ -26,5 +19,3 @@
 {% block userlinks %}
   <a href="/admin/how-to/">How-to</a> / {{ block.super }}
 {% endblock %}
-
-{% block nav-global %}{% endblock %}

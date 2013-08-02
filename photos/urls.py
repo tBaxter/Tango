@@ -1,7 +1,7 @@
 from django.conf.urls import url, patterns
 from django.views.generic import DetailView, ListView
 
-from galleries.models import Gallery
+from .models import Gallery
 
 urlpatterns = patterns(
     '',

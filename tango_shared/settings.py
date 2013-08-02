@@ -14,12 +14,13 @@ TANGO_APPS = (
     'articles',
     'autotagger',
     'contact_manager',
-    'galleries',
     'happenings',
+    'photos',
     'user_profiles',
     'video',
     'typogrify',
     'voting',
+    'easy_thumbnails'
 )
 
 MEDIA_URL = '/media/'

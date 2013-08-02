@@ -85,10 +85,13 @@ class ContentImage(models.Model):
                 """
                 image = Image.open(img)
                 image.resize((900, 1200), Image.ANTIALIAS)
-                image.save(self.image.path)
+                image.save(img.path)
             try:
                 ezthumb_field = get_thumbnailer(self.image)
-                self.thumb = ezthumb_field.get_thumbnail({'size': (80, 80), 'crop': ',-10'}).url.replace("\\", "/")
+                self.thumb = ezthumb_field.get_thumbnail({
+                    'size': (80, 80),
+                    'crop': ',-10'
+                }).url.replace("\\", "/")
             except Exception, inst:
                 print "Error thumbnailing %s: %s" % (self.id, inst)
         super(ContentImage, self).save(*args, **kwargs)

@@ -1,9 +1,10 @@
 from django.contrib import admin
 
-from .forms import BulkUploadForm
+from .forms import BulkUploadForm, GalleryForm
 from .models import Gallery, GalleryImage, BulkImageUpload
 
 
+##### Actions
 def make_published(self, request, queryset):
     rows_updated = queryset.update(published=True)
     if rows_updated == 1:
@@ -27,45 +28,52 @@ make_unpublished.short_description = "Unpublish"
 class GalleryInline(admin.TabularInline):
     model = GalleryImage
     extra = 10
-
-
-class BulkUploadInline(admin.TabularInline):
-    model = BulkImageUpload
-    extra = 1
-    form = BulkUploadForm
-
-
-class BulkUploadAdmin(admin.ModelAdmin):
-    form = BulkUploadForm
+    fields = ('image', 'caption', 'byline', 'order')
 
 
 class GalleryAdmin(admin.ModelAdmin):
+    form = GalleryForm
+
     class Media:
-        js = ('/static/js/admin/inline_reorder.js',)
+        js = (
+            '/static/admin/js/jquery-ui-1.10.3.custom-sortable.min.js',
+            '/static/admin/js/inline_reorder.js',
+        )
 
     ordering = ['-created']
     actions = [make_published, make_unpublished]
 
-    list_display = ('title', 'gallery_credit', 'published', 'created',)
+    list_display = ('title', 'credit', 'published', 'created',)
     list_filter = ('published', 'article')
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ['title', 'summary']
 
     inlines = [
-        BulkUploadInline,
+        #BulkUploadInline,
         GalleryInline,
     ]
 
     fieldsets = (
         ('Header', {'fields': ('overline', 'title')}),
-        ('Content', {'fields': ('summary', 'article')}),
-        ('Meta', {'fields': ('gallery_credit', 'published')}),
+        ('Content', {'fields': ('summary', 'article', 'bulk_upload')}),
+        ('Meta', {'fields': ('credit', 'published')}),
         ('Admin fields', {
             'description': 'You should rarely, if ever, need to touch these fields.',
             'fields': ('slug',),
             'classes': ['collapse']
         }),
     )
+
+    def save_model(self, request, obj, form, change):
+        obj.save()
+        for img in request.FILES.getlist('bulk_upload'):
+            GalleryImage(
+                image = img,
+                gallery = obj
+            ).save()
+
+        obj.bulk_upload = None
+        obj.save()
 
 
 class GalleryImageAdmin(admin.ModelAdmin):
@@ -76,4 +84,3 @@ class GalleryImageAdmin(admin.ModelAdmin):
 
 admin.site.register(Gallery, GalleryAdmin)
 admin.site.register(GalleryImage, GalleryImageAdmin)
-admin.site.register(BulkImageUpload, BulkUploadAdmin)
