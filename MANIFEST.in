@@ -4,10 +4,10 @@ recursive-include articles/static/ *
 recursive-include articles/templates/ *
 recursive-include contact_manager/fixtures/ *
 recursive-include contact_manager/templates/ *
-recursive-include galleries/static/ *
-recursive-include galleries/templates/ *
 recursive-include happenings/static/ *
 recursive-include happenings/templates/ *
+recursive-include photos/static/ *
+recursive-include photos/templates/ *
 recursive-include tango_admin/templates/ *
 recursive-include tango_capo/static/ *
 recursive-include tango_shared/static/ *
