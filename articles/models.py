@@ -128,7 +128,7 @@ class Article(models.Model):
     sections        = models.ManyToManyField(Category, blank=True, null=True)
 
     # RELATED
-    galleries       = models.ManyToManyField('galleries.Gallery', related_name="article_galleries", blank=True)
+    galleries       = models.ManyToManyField('photos.Gallery', related_name="article_galleries", blank=True)
     articles        = models.ManyToManyField('self', related_name="related_articles", blank=True, null=True, limit_choices_to={'publication': 'Published'})
 
     created         = models.DateTimeField(auto_now_add=True)
