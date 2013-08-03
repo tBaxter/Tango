@@ -1,7 +1,12 @@
 import datetime
+from itertools import chain
 
 from django import template
 from django.utils.timesince import timesince
+
+from articles.models import Article
+from photos.models import Gallery
+from video.models import Video
 
 register = template.Library()
 
@@ -65,3 +70,54 @@ def fix_indents(value):
     """
     value = value.replace('\t', '').replace('    ', ' ')
     return value
+
+
+@register.inclusion_tag('includes/fresh_content.html')
+def get_fresh_content(featured=4, additional=10, featured=False):
+    """
+    Returns published *Featured* content (articles, galleries, video, etc)
+    and an additional batch of fresh regular (featured or not) content.
+    The number of objects returned is defined when the tag is called.
+    The top item type is defined in the sites admin for sites that
+    have the supersites app enabled.
+    If "featured" is True, will limit to only featured content.
+    Usage:
+        {% get_fresh_content 5 10 %}
+        Would return five top objects and 10 additional
+        {% get_fresh_content 4 8 featured %}
+        Would return four top objects and 8 additional, limited to featured content.
+    What you get:
+        'top_item':       the top featured item
+        'top_item_type':  the content type for the top item (article, gallery, video)
+        'featured':       Additional featured items. If you asked for 5 featureed items, there will be 4
+                          (five - the one that's in top item)
+        'articles':       featured articles, minus the top item
+        'galleries':      featured galleries, minus the top item
+        'vids':           featured video, minus the top item,
+        'more_articles':  A stack of articles, excluding what's in featured, sliced to the number passed for <num_regular>,
+        'more_galleries': A stack of galleries, excluding what's in featured, sliced to the number passed for <num_regular>,
+        'additional':     A mixed list of articles and galleries, excluding what's in featured, sliced to the number passed for <num_regular>,
+    """
+    articles = Article.published.only('headline', 'summary', 'slug', 'created')
+    galleries = Gallery.published.only('title', 'slug', 'created')
+    videos = Video.published.all()
+
+    if featured:
+        articles = articles.filter(featured=True)
+        galleries = galleries.filter(featured=True)
+        videos = videos.filter(featured=True)
+
+    # now slice to maximum possible for each group
+    # and go ahead and make them lists for chaining
+    max_total = featured + additional
+    articles = list(articles[:max_total])
+    galleries = list(galleries[:max_total])
+    videos = list(videos[:max_total])
+
+    # chain the lists now, we'll remove momentarily
+    top_content = sorted(
+        chain(articles, galleries, videos),
+        key=lambda instance: instance.created
+    ).reverse()
+
+    return top_content

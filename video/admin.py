@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.contenttypes import generic
 
+from .forms import VideoForm
 from .models import Video, VideoGallery
 
 
@@ -20,6 +21,8 @@ class VideoGalleryAdmin(admin.ModelAdmin):
 
 
 class VideoAdmin(admin.ModelAdmin):
+    form = VideoForm
+
     prepopulated_fields = {'slug': ('title',)}
     list_display = ('title', 'source')
     fieldsets = (

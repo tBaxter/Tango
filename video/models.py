@@ -1,27 +1,14 @@
-
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
 
 from .helpers import get_youtube_data, get_vimeo_data, get_ustream_data
+from .managers import VideoManager, PublishedVideoManager
+
+from tango_shared.models import BaseContentModel
 
 
-class Video(models.Model):
-    title = models.CharField(
-        max_length=200,
-        blank=True,
-        help_text="We'll attempt to fill this in from the video service."
-    )
-    slug = models.SlugField(
-        max_length=200,
-        blank=True,
-        help_text="We'll attempt to fill this in from the video title."
-    )
-    description = models.TextField(
-        blank=True,
-        null=True,
-        help_text="We'll attempt to fill this in from the video service."
-    )
+class Video(BaseContentModel):
     video_at_top = models.BooleanField(
         "Put video at top",
         default=False,
@@ -47,6 +34,7 @@ class Video(models.Model):
             from the video source.
             """
     )
+
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField(blank=True, null=True)
     content_object = generic.GenericForeignKey()
@@ -55,6 +43,10 @@ class Video(models.Model):
     source = models.CharField(max_length=20, blank=True, editable=False)
     embed_src = models.CharField(max_length=200, blank=True, editable=False)
     thumb_url = models.CharField(max_length=200, blank=True, editable=False)
+
+    # Managers
+    objects   = VideoManager()
+    published = PublishedVideoManager()
 
     def __unicode__(self):
         return '%s: %s' % (self.source, self.title)

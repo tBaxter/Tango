@@ -1,30 +1,22 @@
 import datetime
-import time
 
 from django.db import models
 
-from articles.models import Article
-from tango_shared.models import ContentImage
+from .managers import GalleryManager, PublishedGalleryManager
+from tango_shared.models import ContentImage, BaseContentModel
 
 now = datetime.datetime.now()
 
 
-class Gallery(models.Model):
-    overline = models.CharField(max_length=200, blank=True, null=True)
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(
-        max_length=200,
-        help_text="""Used for URLs and identification.
-        Will auto-fill, but can be edited with caution.
-        """
-    )
+class Gallery(BaseContentModel):
     credit = models.CharField(max_length=200, blank=True)
-    summary = models.TextField(blank=True)
-    published = models.BooleanField(default=True)
-    article = models.ForeignKey(Article, null=True, blank=True)
-
-    created = models.DateTimeField(auto_now_add=True)
+    article = models.ForeignKey('articles.Article', null=True, blank=True)
     has_image = models.BooleanField(max_length=200, default=False, editable=False)
+    published = models.BooleanField(default=True)
+
+    # Managers
+    objects   = GalleryManager()
+    published = PublishedGalleryManager()
 
     class Meta:
         verbose_name_plural = "galleries"
@@ -51,29 +43,3 @@ class Gallery(models.Model):
 
 class GalleryImage(ContentImage):
     gallery  = models.ForeignKey(Gallery)
-
-
-class BulkImageUpload(models.Model):
-    """
-    Allows multi-file upload in admin.
-    """
-    files       = models.FileField(upload_to= "temp/", help_text='Select multiple images or a .zip file of images to upload.')
-    gallery     = models.ForeignKey(Gallery)
-    caption     = models.TextField(blank=True)
-
-    def save(self, *args, **kwargs):
-        for f in self.files:
-            clean_file_name = f.name.lower().replace(' ', '_')  # lowercase and replace spaces
-            print clean_file_name
-            if clean_file_name.endswith('.jpg') or clean_file_name.endswith('.jpeg'):
-                # to do: proper dupe checking
-                dupe = False
-                if not dupe:
-                    print 'upload starting'
-                    upload = GalleryImage(
-                        gallery         = self.gallery,
-                        image           = clean_file_name,
-                        caption         = self.caption,
-                    )
-                    upload.save()
-                    time.sleep(1)

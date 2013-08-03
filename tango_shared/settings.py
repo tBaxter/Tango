@@ -29,6 +29,24 @@ GOOGLE_ANALYTICS_ID = ''
 # Project name
 PROJECT_NAME = 'tango'
 
+# if set to false, RESTRICT_CONTENT_TO_SITE will allow
+# sites/projects to share content.
+# If true, content will be limited to the current site.
+RESTRICT_CONTENT_TO_SITE = True
+
+# If set to true, additional fields news organizations
+# need will be added, including options to mark content as
+# opinion/editorial, dateline, and noting another source as
+# the origin of the content.
+NEWS_SOURCE = True
+
+# Comment moderation settings
+# Number of days after publication until comments close:
+COMMENTS_CLOSE_AFTER = 30
+# Number of days after publication until comments require moderation:
+COMMENTS_MOD_AFTER = 15
+
+
 # tango apps will be added to installed apps. Or should be.
 TANGO_APPS = (
     'tango_capo',

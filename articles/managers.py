@@ -39,7 +39,7 @@ class ArticlesManager(models.Manager):
         return articles
 
 
-class PublishedArticlesManager(models.Manager):
+class PublishedArticlesManager(ArticlesManager):
     """
     Builds on articles manager to only return articles
     - That are published

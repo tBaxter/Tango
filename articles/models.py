@@ -11,7 +11,7 @@ from .managers import DestinationManager, BlogManager, ArticlesManager, Publishe
 from .signals import auto_tweet
 
 from autotagger.autotag_content import autotag
-from tango_shared.models import ContentImage
+from tango_shared.models import ContentImage, BaseContentModel
 
 
 ########## CONFIG ###########
@@ -106,33 +106,24 @@ class Category(models.Model):
         return self.name
 
 
-class Article(models.Model):
+class Article(BaseContentModel):
     author          = models.ForeignKey(UserModel, limit_choices_to={'is_staff': True}, blank=True, null=True)
     guest_author    = models.CharField(max_length=200, blank=True, help_text="If the author is not on staff or in the system.")
-    kicker          = models.CharField(max_length=200, blank=True, help_text="A short headline over the main headline.")
-    title           = models.CharField('Headline', max_length=200, help_text="The title for this content.")
-    subhead         = models.CharField('Deck', max_length=200, blank=True, help_text="A short extra headline below the main headline.")
-    slug            = models.SlugField(max_length=200)
-    summary         = models.TextField(blank=True, help_text="You should summarize the content. It's better for search engines, and for people browsing lists of content. If you don't, a summary will be created. But you should.")
     body            = models.TextField()
     pull_quote      = models.TextField(blank=True)
     endnote         = models.TextField(blank=True, null=True, help_text="A short note after the body.")
-    featured        = models.BooleanField(default=False)
-
-    enable_comments = models.BooleanField(default=True)
-    publication     = models.CharField(max_length=32, choices=PUBLICATION_CHOICES, default='Published')
-    sites           = models.ManyToManyField(Site, default=[settings.SITE_ID, ], blank=False, null=True)
     override_url    = models.URLField(blank=True, help_text="Direct link to story elsewhere.")
-
+    publication = models.CharField(
+        "Publication status",
+        max_length=32,
+        choices=PUBLICATION_CHOICES,
+        default='Published'
+    )
+    # RELATIONSHIPS
     destination     = models.ForeignKey(Destination)
     sections        = models.ManyToManyField(Category, blank=True, null=True)
-
-    # RELATED
     galleries       = models.ManyToManyField('photos.Gallery', related_name="article_galleries", blank=True)
     articles        = models.ManyToManyField('self', related_name="related_articles", blank=True, null=True, limit_choices_to={'publication': 'Published'})
-
-    created         = models.DateTimeField(auto_now_add=True)
-    last_modified   = models.DateTimeField(auto_now=True)
 
     if NEWS_SOURCE:
         opinion  = models.BooleanField("Opinion/Editorial", default=False)

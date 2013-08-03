@@ -2,6 +2,8 @@ import datetime
 
 from PIL import Image
 
+from django.conf import settings
+from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.safestring import mark_safe
 
@@ -17,6 +19,56 @@ def set_img_path(instance, filename):
     """
     upload_path = '/'.join(['img', instance._meta.app_label, str(now.year), str(now.month), filename])
     return upload_path
+
+
+class BaseContentModel(models.Model):
+    """
+    Defines basic fields all main content types should have.
+    Used for articles, videos and photo galleries.
+    """
+    overline = models.CharField(
+        "Kicker/Overline",
+        max_length=200,
+        blank=True,
+        null=True,
+        help_text="A short headline over the main headline."
+    )
+    title = models.CharField(
+        'Title/Headline',
+        max_length=200,
+        help_text="The title for this content."
+    )
+    subhead = models.CharField(
+        'Subhead/Deck',
+        max_length=200,
+        blank=True,
+        help_text="A short extra headline below the main headline."
+    )
+    slug = models.SlugField(
+        max_length=200,
+        help_text="""Used for URLs and identification.
+        Will auto-fill, but can be edited with caution.
+        """
+    )
+    summary = models.TextField(
+        "Summary description",
+        blank=True,
+        help_text="""You should summarize the content.
+        It's better for search engines, and for people browsing lists of content.
+        If you don't, a summary will be created. But you should.
+        """
+    )
+
+    featured = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    sites = models.ManyToManyField(Site, default=[settings.SITE_ID])
+    enable_comments = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created']
+        abstract = True
 
 
 class ContentImage(models.Model):

@@ -37,7 +37,7 @@
         <h1 class="entry-title">{{ object.title|typogrify }}</h1>
         
         {% if object.subhead %}
-          <p class="subhead">{{ object.subhead|typogrify }}</p>
+          <h2 class="subhead">{{ object.subhead|typogrify }}</h2>
         {% endif %}
         
         <p class="author vcard{% if destination.is_blog %} hide{% endif %}">
