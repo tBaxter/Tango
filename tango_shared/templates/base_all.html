@@ -86,7 +86,9 @@
       {% block content_bottom %}{% endblock %}
     </div>
     <footer id="footer" role="contentinfo">
-      {% block footer_nav %}{% endblock %}
+      {% block footer %}
+        <p class="copyright">&copy; {{ now.year }} {{ site.name }}</p>
+      {% endblock %}
     </footer>
   </div> <!-- /#wrapper -->
   {# Javascript at the bottom for fast page loading #}
