@@ -98,9 +98,9 @@ def get_fresh_content(top=4, additional=10, featured=False):
         'more_galleries': A stack of galleries, excluding what's in featured, sliced to the number passed for <num_regular>,
         'additional':     A mixed list of articles and galleries, excluding what's in featured, sliced to the number passed for <num_regular>,
     """
-    articles = Article.published.only('headline', 'summary', 'slug', 'created')
-    galleries = Gallery.published.only('title', 'slug', 'created')
-    videos = Video.published.all()
+    articles = Article.published.only('title', 'summary', 'slug', 'created')
+    galleries = Gallery.published.only('title', 'summary', 'slug', 'created')
+    videos = Video.published.only('title', 'summary', 'slug', 'created')
 
     if featured:
         articles = articles.filter(featured=True)

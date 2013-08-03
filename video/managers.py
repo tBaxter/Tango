@@ -18,7 +18,7 @@ class VideoManager(models.Manager):
     def get_query_set(self):
         videos = super(VideoManager, self).get_query_set()
         if RESTRICT_CONTENT_TO_SITE:
-            videos.filter(site__id__exact=settings.SITE_ID)
+            videos.filter(sites__id__exact=settings.SITE_ID)
         return videos
 
 
@@ -26,7 +26,7 @@ class PublishedVideoManager(VideoManager):
     """
     Extends VideoManager to only return videos
     - That are published
-    - With a created date greater than or equal to now.
+    - and have a created date greater than or equal to now.
 
     Usage is gallery.published.all()
     """
