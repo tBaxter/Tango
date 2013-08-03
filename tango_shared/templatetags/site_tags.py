@@ -73,7 +73,7 @@ def fix_indents(value):
 
 
 @register.inclusion_tag('includes/fresh_content.html')
-def get_fresh_content(featured=4, additional=10, featured=False):
+def get_fresh_content(top=4, additional=10, featured=False):
     """
     Returns published *Featured* content (articles, galleries, video, etc)
     and an additional batch of fresh regular (featured or not) content.
@@ -109,7 +109,7 @@ def get_fresh_content(featured=4, additional=10, featured=False):
 
     # now slice to maximum possible for each group
     # and go ahead and make them lists for chaining
-    max_total = featured + additional
+    max_total = top + additional
     articles = list(articles[:max_total])
     galleries = list(galleries[:max_total])
     videos = list(videos[:max_total])
