@@ -72,6 +72,9 @@ class Video(BaseContentModel):
                 """ % (self.embed_src, self.key)
         super(Video, self).save()
 
+    def get_image(self):
+        return self.thumb_url
+
 
 class VideoGallery(models.Model):
     title = models.CharField(max_length=200)

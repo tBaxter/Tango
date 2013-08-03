@@ -33,7 +33,7 @@ def get_youtube_data(video):
 
     video.title = unicode(xml.title)
     video.slug = slugify(video.title)
-    video.description = unicode(xml.content)
+    video.summary = unicode(xml.content)
     video.thumb_url = xml[xml_media.group][xml_media.thumbnail:][1]('url')
     return video
 
@@ -52,7 +52,7 @@ def get_vimeo_data(video):
     xml = xmltramp.parse(video_data)
     video.title = unicode(xml.video.title)
     video.slug = slugify(video.title)
-    video.description = unicode(xml.video.description)
+    video.summary = unicode(xml.video.description)
     video.thumb_url = unicode(xml.video.thumbnail_medium)
     return video
 
