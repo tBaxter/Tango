@@ -187,11 +187,6 @@ class Article(BaseContentModel):
         num_comments = Comment.objects.filter(content_type=ctype.id, object_pk=self.id).count()
         return num_comments
 
-    def comments_open(self):
-        close_date = (self.created + datetime.timedelta(days=closing))
-        if close_date > now:
-            return True
-
 
 class Sidebar(models.Model):
     # make sidebars separate content or not. see happenings.
