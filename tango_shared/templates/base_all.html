@@ -87,8 +87,13 @@
     </div>
     <footer id="footer" role="contentinfo">
       {% block footer %}
-        <p class="copyright constrain">&copy; {{ now.year }} {{ site.name }}</p>
+        <div class="constrain">
+          <p class="copyright">&copy; {{ now.year }} {{ site.name }}</p>
+          <p class="right">Powered by <a href="http://tbaxter.github.io/Tango/">Tango</a>
+        </div>
+
       {% endblock %}
+      {% block footer_nav %}{% endblock %}
     </footer>
   </div> <!-- /#wrapper -->
   {# Javascript at the bottom for fast page loading #}
