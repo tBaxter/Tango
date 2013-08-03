@@ -35,14 +35,18 @@ class ArticleList(ListView):
     """
     template_name = 'all_content/article_list.html'
     paginate_by = pagination_setting
+    destination = None
 
     def dispatch(self, request, *args, **kwargs):
-        self.destination_slug = kwargs.get('destination_slug', 'articles')
-        self.destination = Destination.objects.get(slug=self.destination_slug)
+        self.destination_slug = kwargs.get('destination_slug', None)
+        if self.destination_slug:
+            self.destination = Destination.objects.get(slug=self.destination_slug)
         return super(ArticleList, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Article.published.filter(destination=self.destination)
+        if self.destination:
+            return Article.published.filter(destination=self.destination)
+        return Article.published.all()
 
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)
@@ -53,7 +57,7 @@ article_list = ArticleList.as_view()
 
 class ArticleDetail(DetailView):
     """
-    Returns an article detail, plus it's parent destination.
+    Returns an article detail, plus its parent destination.
 
     """
     template_name = 'all_content/article_detail.html'
