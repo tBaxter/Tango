@@ -37,8 +37,8 @@
       "destination": 1, 
       "enable_comments": true, 
       "sections": [], 
-      "slug": 
-      "welcome-tango"
+      "slug": "welcome-tango",
+      "published": true
     }
   }
 ]
