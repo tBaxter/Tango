@@ -26,7 +26,7 @@ class VideoAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_display = ('title', 'source')
     fieldsets = (
-        ('', {'fields': ('url', 'title', 'description',)}),
+        ('', {'fields': ('url', 'title', 'summary',)}),
         ('Admin fields', {
             'description': 'These should be filled in for you, but you can edit them.',
             'fields': ('slug', ),

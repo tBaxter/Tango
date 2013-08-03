@@ -12,6 +12,9 @@ from easy_thumbnails.files import get_thumbnailer
 
 now = datetime.datetime.now()
 
+comments_close_days    = getattr(settings, 'COMMENTS_CLOSE_AFTER', 30)
+comments_moderate_days = getattr(settings, 'COMMENTS_MOD_AFTER', 30)
+
 
 def set_img_path(instance, filename):
     """
@@ -65,10 +68,21 @@ class BaseContentModel(models.Model):
     enable_comments = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    published = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['-created']
         abstract = True
+
+    def comments_open(self):
+        close_date = (self.created + datetime.timedelta(days=comments_close_days))
+        if close_date > now:
+            return True
+
+    def comments_require_moderation(self):
+        mod_date = (self.created + datetime.timedelta(days=comments_moderate_days))
+        if mod_date > now:
+            return True
 
 
 class ContentImage(models.Model):

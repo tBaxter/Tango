@@ -18,7 +18,8 @@
     "pk": 1, "model": "articles.article", 
     "fields": {
       "body": "Building content-driven Django sites with Tango is fast and easy.\r\n\r\nNews, blogs, photo galleries, video and more are included. And these aren't toy apps. They've powered national magazines and large newspaper sites. You can have everything you need to get a solid, extensible site up and running in minutes. \r\n\r\nIf you're just learning Django, the code is clean, well-commented and easy to understand. And if you already have a stack of apps for your project, Tango won't try to take over.\r\n\r\n###Why Tango?\r\nBecause building a content-driven web sites with Django should be easy. Because you should be be able to build a Django web site in minutes, and know everything will work. Because your content management system shouldn't take over your project and force you to build your project around their CMS.\r\n\r\nTango is the result of more than six years building content-driven Django sites, including sites for large publications. Like Django itself, it is designed to get a lot done, quickly and simply. Whether you just want a blog or your a professional on deadline, you need a content manager that helps you get things done.\r\n\r\n###Batteries included\r\nTango includes everything you need for a content-driven site, including:\r\n\r\nNews, articles & announcements  \r\nAs many blogs as you want  \r\nPhoto galleries  \r\nvideo support  \r\nRobust contact forms to handle any interaction with your readers  \r\nOut of-the-box responsive templates  \r\nSolid typography   \r\nand a whole lot more...", 
-      "galleries": [], 
+      "galleries": [],
+      "overline": "",
       "subhead": "Faster, simpler django content management", 
       "publication": "Published", 
       "guest_author": "", 
@@ -31,7 +32,6 @@
       "featured": false, 
       "last_modified": "2013-08-03T02:30:43.883Z", 
       "created": "2013-08-03T01:59:35.996Z", 
-      "kicker": "", 
       "pull_quote": "", 
       "articles": [], 
       "destination": 1, 

@@ -51,7 +51,7 @@ class ArticleAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Routing', {'fields': ('destination', 'sections')}),
         ('Author info', {'fields': (('author', 'guest_author'))}),
-        ('Header', {'fields': ('kicker', 'title', 'subhead')}),
+        ('Header', {'fields': ('overline', 'title', 'subhead')}),
         ('Content', {'fields': ('summary', 'body', 'pull_quote', 'endnote')}),
         ('Admin fields', {
             'description': 'You should rarely, if ever, need to touch these fields.',

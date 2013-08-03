@@ -19,7 +19,7 @@ class GalleryManager(models.Manager):
     def get_query_set(self):
         galleries = super(GalleryManager, self).get_query_set()
         if RESTRICT_CONTENT_TO_SITE:
-            galleries.filter(site__id__exact=settings.SITE_ID)
+            galleries.filter(sites__id__exact=settings.SITE_ID)
         return galleries
 
 

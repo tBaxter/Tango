@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .forms import BulkUploadForm, GalleryForm
-from .models import Gallery, GalleryImage, BulkImageUpload
+from .forms import GalleryForm
+from .models import Gallery, GalleryImage
 
 
 ##### Actions

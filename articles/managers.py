@@ -35,7 +35,7 @@ class ArticlesManager(models.Manager):
     def get_query_set(self):
         articles = super(ArticlesManager, self).get_query_set()
         if RESTRICT_CONTENT_TO_SITE:
-            articles.filter(site__id__exact=settings.SITE_ID)
+            articles.filter(sites__id__exact=settings.SITE_ID)
         return articles
 
 
