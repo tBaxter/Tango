@@ -53,7 +53,7 @@ def get_vimeo_data(video):
     video.title = unicode(xml.video.title)
     video.slug = slugify(video.title)
     video.summary = unicode(xml.video.description)
-    video.thumb_url = unicode(xml.video.thumbnail_medium)
+    video.thumb_url = unicode(xml.video.thumbnail_large)
     return video
 
 

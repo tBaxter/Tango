@@ -69,6 +69,7 @@ class BaseContentModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     published = models.BooleanField(default=True)
+    has_image = models.BooleanField(max_length=200, default=False, editable=False)
 
     class Meta:
         ordering = ['-created']
@@ -83,6 +84,14 @@ class BaseContentModel(models.Model):
         mod_date = (self.created + datetime.timedelta(days=comments_moderate_days))
         if mod_date > now:
             return True
+
+    def save(self, *args, **kwargs):
+        if self.pk and not self.has_image:
+            # most models will have get_image.
+            # video will fall back to thumb_url
+            if self.get_image() or self.thumb_url:
+                self.has_image = True
+        super(BaseContentModel, self).save(*args, **kwargs)
 
 
 class ContentImage(models.Model):
