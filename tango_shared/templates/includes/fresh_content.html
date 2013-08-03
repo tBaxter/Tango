@@ -1,5 +1,5 @@
 {# Takes output from get_fresh_content template tag to create mixed list of what's new #}
-{% load typogrify_tags %}
+{% load typogrify_tags markup %}
 
 <div id="top-content" class="columned phi">
   {% with top_content.0 as object %}
@@ -20,7 +20,11 @@
           {% endif %}
         </a>
         <section class="article-body">
-          <p>{{ object.summary }}</p>
+          {% if object.has_image %}
+            <p>{{ object.summary }}</p>
+          {% else %}
+            <p>{{ object.body|markdown|truncatewords:"90" }}
+          {% endif %}
         </section>
       </article>
     {% endwith %}
@@ -29,7 +33,7 @@
     {% for object in top_content|slice:"1:" %}
       <article>
         <a href="{{ object.get_absolute_url }}">
-          {{ object.get_image.image.t_320 }}
+          <img src="{% firstof object.get_image.image.t_320  object.get_image %}">
           <h1 class="has_photos">{{ object.title }}</h1>
           {% comment %}
             {% if obj.show_label %}
