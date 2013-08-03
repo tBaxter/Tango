@@ -32,6 +32,7 @@ class ContentImage(models.Model):
     )
     caption = models.CharField(max_length=255, blank=True)
     byline = models.CharField(max_length=200, blank=True)
+    credit = models.CharField("Credit/source", max_length=200, blank=True)
     order = models.IntegerField(
         blank=True,
         null=True,
