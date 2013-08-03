@@ -115,9 +115,14 @@ def get_fresh_content(top=4, additional=10, featured=False):
     videos = list(videos[:max_total])
 
     # chain the lists now, we'll remove momentarily
-    top_content = sorted(
+    content = sorted(
         chain(articles, galleries, videos),
         key=lambda instance: instance.created
     ).reverse()
 
-    return top_content
+    top_content = content[:top]
+    additional_content = content[top:max_total]
+    return {
+        'top_content': top_content,
+        'additional_content': additional_content,
+    }

@@ -1,0 +1,85 @@
+{# Takes output from get_fresh_content template tag to create mixed list of what's new #}
+{% load typogrify_tags %}
+
+
+{{ top_content }}
+{{ additional_content }}
+
+
+<article id="top_item">
+  {% if additional_content.top_item_type == 'G' or featured_content.top_item_type == 'galleries.models' %}
+    {% with featured_content.top_item as gallery %}
+    <div id="featured_gallery" {% if gallery.image_list.0.vertical %}class="vertical"{% endif %}>
+    <a href="{{ gallery.get_absolute_url }}">
+      {% with gallery.image_list.0 as pic %}
+        <img src="{% if pic.vertical %}{{ pic.image.t_420 }}{% else %}{{ pic.web_img }}{% endif %}" {% if pic.vertical %} class="vertical"{% endif %}>
+      {% endwith %}
+      <h1>{{ gallery.title }}</h1>
+    </a>
+      <p>{{ gallery.summary }}</p>
+    </div>
+    {% endwith %}
+  {% endif %}
+  {% if featured_content.top_item_type == 'A' or featured_content.top_item_type == 'articles.models' %}
+    {% with featured_content.top_item as top_item %}
+    {% with top_item.get_image as main_image %}
+      {% if main_image.is_vertical %}
+        <article class="vertical" >
+          <a href="{{ top_item.get_absolute_url }}" data-deferred-load="{{ main_image.image.t_360u }}">
+      {% else %}
+        <article>
+          <a href="{{ top_item.get_absolute_url }}" data-deferred-load="{{ main_image.image.t_640 }}">
+      {% endif %}
+            {% if top_item.show_label or top_item.opinion %}
+              <span class="kicker meta">{% firstof top_item.show_label.category top_item.author top_item.other_author|title %}</span>               {% endif %}
+            {% if top_item.kicker %}<h2 class="kicker meta">{{ top_item.kicker }}</h2>{% endif %}       
+            <h1>{{ top_item.headline}}</h1>
+            {% if top_item.subhead %}<h2 class="kicker meta">{{ top_item.subhead }}</h2>{% endif %}
+            <section class="article-body">
+              {{ top_item.summary|safe }}
+            </section>
+          </a>
+        </article>
+    {% endwith %}
+    {% endwith %}
+  {% endif %}
+  {% if featured_content.top_item_type == 'V' or featured_content.top_item_type == 'video.models' %}
+    {% load video_tags %}
+    {% show_video featured_content.top_item %}
+  {% endif %}   
+  </div><!-- /#top_item -->
+
+  <div id="more_featured">
+  {% for obj in featured_content.featured %}
+    <article>
+        {% if obj.obj_type == "galleries" %}
+          <a href="{{ obj.get_absolute_url }}">
+          {{ obj.get_image }}
+          <h3 class="has_photos">{{ obj.title }}</h3>
+          </a>
+        {% endif %}
+        {% if obj.obj_type == "articles" %}
+            <a href="{{ obj.get_absolute_url }}" {% if obj.has_image %}data-deferred-load="{{ obj.get_image.image.t_320 }"{% endif %}>
+            {% if obj.show_label %}
+              <span class="kicker meta"><a href="{{ obj.show_label.get_absolute_url }}">{{ obj.show_label.category }}</a></span>
+              {% else %}
+                {% if obj.opinion %}
+                  <span class="meta opinion">{% firstof obj.author obj.other_author|title %}, Opinion {{ obj.show_label.category }} </span>
+                {% endif %}         
+            {% endif %}
+            <h3>{{ obj.headline|typogrify }}</h3>
+          <p>{{ obj.summary|truncatewords:"15" }}</p>
+          </a>
+        {% endif %}
+        {% if obj.obj_type == "video" %}
+          <a href="{{ obj.get_absolute_url }}">
+            <img src="{{ obj.image.t_320  }}">
+            <h3 class="has_video">{{ obj.video_title }}</h3>
+          </a>
+          <p>{{ obj.description|truncatewords:"14" }}</p>
+        {% endif %}
+    </article>
+  {% endfor %}
+  </div>
+  {% block content_ad %}{% endblock %}
+  </div>
