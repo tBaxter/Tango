@@ -79,17 +79,16 @@
       <div id="content-main" role="main">
         {% block content %}{% endblock %}
       </div> <!-- /#content-main -->
-      <div id="secondary" role="complementary">
-        {% block site_side %}{% endblock %}
-        {% block aside %}{% endblock %}
+      <div id="content-complementary" role="complementary">
+        {% block complementary %}{% endblock %}
       </div><!-- /#content-side -->
       {% block content_bottom %}{% endblock %}
     </div>
     <footer id="footer" role="contentinfo">
       {% block footer %}
         <div class="constrain">
-          <p class="copyright">&copy; {{ now.year }} {{ site.name }}</p>
           <p class="right">Powered by <a href="http://tbaxter.github.io/Tango/">Tango</a>
+          <p class="copyright">&copy; {{ now.year }} {{ site.name }}</p>
         </div>
 
       {% endblock %}
