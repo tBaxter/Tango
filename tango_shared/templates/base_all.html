@@ -19,6 +19,8 @@
   {% block canonical %}{% endblock %}
   <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png">
   <link rel="apple-touch-icon" href="{{ STATIC_URL }}img/touch-icon.png">
+  
+  <link rel="profile" href="http://microformats.org/profile/hcard">
   {% block site_styles %}
     {% if theme %}
       <link rel="stylesheet" href="{{ STATIC_URL }}css/themes/{{ theme }}.css">
@@ -85,14 +87,13 @@
       {% block content_bottom %}{% endblock %}
     </div>
     <footer id="footer" role="contentinfo">
+      {% block footer_nav %}{% endblock %}
       {% block footer %}
         <div class="constrain">
           <p class="right">Powered by <a href="http://tbaxter.github.io/Tango/">Tango</a>
           <p class="copyright">&copy; {{ now.year }} {{ site.name }}</p>
         </div>
-
       {% endblock %}
-      {% block footer_nav %}{% endblock %}
     </footer>
   </div> <!-- /#wrapper -->
   {# Javascript at the bottom for fast page loading #}
