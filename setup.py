@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
 setup(
     name='django-tango',
     version='0.1',
@@ -12,6 +15,7 @@ setup(
     author_email='mail.baxter@gmail.com',
     packages=find_packages(),
     include_package_data=True,
+    install_requires=required,
     #zip_safe=False,
     #dependency_links = ['https://github.com/tBaxter/capo.git']
 )
