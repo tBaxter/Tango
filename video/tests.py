@@ -20,7 +20,7 @@ class TestVideo(TestCase):
         video_dict = test_video.__dict__
         self.assertIn('title', video_dict)
         self.assertIn('slug', video_dict)
-        self.assertIn('description', video_dict)
+        self.assertIn('summary', video_dict)
         self.assertIn('thumb_url', video_dict)
 
         response = self.client.get(reverse('video_detail', args=[test_video.slug, ]))
@@ -45,7 +45,7 @@ class TestVideo(TestCase):
         video_dict = test_video.__dict__
         self.assertIn('title', video_dict)
         self.assertIn('slug', video_dict)
-        self.assertIn('description', video_dict)
+        self.assertIn('summary', video_dict)
         self.assertIn('thumb_url', video_dict)
 
         response = self.client.get(reverse('video_detail', args=[test_video.slug, ]))

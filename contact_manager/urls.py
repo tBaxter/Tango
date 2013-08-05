@@ -33,4 +33,9 @@ urlpatterns = patterns(
         name="contact_form_builder",
         view='build_contact'
     ),
+    url(
+        regex=r'^(?P<controller_slug>[-\w]+)/messages/$',
+        name="controller_contact_list",
+        view='form_contact_list'
+    ),
 )

@@ -108,7 +108,8 @@ class Event(models.Model):
 
     def save(self, *args, **kwargs):
         geocode = get_geocode(self.city, self.state, self.address, self.zipcode)
-        self.geocode = ', '.join(geocode)
+        if geocode:
+            self.geocode = ', '.join(geocode)
         super(Event, self).save(*args, **kwargs)
 
     def ended(self):

@@ -39,7 +39,7 @@ class FormContacts(ContactList):
     def get_queryset(self):
         queryset = super(FormContacts, self).get_queryset()
         return queryset.filter(controller__slug=self.controller_slug)
-form_comments_list = FormContacts.as_view()
+form_contact_list = FormContacts.as_view()
 
 
 class ContactDone(TemplateView):

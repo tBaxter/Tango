@@ -5,8 +5,10 @@ from .models import Event
 
 
 class TestHappeningsGeneralViews(TestCase):
+    fixtures = ['events.json']
+
     def setUp(self):
-        self.event = Event.objects.get(id=98)  # 98 is the Nashville roundup
+        self.event = Event.objects.get(id=1)
 
     def test_index(self):
         """
@@ -38,12 +40,3 @@ class TestHappeningsGeneralViews(TestCase):
         if self.event.ended:
             self.assertFalse('schedule/">Schedule</a>' in resp.content)
 
-    def test_giveaway(self):
-        """
-        Test for valid event detail.
-        """
-        # unauthenticated
-        resp = self.client.get(reverse('giveaways', args=[self.event.slug]))
-        self.assertEqual(resp.status_code, 200)
-        self.assertFalse('giveaway-form' in resp.content)
-        self.assertTrue('sign in to enter' in resp.content)

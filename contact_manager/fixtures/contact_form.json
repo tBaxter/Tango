@@ -21,7 +21,7 @@
       "email_options": "1", 
       "slug": "test-contact-form", 
       "require_auth": false, 
-      "request_contact_info": false
+      "request_contact_info": true
     }
   }, 
   {

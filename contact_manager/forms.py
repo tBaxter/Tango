@@ -11,7 +11,7 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        fields = ['sender_name', 'sender_email', 'body', 'send_a_copy']
+        fields = ['sender_name', 'sender_email', 'body', 'send_a_copy', 'contact_address', 'contact_city', 'contact_state', 'contact_phone']
 
     def __init__(self, *args, **kwargs):
         #pick controller off before init
@@ -44,11 +44,15 @@ class ContactForm(forms.ModelForm):
 
             # if we want contact info
             if controller.request_contact_info:
-                self.fields.extend(['contact_address', 'contact_city', 'contact_state', 'contact_phone', ])
                 self.fields['contact_address'].required = True
                 self.fields['contact_city'].required = True
                 self.fields['contact_state'].required = True
                 self.fields['contact_phone'].required = True
+            else:
+                form.fields['contact_address'].widget = forms.HiddenInput()
+                form.fields['contact_address'].widget = forms.HiddenInput()
+                form.fields['contact_address'].widget = forms.HiddenInput()
+                form.fields['contact_address'].widget = forms.HiddenInput()
 
             # If there's a file
             if controller.allow_uploads:

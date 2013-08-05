@@ -33,13 +33,14 @@ class EventList(ListView):
         offset = now - datetime.timedelta(days=5)
         events = Event.objects.filter(approved=True, start_date__gte=offset).order_by('start_date')
         if 'region' in self.kwargs:
+            self.region = self.kwargs['region']
             events = events.filter(region=self.kwargs['region'])
         return events
 
-    #def get_context_data(self, **kwargs):
-    #    context = super(EventList, self).get_context_data(**kwargs)
-    #    if 'region' in kwargs:
-    #        context['region'] = kwargs['region']
+    def get_context_data(self, **kwargs):
+        context = super(EventList, self).get_context_data(**kwargs)
+        context['region'] = self.region
+        return context
 event_list = EventList.as_view()
 
 
