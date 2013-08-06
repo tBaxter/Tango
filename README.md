@@ -22,7 +22,10 @@ For more info, see the "Dependencies" section.
 *Note: test_project should (of course) be the name of your project*
 
 ### What then?
-If you used the starter project, a basic test database was included. Just run manage.py runserver and you'll have a working site.
+If you used the starter project, a basic test database was included. 
+Just run manage.py runserver and you'll have a working site. 
+You can log into the admin with username:admin, password:test.
+Obviously, you'll want to change that right away.
 
 If not, you'll want to run syncdb or South.
 
