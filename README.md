@@ -21,9 +21,14 @@ For more info, see the "Dependencies" section.
 
 *Note: test_project should (of course) be the name of your project*
 
-### Run syncdb or South.
+### What then?
+If you used the starter project, a basic test database was included. Just run manage.py runserver and you'll have a working site.
 
-And start adding content. That's it.
+If not, you'll want to run syncdb or South.
+
+Then start adding content. That's it.
+
+Of course, before the site is ready to go live, you'll want to change some settings and hook up a real database.
 
 ##Dependencies (these should be installed for you)
 [Django 1.5.1 +](https://www.djangoproject.com)
