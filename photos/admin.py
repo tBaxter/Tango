@@ -28,7 +28,7 @@ make_unpublished.short_description = "Unpublish"
 class GalleryInline(admin.TabularInline):
     model = GalleryImage
     extra = 10
-    fields = ('image', 'caption', 'byline', 'order')
+    fields = ('image', 'caption', 'byline', 'credit', 'order')
 
 
 class GalleryAdmin(admin.ModelAdmin):

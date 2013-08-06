@@ -1,6 +1,6 @@
 {% extends "galleries/base.html" %}
 
-{% load cache gallery_tags social_tags %}
+{% load cache gallery_tags social_tags markup %}
 
 {% block title %}{{ gallery.title }}{% endblock %}
 
@@ -9,68 +9,70 @@
 {% block bodyid %}gallery_detail{% endblock %}
 
 {% block extra_meta %}
-	<meta property="og:title" content="Photo Gallery: {{ gallery.title }}">
-	<meta property="og:url" content="http://{{ site.domain }}{{ gallery.get_absolute_url }}">
-	<meta property="og:description" content="{{ gallery.summary }}">
-	<meta property="og:image" content="{{ MEDIA_URL }}{{ gallery.get_image.image }}">
-	<meta property="og:type" content="gallery">
-	<meta property="gallery:section" content="{{ gallery.get_section }}">
-	<meta property="gallery:published_time"  content="{{ gallery.created|date:"c" }}Z">
-	<meta name="description" content="{{ gallery.title }}: {{ gallery.summary }}" />
-	<meta name="DC.date.issued" content="{{ gallery.created|date:"c" }}Z">	
+  <meta property="og:title" content="Photo Gallery: {{ gallery.title }}">
+  <meta property="og:url" content="http://{{ site.domain }}{{ gallery.get_absolute_url }}">
+  <meta property="og:description" content="{{ gallery.summary }}">
+  <meta property="og:image" content="{{ MEDIA_URL }}{{ gallery.get_image.image }}">
+  <meta property="og:type" content="gallery">
+  <meta property="gallery:section" content="{{ gallery.get_section }}">
+  <meta property="gallery:published_time"  content="{{ gallery.created|date:"c" }}Z">
+  <meta name="description" content="{{ gallery.title }}: {{ gallery.summary }}" />
+  <meta name="DC.date.issued" content="{{ gallery.created|date:"c" }}Z">  
 {% endblock %}
-
-{% block extrascript %}
-	<script src="http://media.kansascity.com/js/gallery.js?v=34"></script>
-{% endblock %}
-
 
 {% block content %}
-{% cache 900 gallery gallery.id gallery.galleryimage_set.count 8 %}
+  {% cache 900 gallery gallery.id gallery.galleryimage_set.count 8 %}
 
-<div id="gallery_thumbs_hold">
-	<ul id="gallery_thumbs">{% for object in gallery.galleryimage_set.all %}
-	 	<li id="thumb_{{ forloop.counter }}" data-deferred-thumbs="{{ object.image.thumbnail }}"></li>
-	{% endfor %}</ul>
-</div><!-- /gallery_thumbs_hold -->
-	
-<div id="gallery_slides_hold">
-	<div id="gallery_slides">{% for object in gallery.galleryimage_set.all %}
-		{% if forloop.counter == 1 %}
-			{# load the first, defer loading of subsequent #}
-			<figure id="image_{{ forloop.counter }}">
-				<img src="{{ object.image.extra_thumbnails.t_640 }}">
-		{% else %}
-			<figure id="image_{{ forloop.counter }}" data-load-on-demand="{{ object.image.extra_thumbnails.t_640 }}">
-		{% endif %}
-			<figcaption>
-				<div class="caption">{{ object.caption }}</div>
-				<span class="byline">{{ object.byline }}</span>
-			</figcaption>
-		</figure>
-	{% endfor %}</div>
-</div> <!-- /slides -->
+    <div id="gallery_thumbs_hold">
+      <ul id="gallery_thumbs">
+        {% for object in gallery.galleryimage_set.all %}
+          <li id="thumb_{{ forloop.counter }}" data-deferred-thumbs="{{ object.image.thumbnail }}">
+          </li>
+        {% endfor %}
+      </ul>
+    </div><!-- /gallery_thumbs_hold -->
+  
+    <div id="gallery_slides_hold">
+      <div id="gallery_slides">
+        {% for object in gallery.galleryimage_set.all %}
+          {% if forloop.counter == 1 %}{# load the first, defer loading of subsequent #}
+            <figure id="image_{{ forloop.counter }}">
+              <img src="{{ object.image.extra_thumbnails.t_640 }}">
+          {% else %}
+            <figure id="image_{{ forloop.counter }}" data-load-on-demand="{{ object.image.extra_thumbnails.t_640 }}">
+          {% endif %}
+            <figcaption>
+              <div class="caption">{{ object.caption }}</div>
+              <span class="byline">{{ object.byline }}</span>
+            </figcaption>
+          </figure>
+        {% endfor %}
+      </div>
+    </div> <!-- /slides -->
 
-<div id="gallery_info">
-	<h1>{{ gallery.title }}</h1>
-	{{ gallery.summary|markdown }}
-	
-	{% if gallery.gallery_credit %}<p class="meta">{{ gallery.gallery_credit }}</p>{% endif %}
-	<nav class="pager">
-		<ul>    
-			<li class="prev" title="Previous"><span>previous</span></li>
-			<li class="current"><span id="gallery_index">1</span> of {{ gallery.image_list|length }}</li>
-			<li class="next" title="Next"><span>next</span></li>
-		</ul>
-	</nav>
-	{% with gallery as object %}
-		{% social_links object %}
-	{% endwith %}
-	<div id="caption_hold"></div>
-	<p id="buy_hold"></p>
-</div>
-<section class="clear">
-	{% get_related_galleries gallery 4 %}
-</section>
-{% endcache %}
+    <div id="gallery_info">
+      <h1>{{ gallery.title }}</h1>
+      {{ gallery.summary|markdown }}
+      {% if gallery.gallery_credit %}
+        <p class="meta">
+          {{ gallery.gallery_credit }}
+        </p>
+      {% endif %}
+
+      <nav class="pager">
+        <ul>    
+          <li class="prev" title="Previous"><span>previous</span></li>
+          <li class="current">
+            <span id="gallery_index">1</span> of {{ gallery.image_list|length }}
+          </li>
+          <li class="next" title="Next"><span>next</span></li>
+        </ul>
+      </nav>
+      {% social_links object %}
+      <div id="caption_hold"></div>
+    </div>
+    <section class="clear">
+      {% get_related_galleries gallery 4 %}
+    </section>
+  {% endcache %}
 {% endblock %}

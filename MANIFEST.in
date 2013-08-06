@@ -7,6 +7,7 @@ recursive-include contact_manager/templates/ *
 recursive-include happenings/fixtures/ *
 recursive-include happenings/static/ *
 recursive-include happenings/templates/ *
+recursive-include photos/fixtures/ *
 recursive-include photos/static/ *
 recursive-include photos/templates/ *
 recursive-include tango_admin/templates/ *

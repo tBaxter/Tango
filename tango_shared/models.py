@@ -86,10 +86,9 @@ class BaseContentModel(models.Model):
             return True
 
     def save(self, *args, **kwargs):
-        if self.pk and not self.has_image:
-            # most models will have get_image.
-            # video will fall back to thumb_url
-            if self.get_image() or self.thumb_url:
+        if not self.has_image:
+            # most models will have get_image. video falls back to thumb_url
+            if self.get_image() or hasattr(self, 'thumb_url'):
                 self.has_image = True
         super(BaseContentModel, self).save(*args, **kwargs)
 

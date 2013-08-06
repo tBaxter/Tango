@@ -1,0 +1,15 @@
+{% if related %}
+  <div class="clear">
+    <h2>Related</h2>
+    <ul class="related_galleries clearfix columned five-col">
+      {% for r in related %}
+        <li>
+          <a href="{{ r.get_absolute_url }}">
+            <img src="{{ r.get_image.get_thumb }}">
+            <h3>{{ r.title }}</h3>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
