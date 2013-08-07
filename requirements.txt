@@ -12,4 +12,4 @@ vobject==0.8.1c
 typogrify==2.0.0
 django-filter==0.6
 markdown==2.3.1
-tbaxter-voting
+tbaxter-voting==0.1
