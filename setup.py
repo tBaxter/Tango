@@ -17,6 +17,5 @@ setup(
     include_package_data=True,
     install_requires=required,
     #zip_safe=False,
-    dependency_links = ['http://github.com/tBaxter/django-voting.git']
-    
+    dependency_links = ['http://github.com/tBaxter/django-voting/tarball/master#egg=django-voting-0.1']
 )
