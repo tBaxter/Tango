@@ -1,4 +1,4 @@
-
+from django import forms
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -24,6 +24,11 @@ class TestContactViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue('form' in response.context)
         self.assertTrue('site' in response.context)
+        form_fields = response.context['form'].fields
+        self.assertEquals(form_fields.keys(), ['sender_name', 'sender_email', 'body', 'send_a_copy', 'contact_address', 'contact_city', 'contact_state', 'contact_phone'])
+        # because this is a simple form these fields should be hidden:
+        hidden_fields = [k.name for k in response.context['form'].hidden_fields()]
+        self.assertEquals(hidden_fields, ['contact_address', 'contact_city', 'contact_state', 'contact_phone'])
 
     def test_admin_contact_post(self):
         """
@@ -97,8 +102,6 @@ class TestContactViews(TestCase):
         self.assertTrue(form_dict['fields']['contact_city'].required)
         self.assertTrue(form_dict['fields']['contact_state'].required)
         self.assertTrue(form_dict['fields']['contact_phone'].required)
-
-
 
     def test_contact_builder_authenticated(self):
         contact_form_slug = ContactFormController.objects.get(id=1).slug

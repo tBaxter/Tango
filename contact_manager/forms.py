@@ -42,18 +42,18 @@ class ContactForm(forms.ModelForm):
             if controller.body_label:  # we're overriding the body label
                 self.fields['body'].label = controller.body_label
 
-            # if we want contact info
-            if controller.request_contact_info:
-                self.fields['contact_address'].required = True
-                self.fields['contact_city'].required = True
-                self.fields['contact_state'].required = True
-                self.fields['contact_phone'].required = True
-            else:
-                form.fields['contact_address'].widget = forms.HiddenInput()
-                form.fields['contact_address'].widget = forms.HiddenInput()
-                form.fields['contact_address'].widget = forms.HiddenInput()
-                form.fields['contact_address'].widget = forms.HiddenInput()
-
             # If there's a file
             if controller.allow_uploads:
                 self.fields.append('photo')
+
+        # if we want contact info
+        if controller and controller.request_contact_info:
+            self.fields['contact_address'].required = True
+            self.fields['contact_city'].required = True
+            self.fields['contact_state'].required = True
+            self.fields['contact_phone'].required = True
+        else:
+            self.fields['contact_address'].widget = forms.HiddenInput()
+            self.fields['contact_city'].widget = forms.HiddenInput()
+            self.fields['contact_state'].widget = forms.HiddenInput()
+            self.fields['contact_phone'].widget = forms.HiddenInput()
