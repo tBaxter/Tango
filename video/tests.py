@@ -1,7 +1,9 @@
 from django.core.urlresolvers import reverse
+from django.template import Template, Context
 from django.test import TestCase
 
-from .models import Video
+from .models import Video, VideoGallery
+from .forms import VideoForm
 
 
 class TestVideo(TestCase):
@@ -29,6 +31,17 @@ class TestVideo(TestCase):
         self.assertIn('object', response.context)
         object = response.context['object']
         self.assertIsInstance(object, Video)
+        self.assertTrue(hasattr(object, 'title'))
+        self.assertTrue(hasattr(object, 'summary'))
+        self.assertTrue(hasattr(object, 'embed_src'))
+
+        # test template Tag:
+        out = Template(
+            "{% load video_tags %}"
+            "{% show_video object %}"
+        ).render(Context({'object': object}))
+        self.assertIn(object.title, out)
+        self.assertIn(object.embed_src, out)
 
     def test_vimeo_video(self):
         """
@@ -56,4 +69,29 @@ class TestVideo(TestCase):
         object = response.context['object']
         self.assertIsInstance(object, Video)
 
+    def test_recent_video_tag(self):
+        out = Template(
+            "{% load video_tags %}"
+            "{% get_video_list as video_list %}"
+            "{% for video in video_list %}"
+            "{{ video.title }},"
+            "{% endfor %}"
+        ).render(Context())
+        self.assertEqual(out, '')
 
+    def test_video_form(self):
+        fields = VideoForm().fields
+        self.assertFalse(fields['title'].required)
+        self.assertFalse(fields['slug'].required)
+        self.assertFalse(fields['summary'].required)
+
+    def test_video_gallery_detail(self):
+        gallery = VideoGallery.objects.create(title= 'test gallery', slug='test-gallery')
+        response = self.client.get(reverse('video_gallery_detail', args=[gallery.slug, ]))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('object', response.context)
+        self.assertIn('gallery', response.context)
+        self.assertTemplateUsed('video/video_list.html')
+
+        #ensure we also attempted to pass a video list
+        self.assertIn('object_list', response.context)

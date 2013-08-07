@@ -1,6 +1,10 @@
-{% extends "users/base.html" %}{% load markup cache timesince_filters %}
+{% extends "users/base.html" %}
 
-{% block extra_title %}{{ block.super }}: {{ user.display_name }}{% endblock%}
+{% load markup cache timesince_filters %}
+
+{% block extra_title %}
+  {{ block.super }}: {{ user.display_name }}
+{% endblock%}
 
 {% block description %}{{ site.name }} Community: {{ user.display_name }} Profile{% endblock %}
 
@@ -10,7 +14,7 @@
 
 {% block content %}
   <article>
-    <img src="{% MEDIA_URL %}{% firstof user.avatar 'img/avatars/default.jpg' %}" class="left noscale">
+    <img src="{{ MEDIA_URL }}{% firstof user.avatar 'img/avatars/default.jpg' %}" class="left noscale">
     {% if authenticated_request %}
       <h2 class="meta button right">
         {% if user = request.user %}
@@ -30,10 +34,6 @@
       {% endif %}
       <dt>Member since:</dt>
       <dd>{{ user.date_joined|date:"M j, Y"}}</dd>
-      <dt>Board post count:</dt>
-      <dd>
-        <a href="{% url 'topics_for_user' user.username %}">{{ user.post_count }}</a>
-      </dd>
       {% if user.gender %}
           <dt>Gender:</dt>
           <dd> {{ user.get_gender_display }}</dd>
