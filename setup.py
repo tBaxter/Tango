@@ -17,5 +17,6 @@ setup(
     include_package_data=True,
     install_requires=required,
     #zip_safe=False,
-    #dependency_links = ['https://github.com/tBaxter/capo.git']
+    dependency_links = ['http://github.com/tBaxter/django-voting.git']
+    
 )
