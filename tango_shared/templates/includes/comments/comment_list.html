@@ -7,7 +7,7 @@
     {% scores_for_objects comment_list as score_dict %}
     {% for comment in comment_list %}
       {% dict_entry_for_item comment from score_dict as score %}
-      <article class="{{ score|collapse_bad:"-2" }}" id="c{{ comment.id }}">
+      <article class="{{ score|set_flag }}" id="c{{ comment.id }}">
         <header {% if comment.submit_date > last_seen %} class="newposts"{% endif %}>
           {% cache 46800 'comment_fks' comment.id 3 %}
             {% with comment.user as profile %}
