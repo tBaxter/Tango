@@ -2,35 +2,12 @@ import datetime
 
 from django import template
 from django.contrib.sites.models import Site
-from django.template import TemplateSyntaxError
 from happenings.models import Event, GiveawayResponse, Update
 
 register = template.Library()
 
 today = datetime.date.today()
 current_site = Site.objects.get_current()
-
-
-class EventsNode(template.Node):
-    def __init__(self, num, varname):
-        self.num, self.varname = num, varname
-
-    def render(self, context):
-        offset = today - datetime.timedelta(days=14)
-        events = Event.objects.filter(start_date__gt=offset, featured=True).only('name', 'slug').order_by('start_date')[:self.num]
-        context[self.varname] = events
-        return ''
-
-
-def get_events_list(parser, token):
-    bits = token.contents.split()
-    if len(bits) != 4:
-        raise TemplateSyntaxError("get_events_list tag takes exactly three arguments")
-    if bits[2] != 'as':
-        raise TemplateSyntaxError("second argument to the get_events_list tag must be 'as'")
-    return EventsNode(bits[1], bits[3])
-
-get_events_list = register.tag(get_events_list)
 
 
 @register.assignment_tag

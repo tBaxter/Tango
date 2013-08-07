@@ -89,7 +89,7 @@ event_detail = EventDetail.as_view()
 
 class EventUpdate(DetailView):
     """
-    Creates a detail page for an Event.ExtraInfo, if it's not a sidebar.
+    Detail page for an Event.Update.
     """
     template_name = "happenings/updates/update_detail.html"
 
@@ -110,7 +110,7 @@ class EventUpdate(DetailView):
 
 class ExtraInfoDetail(EventUpdate):
     """
-    Creates a detail page for an Event.ExtraInfo, if it's not a sidebar.
+    Detail page for an Event.ExtraInfo, if it's not a sidebar.
     """
     queryset = ExtraInfo.objects.filter(is_sidebar=False)
     template_name = "happenings/event_extra.html"
