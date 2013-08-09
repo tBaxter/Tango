@@ -13,3 +13,4 @@ typogrify>=2.0.0
 django-filter>=0.6
 markdown>=2.3.1
 tango-voting>=0.1
+django-allauth>=0.12.0
