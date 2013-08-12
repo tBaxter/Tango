@@ -31,7 +31,9 @@ If not, you'll want to run syncdb or South.
 
 Then start adding content. That's it.
 
-Of course, before the site is ready to go live, you'll want to change some settings and hook up a real database.
+Of course, before the site is ready to go live, you'll want to change some settings and hook up a real database. 
+Before users can register and sign in, you'll also need to do some configuration for [django-allauth](https://github.com/pennersr/django-allauth), which has already been installed for you. 
+Refer to the allauth documentation for details.
 
 ##Dependencies (these should be installed for you)
 [Django 1.5.1 +](https://www.djangoproject.com)  
@@ -40,7 +42,8 @@ PIL or Pillow (Your choice)
 Markdown & Typogrify for nice text formatting   
 django-filter  
 python-dateutil  
-vobject  
+vobject
+[django-allauth](https://github.com/pennersr/django-allauth)
 [Python-Twitter](https://github.com/bear/python-twitter) (if you want to auto-tweet news items)
 
 ### Recommended
