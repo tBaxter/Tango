@@ -63,22 +63,24 @@ TANGO_APPS = (
     'easy_thumbnails',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
+
+    #uncomment if you'd like to use social accounts.
+    #'allauth.socialaccount',
 
     # Include the allauth providers you want to enable:
 
     #'allauth.socialaccount.providers.bitly',
     #'allauth.socialaccount.providers.dropbox',
-    'allauth.socialaccount.providers.facebook',
+    #'allauth.socialaccount.providers.facebook',
     #'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.google',
+    #'allauth.socialaccount.providers.google',
     #'allauth.socialaccount.providers.linkedin',
     #'allauth.socialaccount.providers.openid',
     #'allauth.socialaccount.providers.persona',
     #'allauth.socialaccount.providers.soundcloud',
     #'allauth.socialaccount.providers.stackexchange',
     #'allauth.socialaccount.providers.twitch',
-    'allauth.socialaccount.providers.twitter',
+    #'allauth.socialaccount.providers.twitter',
     #'allauth.socialaccount.providers.vimeo',
     #'allauth.socialaccount.providers.weibo',
 )
