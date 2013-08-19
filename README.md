@@ -31,9 +31,11 @@ If not, you'll want to run syncdb or South.
 
 Then start adding content. That's it.
 
-Of course, before the site is ready to go live, you'll want to change some settings and hook up a real database. 
+### Before you go live
+Before the site is ready to go live, you'll want to change some settings and hook up a real database, of course.
 Before users can register and sign in, you'll also need to do some configuration for [django-allauth](https://github.com/pennersr/django-allauth), which has already been installed for you. 
-Refer to the allauth documentation for details.
+You'll need to set up accounts for any third-party logins you want to accept (or turn them off). Refer to the allauth documentation for details.
+
 
 ##Dependencies (these should be installed for you)
 [Django 1.5.1 +](https://www.djangoproject.com)  
