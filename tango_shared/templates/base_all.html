@@ -38,22 +38,22 @@
 
 <body id="{% block bodyid %}default{% endblock %}" class="{% block bodyclass %}section_front{% endblock %} {% block extra_body_class %}{% endblock %}">
   <div id="wrapper">
-    <header id="masthead" role="banner">
-      <div class="constrain">
+    <header role="banner">
+      <div>
         {% block menu_button %}
           <a href="#full_menu" id="menu-trigger" title="Menu" class="navicon">≡≡</a>
         {% endblock %}
         <div class="site-name">
           {% block site_header %}
             <h1>
-              <a href="/" title="home">
+              <a href="/" title="Home">
                 {% block logo %}{{ site.name }}{% endblock %}
               </a>
             </h1>
             {% block nav_tagline %}{% endblock %}
           {% endblock %}
         </div>
-        <nav class="clearfix" role="navigation">
+        <nav role="navigation">
           {% block site_nav %}
             {% include 'includes/site_nav.html' %}
           {% endblock %}
