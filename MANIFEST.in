@@ -4,6 +4,7 @@ recursive-include articles/static/ *
 recursive-include articles/templates/ *
 recursive-include contact_manager/fixtures/ *
 recursive-include contact_manager/templates/ *
+recursive-include docs/ *
 recursive-include happenings/fixtures/ *
 recursive-include happenings/static/ *
 recursive-include happenings/templates/ *
