@@ -18,7 +18,7 @@ def get_birthday_list():
     Usage:
     {% get_birthday_list as birthday_list %}
     """
-    return UserModel.objects.filter(post_count__gt=2, birthday__month = today.month, birthday__day = today.day).values()
+    return UserModel.objects.filter(is_active=True, birthday__month = today.month, birthday__day = today.day).values()
 
 
 @register.assignment_tag

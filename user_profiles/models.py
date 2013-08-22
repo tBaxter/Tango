@@ -51,9 +51,10 @@ class Profile(AbstractUser):
             Members who choose to view signatures can see it. HTML is not allowed.
             """
     )
-    post_count = models.IntegerField(default="0", editable=False)
     geocode = models.CharField(max_length=200, null=True, blank=True)
     avatar = models.ImageField(blank=True, null=True, upload_to=set_img_path)
+    if 'fretboard' in settings.INSTALLED_APPS:
+        post_count = models.IntegerField(default="0", editable=False)
 
     #preferences
     display_on_map = models.BooleanField(default=True)
