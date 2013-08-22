@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import ArticleImage, Sidebar, Destination, Category, Brief, Article
-from .models import supports_video, supports_polls
+from .models import supports_video, supports_polls, supports_galleries, NEWS_SOURCE
 
 from tango_admin.admin import TextCounterWidget
 
@@ -28,23 +28,20 @@ class ArticleAdmin(admin.ModelAdmin):
     list_filter = ('created', 'last_modified', 'enable_comments', 'publication', 'destination')
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ['body', 'title']
-    filter_horizontal = ('sections', 'articles', 'galleries')
+    filter_horizontal = ['sections', 'articles']
     inlines = [
         ArticleImagesInline,
         SidebarInline,
     ]
-    if supports_video:
-        inlines.append(VideoInline)
-    """
-    if NEWS_SITE:
-        opinion         = models.BooleanField("Opinion/Editorial", default=False)
-        source          = models.CharField(max_length=200, default=SOURCE, blank=True, null=True)
-        dateline        = models.CharField(max_length=200, blank=True, null=True)
-    """
     related = ('Related', {
-        'fields': ['galleries', 'articles'],
+        'fields': ['articles'],
         'description': 'Other content directly related to this article'
     })
+    if supports_video:
+        inlines.append(VideoInline)
+    if supports_galleries:
+        related[1]['fields'].insert(0, 'galleries')
+        filter_horizontal.append('galleries')
     if supports_polls:
         related[1]['fields'].insert(0, 'polls')
 

@@ -10,27 +10,21 @@ from django.template.defaultfilters import truncatewords
 from .managers import DestinationManager, BlogManager, ArticlesManager, PublishedArticlesManager
 from .signals import auto_tweet
 
-from autotagger.autotag_content import autotag
 from tango_shared.models import ContentImage, BaseContentModel
 
-
 ########## CONFIG ###########
-supports_video = False
-if 'video' in settings.INSTALLED_APPS:
-    from video.models import Video
-    supports_video = True
 
-supports_polls = False
-if 'polls' in settings.INSTALLED_APPS:
-    from polls.models import Poll
-    supports_polls = True
+supports_video = 'video' in settings.INSTALLED_APPS
+supports_polls = 'polls' in settings.INSTALLED_APPS
+supports_galleries = 'photos' in settings.INSTALLED_APPS
+supports_autotagging = 'autotagger' in settings.INSTALLED_APPS
+
+if supports_autotagging:
+    from autotagger.autotag_content import autotag
 
 # Comment moderation settings
 closing    = getattr(settings, 'COMMENTS_CLOSE_AFTER', 30)
 moderating = getattr(settings, 'COMMENTS_MOD_AFTER', 30)
-
-
-# possibly to do.. add "news" config with source, opinion, etc.
 
 PUBLICATION_CHOICES = (
     ('Draft', 'Draft'),
@@ -107,34 +101,49 @@ class Category(models.Model):
 
 
 class Article(BaseContentModel):
-    author          = models.ForeignKey(UserModel, limit_choices_to={'is_staff': True}, blank=True, null=True)
-    guest_author    = models.CharField(max_length=200, blank=True, help_text="If the author is not on staff or in the system.")
-    body            = models.TextField()
-    pull_quote      = models.TextField(blank=True)
-    endnote         = models.TextField(blank=True, null=True, help_text="A short note after the body.")
-    override_url    = models.URLField(blank=True, help_text="Direct link to story elsewhere.")
+    author = models.ForeignKey(
+        UserModel,
+        limit_choices_to={'is_staff': True},
+        blank=True,
+        null=True,
+        help_text="""If the author is on-staff, select their name."""
+    )
+    guest_author = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text="""If the author is not on staff, enter their name."""
+    )
+    body = models.TextField()
+    pull_quote = models.TextField(blank=True)
+    endnote = models.TextField(blank=True, null=True, help_text="A short note after the body.")
+
+    override_url = models.URLField(
+        blank=True,
+        help_text="If this story is actaully published elsewhere, give the URL."
+    )
     publication = models.CharField(
         "Publication status",
         max_length=32,
         choices=PUBLICATION_CHOICES,
         default='Published'
     )
+
     # RELATIONSHIPS
     destination     = models.ForeignKey(Destination)
     sections        = models.ManyToManyField(Category, blank=True, null=True)
-    galleries       = models.ManyToManyField('photos.Gallery', related_name="article_galleries", blank=True)
     articles        = models.ManyToManyField('self', related_name="related_articles", blank=True, null=True, limit_choices_to={'publication': 'Published'})
+
+    if supports_video:
+        videos = generic.GenericRelation('video.Video')
+    if supports_polls:
+        polls = models.ManyToManyField('polls.Poll', blank=True, null=True)
+    if supports_galleries:
+        galleries = models.ManyToManyField('photos.Gallery', related_name="article_galleries", blank=True)
 
     if NEWS_SOURCE:
         opinion  = models.BooleanField("Opinion/Editorial", default=False)
         source   = models.CharField(max_length=200, default=NEWS_SOURCE, blank=True, null=True)
         dateline = models.CharField(max_length=200, blank=True, null=True)
-
-    if supports_video:
-        videos = generic.GenericRelation(Video)
-
-    if supports_polls:
-        polls = models.ManyToManyField(Poll, blank=True, null=True)
 
     # Managers
     objects   = ArticlesManager()
@@ -178,7 +187,9 @@ class Article(BaseContentModel):
         Auto-inserts links for matching content and establishes M2M relationshiops.
         See utils.autotag_content import autotag for details.
         """
-        return autotag(self, self.body)
+        if supports_autotagging:
+            return autotag(self, self.body)
+        return self.body
 
     def get_comment_count(self):
         from django.contrib.contenttypes.models import ContentType
@@ -189,18 +200,23 @@ class Article(BaseContentModel):
 
 
 class Sidebar(models.Model):
-    # make sidebars separate content or not. see happenings.
+    # TO-DO: make sidebars separate content or not. see happenings.
     article   = models.ForeignKey(Article, related_name="related_sidebars")
     headline  = models.CharField(max_length=200, blank=True)
     body      = models.TextField()
 
 
 class Brief(models.Model):
-    text     = models.TextField(help_text="Limit yourself to 140 characters for Twitter integration")
+    text = models.TextField(help_text="Limit yourself to 140 characters for Twitter integration")
     pub_date = models.DateTimeField(auto_now_add=True)
-    link     = models.CharField(max_length=200, blank=True, null=True, help_text="Use full URL, with http://")
-    sites    = models.ManyToManyField(Site)
-    tweet    = models.BooleanField("Send to Twitter", default=False)
+    link = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True,
+        help_text="Use full URL, with http://"
+    )
+    sites = models.ManyToManyField(Site)
+    tweet = models.BooleanField("Send to Twitter", default=False)
 
     def __unicode__(self):
         return unicode(self.pub_date)
