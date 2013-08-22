@@ -1,20 +1,41 @@
 include INSTALL.md LICENSE README.md
 recursive-include articles/fixtures/ *
 recursive-include articles/static/ *
-recursive-include articles/templates/ *
+recursive-include articles/templates/all_content/ *
+recursive-include articles/templates/articles/ *
+recursive-include articles/templates/blogs/ *
+recursive-include articles/templates/blogs/includes *
 recursive-include contact_manager/fixtures/ *
-recursive-include contact_manager/templates/ *
+recursive-include contact_manager/templates/contact/ *
 recursive-include docs/ *
 recursive-include happenings/fixtures/ *
-recursive-include happenings/static/ *
-recursive-include happenings/templates/ *
+recursive-include happenings/static/css/ *
+recursive-include happenings/static/js/ *
+recursive-include happenings/templates/happenings/ *
+recursive-include happenings/templates/happenings/attending/ *
+recursive-include happenings/templates/happenings/giveaways/ *
+recursive-include happenings/templates/happenings/includes/ *
+recursive-include happenings/templates/happenings/updates/ *
 recursive-include photos/fixtures/ *
-recursive-include photos/static/ *
-recursive-include photos/templates/ *
-recursive-include tango_admin/templates/ *
-recursive-include tango_capo/static/ *
-recursive-include tango_shared/static/ *
-recursive-include tango_shared/templates/ *
+recursive-include photos/static/css/ *
+recursive-include photos/static/js/ *
+recursive-include photos/templates/galleries/ *
+recursive-include photos/templates/galleries/includes/ *
+recursive-include tango_admin/templates/admin/ *
+recursive-include tango_capo/static/css/ *
+recursive-include tango_capo/static/css/themes/ *
+recursive-include tango_capo/static/js/ *
+recursive-include tango_capo/static/js/libs/ *
+recursive-include tango_capo/source/sass/ *
+
+recursive-include tango_shared/static/admin/css/ *
+recursive-include tango_shared/static/admin/js/ *
+recursive-include tango_shared/static/js/libs/ *
+
+recursive-include tango_shared/templates/ * .html
+recursive-include tango_shared/templates/admin/ *
+recursive-include tango_shared/templates/includes/ *
+
 recursive-include user_profiles/fixtures/ *
 recursive-include user_profiles/templates/ *
 recursive-include video/fixtures/ *
