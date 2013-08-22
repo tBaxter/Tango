@@ -3,5 +3,4 @@
 
 *.pyc
 
-/django_tango.egg-info/
 /dist/

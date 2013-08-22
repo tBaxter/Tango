@@ -61,28 +61,6 @@ TANGO_APPS = (
     'typogrify',
     'voting',
     'easy_thumbnails',
-    'allauth',
-    'allauth.account',
-
-    #uncomment if you'd like to use social accounts.
-    #'allauth.socialaccount',
-
-    # Include the allauth providers you want to enable:
-
-    #'allauth.socialaccount.providers.bitly',
-    #'allauth.socialaccount.providers.dropbox',
-    #'allauth.socialaccount.providers.facebook',
-    #'allauth.socialaccount.providers.github',
-    #'allauth.socialaccount.providers.google',
-    #'allauth.socialaccount.providers.linkedin',
-    #'allauth.socialaccount.providers.openid',
-    #'allauth.socialaccount.providers.persona',
-    #'allauth.socialaccount.providers.soundcloud',
-    #'allauth.socialaccount.providers.stackexchange',
-    #'allauth.socialaccount.providers.twitch',
-    #'allauth.socialaccount.providers.twitter',
-    #'allauth.socialaccount.providers.vimeo',
-    #'allauth.socialaccount.providers.weibo',
 )
 
 
@@ -108,8 +86,6 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',
     'tango_shared.context_processors.site_processor',
-    'allauth.account.context_processors.account',
-    'allauth.socialaccount.context_processors.socialaccount',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -119,11 +95,4 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
-
-AUTHENTICATION_BACKENDS = (
-    # Needed to login by username in Django admin, regardless of `allauth`
-    "django.contrib.auth.backends.ModelBackend",
-    # `allauth` specific authentication methods, such as login by e-mail
-    "allauth.account.auth_backends.AuthenticationBackend",
 )
