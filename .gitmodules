@@ -4,3 +4,6 @@
 [submodule "articles"]
 	path = articles
 	url = https://tbaxter@github.com/tBaxter/tango-articles
+[submodule "apps/tango-shared-core"]
+	path = apps/tango-shared-core
+	url = https://tbaxter@github.com/tBaxter/tango-shared-core
