@@ -2,5 +2,6 @@
 .DS_Store
 
 *.pyc
+*.egg_info
 
 /dist/
