@@ -1,43 +1,22 @@
 include INSTALL.md LICENSE README.md
-recursive-include articles/fixtures/ * .json
-recursive-include articles/static/ *
-recursive-include articles/templates/all_content/ * .html
-recursive-include articles/templates/articles/ * .html
-recursive-include articles/templates/blogs/ * .html
-recursive-include articles/templates/blogs/includes * .html
-recursive-include contact_manager/fixtures/ * .json
-recursive-include contact_manager/templates/contact/ * .html
-recursive-include docs/ *
-recursive-include happenings/fixtures/ * .json
-recursive-include happenings/static/css/ * .css
-recursive-include happenings/static/js/ * .js
-recursive-include happenings/templates/happenings/ * .html
-recursive-include happenings/templates/happenings/attending/ * .html
-recursive-include happenings/templates/happenings/giveaways/ * .html
-recursive-include happenings/templates/happenings/includes/ * .html
-recursive-include happenings/templates/happenings/updates/ * .html
-recursive-include photos/fixtures/ *
-recursive-include photos/static/css/ *
-recursive-include photos/static/js/ *
-recursive-include photos/templates/galleries/ *
-recursive-include photos/templates/galleries/includes/ *
-recursive-include tango_admin/templates/admin/ *
-recursive-include tango_capo/static/css/ *
-recursive-include tango_capo/static/css/themes/ *
-recursive-include tango_capo/static/js/ *
-recursive-include tango_capo/static/js/libs/ *
-recursive-include tango_capo/source/sass/ *
-
-recursive-include tango_shared/static/admin/css/ *
-recursive-include tango_shared/static/admin/js/ *
-recursive-include tango_shared/static/js/libs/ *
-
-recursive-include tango_shared/templates/ * .html
-recursive-include tango_shared/templates/admin/ *
-recursive-include tango_shared/templates/includes/ *
-
-recursive-include user_profiles/fixtures/ *
-recursive-include user_profiles/templates/ *
-recursive-include video/fixtures/ *
-recursive-include video/templates/ *
-recursive-include voting/templates/ *
+recursive-include articles *.html
+recursive-include articles *.js
+recursive-include articles *.json
+recursive-include contact_manager *.html
+recursive-include contact_manager *.json
+recursive-include docs *.txt
+recursive-include happenings *.css
+recursive-include happenings *.html
+recursive-include happenings *.js
+recursive-include happenings *.json
+recursive-include photos *.css
+recursive-include photos *.html
+recursive-include photos *.js
+recursive-include photos *.json
+recursive-include tango_admin *.html
+recursive-include tango_shared *.css
+recursive-include tango_shared *.html
+recursive-include tango_shared *.js
+recursive-include user_profiles *.html
+recursive-include user_profiles *.json
+recursive-include video *.html
