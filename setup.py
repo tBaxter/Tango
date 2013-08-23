@@ -6,7 +6,7 @@ with open('docs/requirements.txt') as f:
 
 setup(
     name='django-tango',
-    version='0.1.6',
+    version='0.2',
     author=u'Tim Baxter',
     author_email='mail.baxter@gmail.com',
     description='Faster, simpler Django content management.',
@@ -18,5 +18,8 @@ setup(
     include_package_data=True,
     install_requires=required,
     zip_safe=False,
-    dependency_links = ['http://github.com/tBaxter/django-voting/tarball/master#egg=tango-voting-0.1']
+    dependency_links = [
+        'http://github.com/tBaxter/tango-articles/tarball/master#egg=tango-articles-0.2',
+        'http://github.com/tBaxter/django-voting/tarball/master#egg=tango-voting-0.1'
+    ]
 )

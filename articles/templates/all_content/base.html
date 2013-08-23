@@ -1,7 +1,0 @@
-{% extends "base.html" %}{% load article_tags %}
-
-{% block extrahead %}
-  {% if destination %}
-    <link rel="alternate" type="application/rss+xml" title="{{ site.name }} {{ destination.title }}" href="{{ destination.get_feed_url }}">
-  {% endif %}
-{% endblock %}

@@ -52,5 +52,4 @@ vobject
 [Python-Twitter](https://github.com/bear/python-twitter) (if you want to auto-tweet news items)
 
 ### Recommended
-South  
 docutils  

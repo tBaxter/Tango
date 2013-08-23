@@ -1,7 +1,4 @@
 include INSTALL.md LICENSE README.md
-recursive-include articles *.html
-recursive-include articles *.js
-recursive-include articles *.json
 recursive-include contact_manager *.html
 recursive-include contact_manager *.json
 recursive-include docs *.txt
