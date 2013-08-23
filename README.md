@@ -41,6 +41,24 @@ Then start adding content. That's it.
 Before the site is ready to go live, you'll want to change some settings and hook up a real database, of course.
 Before users can register and sign in, you'll also need to configure user registration and authentication. We like [django-allauth](https://github.com/pennersr/django-allauth), but have also used and liked django-registration.
 
+## So what batteries are included?
+* [News/articles/blogs](https://github.com/tBaxter/tango-articles)   
+* Photo galleries  
+* Video integration with Youtube, Hulu and uStream   
+* Robust event calendars and management  
+* Autotagging articles for automatic creation of links from key phrases and cross-linking between apps
+* A straighforward user profile model (that you're welcome to ignore if you have your own)   
+* Capo, a simple SASS-based framework for quickly styling your site.  
+* Sophisticated contact and user submissions forms.  
+
+
+### What else?
+* Clear, easy-to-understand code.  
+* Plug and play. Whether you want a new site in minutes or just want an app, you're covered.  
+* Full multi-site support.     
+* Tango doesn't take over your project. It works with your other code.  
+* Don't want all of it? You can get just the pieces you want, and throw out the pieces you don't want.  
+
 
 ##Dependencies (these should be installed for you)
 [Django 1.5.1 +](https://www.djangoproject.com)  

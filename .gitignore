@@ -5,3 +5,5 @@
 *.egg_info
 
 /dist/
+
+django_tango.egg-info

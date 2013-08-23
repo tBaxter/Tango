@@ -5,7 +5,8 @@ from .models import Contact
 
 class ContactForm(forms.ModelForm):
     """
-    Base contact form
+    Builds either base contact form 
+    or more sophisticated form if a contact form controller is used.
     """
     required_css_class = 'required'
 
