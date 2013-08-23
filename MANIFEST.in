@@ -1,21 +1,21 @@
 include INSTALL.md LICENSE README.md
-recursive-include articles/fixtures/ *
+recursive-include articles/fixtures/ * .json
 recursive-include articles/static/ *
-recursive-include articles/templates/all_content/ *
-recursive-include articles/templates/articles/ *
-recursive-include articles/templates/blogs/ *
-recursive-include articles/templates/blogs/includes *
-recursive-include contact_manager/fixtures/ *
-recursive-include contact_manager/templates/contact/ *
+recursive-include articles/templates/all_content/ * .html
+recursive-include articles/templates/articles/ * .html
+recursive-include articles/templates/blogs/ * .html
+recursive-include articles/templates/blogs/includes * .html
+recursive-include contact_manager/fixtures/ * .json
+recursive-include contact_manager/templates/contact/ * .html
 recursive-include docs/ *
-recursive-include happenings/fixtures/ *
-recursive-include happenings/static/css/ *
-recursive-include happenings/static/js/ *
-recursive-include happenings/templates/happenings/ *
-recursive-include happenings/templates/happenings/attending/ *
-recursive-include happenings/templates/happenings/giveaways/ *
-recursive-include happenings/templates/happenings/includes/ *
-recursive-include happenings/templates/happenings/updates/ *
+recursive-include happenings/fixtures/ * .json
+recursive-include happenings/static/css/ * .css
+recursive-include happenings/static/js/ * .js
+recursive-include happenings/templates/happenings/ * .html
+recursive-include happenings/templates/happenings/attending/ * .html
+recursive-include happenings/templates/happenings/giveaways/ * .html
+recursive-include happenings/templates/happenings/includes/ * .html
+recursive-include happenings/templates/happenings/updates/ * .html
 recursive-include photos/fixtures/ *
 recursive-include photos/static/css/ *
 recursive-include photos/static/js/ *
