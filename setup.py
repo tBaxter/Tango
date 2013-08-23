@@ -19,7 +19,7 @@ setup(
     install_requires=required,
     zip_safe=False,
     dependency_links = [
-        #'http://github.com/tBaxter/tango-articles/tarball/master#egg=tango-articles-0.2',
+        'http://github.com/tBaxter/tango-articles/tarball/master#egg=tango-articles-0.2',
         'http://github.com/tBaxter/django-voting/tarball/master#egg=tango-voting-0.1'
     ]
 )
