@@ -15,6 +15,7 @@ from django.db.models import signals
 
 from tango_shared.models import ContentImage
 from tango_shared.utils.maptools import get_geocode
+from tango_shared.utils.sanetize import sanetize_text
 
 from signals import update_time
 
@@ -57,38 +58,63 @@ class EventManager(models.Manager):
 
 
 class Event(models.Model):
-    submitted_by    = models.ForeignKey(UserModel, limit_choices_to = {'is_active': True}, related_name="event_submitter")
-    name            = models.CharField('Event name', max_length=200)
-    subhead         = models.CharField(max_length=200, blank=True)
-    slug            = models.SlugField(unique=True)
+    submitted_by = models.ForeignKey(
+        UserModel,
+        limit_choices_to = {'is_active': True},
+        related_name="event_submitter"
+    )
+    name = models.CharField('Event name', max_length=200)
+    subhead = models.CharField(max_length=200, blank=True)
+    slug = models.SlugField(unique=True)
+    region = models.CharField(max_length=200, choices=REGION_CHOICES)
+    venue = models.CharField(max_length=200, blank=True, null=True)
+    address = models.CharField("Street Address", max_length=200, null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
+    state = models.CharField(max_length=100, blank=True, null=True)
+    zipcode = models.CharField(max_length=10, blank=True, null=True)
+    phone = models.CharField(max_length=12, blank=True, null=True)
+    website = models.URLField(
+        'Event website',
+        blank=True,
+        null=True,
+        help_text="If you have one, make sure it's a complete URL. Don't forget the http://"
+    )
 
-    add_date        = models.DateField(auto_now_add=True)
-    start_date      = models.DateField(help_text="yyyy-mm-dd format")
-    end_date        = models.DateField(help_text="For multi-day events", blank=True, null=True)
+    info = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Brief info about the event. Do **not** use HTML, but Markdown is allowed."
+    )
+    recap = models.TextField(blank=True, null=True, help_text="Post-event recap")
+    info_formatted = models.TextField(blank=True, null=True, editable=False)
+    recap_formatted = models.TextField(blank=True, null=True, editable=False)
 
-    admin_notes     = models.TextField(blank=True, null=True, help_text="Private administrative notes")
-    approved        = models.BooleanField(default=True)
 
-    region           = models.CharField(max_length=200, choices=REGION_CHOICES)
-    venue            = models.CharField(max_length=200, blank=True, null=True)
-    address          = models.CharField("Street Address", max_length=200, null=True, blank=True)
-    city             = models.CharField(max_length=200, null=True, blank=True)
-    state            = models.CharField(max_length=100, blank=True, null=True)
-    zipcode          = models.CharField(max_length=10, blank=True, null=True)
-    geocode          = models.CharField(max_length=200, null=True, blank=True)
-    phone            = models.CharField(max_length=12, blank=True, null=True)
-    website          = models.URLField('Event website', blank=True, null=True, help_text="If you have one, make sure it's a complete URL. Don't forget the http://")
+    add_date = models.DateField(auto_now_add=True)
+    start_date = models.DateField(help_text="yyyy-mm-dd format")
+    end_date = models.DateField(help_text="For multi-day events", blank=True, null=True)
 
-    info             = models.TextField(blank=True, null=True, help_text="Brief info about the event. Do **not** use HTML.")
-    recap            = models.TextField(blank=True, null=True, help_text="Post-event recap")
-
-    attending        = models.ManyToManyField(UserModel, blank=True, null=True, related_name="attendees")
-
-    featured         = models.BooleanField(default=False, help_text="Check for featured events")
-    has_playlist     = models.BooleanField(default=True, help_text="If checked, playlist submissions will be requested.")
-    offsite_tickets  = models.URLField(blank=True, null=True, help_text="URL to off-site ticket sales")
+    admin_notes = models.TextField(blank=True, null=True, help_text="Private administrative notes")
+    approved = models.BooleanField(default=True)
+    geocode = models.CharField(max_length=200, null=True, blank=True, editable=False)
+    featured = models.BooleanField(default=False, help_text="Check for featured events")
+    has_playlist = models.BooleanField(
+        default=True,
+        help_text="If checked, playlist submissions will be requested."
+    )
+    offsite_tickets = models.URLField(
+        blank=True,
+        null=True,
+        help_text="URL to off-site ticket sales"
+    )
     ticket_sales_end = models.DateField(blank=True, null=True)
-    related_events   = models.ManyToManyField("self", blank=True, related_name="similar_events", limit_choices_to = {'featured': True})
+    related_events = models.ManyToManyField(
+        "self",
+        blank=True,
+        related_name="similar_events",
+        limit_choices_to = {'featured': True}
+    )
+    attending = models.ManyToManyField(UserModel, blank=True, null=True, related_name="attendees")
 
     objects         = EventManager()
 
@@ -110,6 +136,9 @@ class Event(models.Model):
         geocode = get_geocode(self.city, self.state, self.address, self.zipcode)
         if geocode:
             self.geocode = ', '.join(geocode)
+        self.info_formatted = sanetize_text(self.info)
+        if self.recap:
+            self.recap_formatted = sanetize_text(self.recap)
         super(Event, self).save(*args, **kwargs)
 
     def ended(self):
@@ -209,15 +238,20 @@ class ExtraInfo(models.Model):
     """
     For sidebar-type additional info on event
     """
-    event      = models.ForeignKey(Event, verbose_name="Extra info",)
-    title      = models.CharField(max_length=300)
-    slug       = models.SlugField(blank=True, help_text="Only needed if this is not a sidebar")
-    text       = models.TextField()
+    event = models.ForeignKey(Event, verbose_name="Extra info",)
+    title = models.CharField(max_length=300)
+    slug = models.SlugField(blank=True, help_text="Only needed if this is not a sidebar")
+    text = models.TextField()
+    text_formatted = models.TextField(blank=True, null=True, editable=False)
     is_sidebar = models.BooleanField(default=False)
-    image      = models.ImageField(upload_to='img/events/special/', blank=True, null=True)
+    image = models.ImageField(upload_to='img/events/special/', blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.title)
+
+    def save(self, *args, **kwargs):
+        self.text_formatted = sanetize_text(self.text)
+        super(ExtraInfo, self).save(*args, **kwargs)
 
 
 class Image(ContentImage):
@@ -292,17 +326,34 @@ class PlaylistItem(models.Model):
 
 
 class Update(models.Model):
-    event        = models.ForeignKey(Event, limit_choices_to = {'featured': True}, db_index=True)
-    title        = models.CharField(max_length=200)
-    update       = models.TextField()
-    pub_time     = models.DateTimeField(auto_now_add=True)
-    giveaway     = models.ManyToManyField(Giveaway,  null=True, blank=True, help_text="Optional. Use this if you want to attach the giveaway to a specific update. Even if you don't, it will be attached to the parent event.")
+    """
+    Allows updating the event in near real-time, with blog-style content updates.
+    """
+    event = models.ForeignKey(Event, limit_choices_to = {'featured': True}, db_index=True)
+    title = models.CharField("Update title", max_length=200)
+    update = models.TextField()
+    pub_time = models.DateTimeField(auto_now_add=True)
+    giveaway = models.ManyToManyField(
+        Giveaway,
+        null=True,
+        blank=True,
+        help_text="""Optional. Use this if you want to attach a giveaway to this update.
+            Giveaways that aren't attached to an update will be still be attached to the event."""
+    )
     last_updated = models.DateTimeField(auto_now=True)
-    author       = models.ForeignKey(UserModel, limit_choices_to = {'is_staff': True})
-    audio        = models.FileField(upload_to='audio/events/special/', blank=True, null=True, help_text="Should be MP3 format")
+    author = models.ForeignKey(UserModel, limit_choices_to = {'is_staff': True})
+    audio = models.FileField(upload_to='audio/events/special/', blank=True, null=True, help_text="Should be MP3 format")
 
     def __unicode__(self):
         return unicode(self.title)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('event_update_detail', [str(self.event.slug), str(self.id)])
+
+    def save(self, *args, **kwargs):
+        self.update_formatted = sanetize_text(self.update)
+        super(Update, self).save(*args, **kwargs)
 
     def comments_open(self):
         return True
@@ -311,10 +362,6 @@ class Update(models.Model):
         ctype = ContentType.objects.get(name__exact='update')
         num_comments = Comment.objects.filter(content_type=ctype.id, object_pk=self.id).count()
         return num_comments
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('event_update_detail', [str(self.event.slug), str(self.id)])
 
     def has_image(self):
         if self.updateimage_set.count():
@@ -338,15 +385,18 @@ class UpdateImage(ContentImage):
     update  = models.ForeignKey(Update, db_index=True)
 
 
-class Memories(models.Model):
+class Memory(models.Model):
+    """
+    Allows users to post their thoughts and memories on an event.
+    """
     event = models.ForeignKey(Event, verbose_name="remembered_event", limit_choices_to = {'featured': True})
     author = models.ForeignKey(UserModel)
     thoughts = models.TextField(blank=True)
+    thoughts_formatted = models.TextField(blank=True, editable=False)
     photos = models.ManyToManyField(Image, null=True, blank=True, help_text="Optional. Upload some images. Be kind, this isn't Flickr.")
     offsite_photos = models.URLField(null=True, blank=True, help_text="If you've already uploaded photos somewhere else, you can give the gallery URL here.")
 
     class Meta:
-        verbose_name = "memory"
         verbose_name_plural = "memories"
 
     def __unicode__(self):
@@ -355,6 +405,10 @@ class Memories(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('memory_detail', [self.event.slug, self.id])
+
+    def save(self, *args, **kwargs):
+        self.thoughts_formatted = sanetize_text(self.thoughts_formatted)
+        super(Memory, self).save(*args, **kwargs)
 
 
 class BulkEventImageUpload(models.Model):

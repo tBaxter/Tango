@@ -1,6 +1,6 @@
 {% extends "happenings/event_detail.html" %}
 
-{% load markup typogrify_tags social_tags event_tags humanize %}
+{% load typogrify_tags social_tags event_tags humanize %}
 
 {% block extra_title %}Events: {{ event.name }}: {{ object.title }}{% endblock %}
 
@@ -17,16 +17,18 @@
         </a>
       </h2>
       <h1>{{ object.title }}</h1>
-      {{ object.update|safe|urlize|markdown|typogrify }}
+      {{ object.update_formatted|typogrify }}
 
       {% with object.get_open_giveaways as giveaways %}
         {% if giveaways %}
-          <h1>GDP Challenge{{ giveaways.count|pluralize }}!</h1>
+          <h1>{{ object.title }} Challenge{{ giveaways.count|pluralize }}!</h1>
           <ul>
             {% for g in giveaways %}
               <li>
                 <a href="">
-                  <small class="meta block">For {{ g.number|apnumber }} {{ g.prize }}{{ g.number|pluralize }}:</small> 
+                  <small class="meta block">
+                    For {{ g.number|apnumber }} {{ g.prize }}{{ g.number|pluralize }}:
+                  </small> 
                   <strong>{{ g.question }}</strong>
                 </a>
               </li>

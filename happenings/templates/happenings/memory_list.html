@@ -1,6 +1,6 @@
 {% extends "happenings/event_detail.html" %}
 
-{% load typogrify markup thumbnail %}
+{% load typogrify_tags site_tags %}
 
 {% block title %}{{ object.name}} Memories: {% endblock %}
 
@@ -13,10 +13,10 @@
       {% endif %}
     </h1>
     <div class="columned two-col">
-      {% for u in object.memories_set.all %}
+      {% for u in object.memory_set.all %}
         <section>
           <h2>{{ u.author.display_name }}</h2>
-          {{ u.thoughts|markdown|typogrify }}
+          {{ u.thoughts_formatted|typogrify }}
           {% if u.offsite_photos %}
             <h3><a href="{{ u.offsite_photos }}">Photos</a></h3>
           {% endif %}

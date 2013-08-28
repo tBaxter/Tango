@@ -1,6 +1,6 @@
 {% extends "happenings/event_detail.html" %}
 
-{% load markup typogrify_tags social_tags event_tags humanize %}
+{% load typogrify_tags %}
 
 {% block extra_title %}Events: {{ event.name }} Memories: {{ object.author.display_name }}
 {% endblock %}
@@ -18,7 +18,7 @@
         </a>
       </h2>
       <h1>{{ object.author.display_name }}</h1>
-      {{ object.thoughts|safe|urlize|markdown|typogrify }}
+      {{ object.thoughts_formatted|typogrify }}
       {% include 'comments/inclusion/comments.html' %}
     </section>
   </article>

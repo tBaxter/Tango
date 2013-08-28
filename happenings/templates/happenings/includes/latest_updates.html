@@ -1,59 +1,59 @@
-{% load markup typogrify_tags site_tags %}
+{% load typogrify_tags site_tags %}
 
 {% with object.get_latest_updates as obj_updates %}
   {% if obj_updates.count %}
-    
-  <div{% if obj_updates.count != 1 %} class="columned phi" id="more_articles"{% endif %}>
-  {% with obj_updates.updates.0 as update %}
-    <article>
-      <h2 class="kicker">
-        <a href="{% url 'event_update_list' object.slug %}">
-          {% if not object.ended %}Latest {% endif %}
-          Update{{ obj_updates.count|pluralize }}
-        </a>
-      </h2>
-      <h1>
-        <a href="{{ update.get_absolute_url }}">
-          {{ update.title }}
-        </a>
-      </h1>
-      {% if update.has_image %}
-        <figure class="right">
-          <img src="{{ MEDIA_URL }}{{ update.get_image.image.t_180 }}">
-        </figure>
-      {% endif %}
+    <div {% if obj_updates.count != 1 %}class="columned phi" id="more_articles"{% endif %}>
+      {% with obj_updates.updates.0 as update %}
+        <article>
+          <h2 class="kicker">
+            <a href="{% url 'event_update_list' object.slug %}">
+              {% if not object.ended %}Latest {% endif %}
+              Update{{ obj_updates.count|pluralize }}
+            </a>
+          </h2>
+          <h1>
+            <a href="{{ update.get_absolute_url }}">
+              {{ update.title }}
+            </a>
+          </h1>
+          {% if update.has_image %}
+            <figure class="right">
+              <img src="{{ MEDIA_URL }}{{ update.get_image.image.t_180 }}">
+            </figure>
+          {% endif %}
+          
+          {% format_time update.pub_time %}
+        
+          <p class="author vcard">
+            <span class="email fn">
+              {{ update.author.display_name }}
+            </span>
+          </p>
+          {% if obj_updates.count = 1 %}
+            {{ update.update_formatted|typogrify }}
+          {% else %}
+            {{ update.update_formatted|striptags|truncatewords:"70"|typogrify }}
+          {% endif %}
+        </article>
+      {% endwith %}
 
-      {% format_time update.pub_time %}
-      
-      <p class="author vcard">
-        <span class="email fn">
-          {{ update.author.display_name }}
-        </span>
-      </p>
-      {% if obj_updates.count = 1 %}
-        {{ update.update|markdown|typogrify }}
-      {% else %}
-        {{ update.update|striptags|truncatewords:"70"|markdown|typogrify }}
-      {% endif %}
-    </article>
-  {% endwith %}
-  {% if obj_updates.count > 1 %}
-    <div>
-     <ul class="fancy">
-       {% for update in obj_updates.updates|slice:"1:" %}
-         <li>
-          <a href="{{ update.get_absolute_url }}">
-            {{ update.title }}
-            {% format_time update.pub_time %}
+      {% if obj_updates.count > 1 %}
+        <div>
+          <ul class="fancy">
+            {% for update in obj_updates.updates|slice:"1:" %}
+              <li>
+                <a href="{{ update.get_absolute_url }}">
+                  {{ update.title }}
+                  {% format_time update.pub_time %}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+          <a href="{% url 'event_update_list' object.slug %}" class="button">
+            See all {{ obj_updates.count }} updates
           </a>
-        </li>
-       {% endfor %}
-     </ul>
-     <a href="{% url 'event_update_list' object.slug %}" class="button">
-        See all {{ obj_updates.count }} updates
-      </a>
+        </div>
+      {% endif %}
     </div>
-  {% endif %}
-  </div>
   {% endif %}
 {% endwith %}

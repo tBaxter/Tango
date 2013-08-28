@@ -1,5 +1,5 @@
 {% extends "happenings/event_detail.html" %}
-{% load typogrify_tags markup %}
+{% load typogrify_tags %}
 
 {% block title %}{{ object.event }}: {{ object.title}} | {% endblock %}
 
@@ -10,7 +10,7 @@
     </a>
   </h1>
   <h2>{{ object.title }}</h2>
-  {{ object.text|markdown|typogrify }}
+  {{ object.text_formatted|typogrify }}
 {% endblock %}
 
 {% block secondary %}

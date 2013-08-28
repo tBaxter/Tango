@@ -14,8 +14,8 @@ from django.template.defaultfilters import slugify
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, UpdateView
 
-from .forms import GiveawayResponseForm, PlayListForm, MemoriesForm, AddEventForm, EventRecapForm, EventUpdateForm
-from .models import Event, Update, Giveaway, GiveawayResponse, PlaylistItem, Image, ExtraInfo, Memories
+from .forms import GiveawayResponseForm, PlayListForm, MemoryForm, AddEventForm, EventRecapForm, EventUpdateForm
+from .models import Event, Update, Giveaway, GiveawayResponse, PlaylistItem, Image, ExtraInfo, Memory
 
 key = getattr(settings, 'GMAP_KEY', None)
 
@@ -314,7 +314,7 @@ def record_giveaway_response(request, giveaway_id):
 def add_memory(request, slug):
     """ Adds a memory to an event. """
     event = get_object_or_404(Event, slug=slug)
-    form = MemoriesForm(request.POST or None, request.FILES or None)
+    form = MemoryForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         instance = form.save(commit=False)
         instance.author = request.user
@@ -340,7 +340,7 @@ class MemoryDetail(DetailView):
     Creates a detail page for an Event.Memory.
     """
     template_name = "happenings/memory_detail.html"
-    queryset = Memories.objects.all()
+    queryset = Memory.objects.all()
 
     def dispatch(self, request, *args, **kwargs):
         self.event_slug = kwargs.get('event_slug', False)
@@ -354,7 +354,7 @@ class MemoryDetail(DetailView):
         return context
 
     def get_object(self):
-        return get_object_or_404(Memories, pk=self.kwargs.get('pk', None))
+        return get_object_or_404(Memory, pk=self.kwargs.get('pk', None))
 
 
 def process_upload(upload_file, instance, form, event, request):

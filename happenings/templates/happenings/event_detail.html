@@ -1,6 +1,6 @@
 {% extends "happenings/base.html" %}
 
-{% load markup typogrify_tags cache social_tags event_tags humanize %}
+{% load typogrify_tags cache social_tags event_tags humanize %}
 
 {% block extra_title %}Events: {{ object.name }}{% endblock %}
 
@@ -12,7 +12,7 @@
       {% include "includes/top_assets.html" %}
       {% if object.recap %}
         <h1>{{ object.name }}</h1>
-        {{ object.recap|markdown|typogrify }}
+        {{ object.recap_formatted|typogrify }}
       {% else %}
         {% include "happenings/includes/event_info.html" %}
       {% endif %}
@@ -24,7 +24,7 @@
     {% include "happenings/includes/latest_updates.html" %}
 
     {% if object.has_started %}
-      {% with object.memories_set.count as memory_count %}
+      {% with object.memory_set.count as memory_count %}
         {% if memory_count %}
           <hr class="fancy">
         {% endif %}
@@ -50,7 +50,7 @@
             <a href="{% url 'event_memories' object.slug %}">Memories</a>
           </h2>
           <div class="columned two-col">
-            {% for m in object.memories_set.all|dictsortreversed:'id'|slice:"2" %}
+            {% for m in object.memory_set.all|dictsortreversed:'id'|slice:"2" %}
               <a href="{{ m.get_absolute_url }}">
                 {% if m.thoughts %}
                   <p>{{ m.thoughts|truncatewords:"30" }}<br>
@@ -137,7 +137,7 @@
         {% for side in sidebars %}
           <div>
             <h3>{{side.title}}</h3>
-            {{ side.text|markdown|typogrify }}
+            {{ side.text_formatted|typogrify }}
           </div>
         {% endfor %}
       {% endif %}

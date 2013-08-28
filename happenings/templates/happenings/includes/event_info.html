@@ -1,4 +1,4 @@
-{% load markup typogrify_tags site_tags %}
+{% load typogrify_tags %}
 
 <article class="vevent{% if object_list and object.ended %} diminish{% endif %}" data-geocode="{{ object.geocode }}">
   <section class="event_times">
@@ -46,7 +46,7 @@
           {% if object_list %}
             <p>{{ object.info|striptags|truncatewords:"50" }}</p>
           {% else %}
-            {{ object.info|markdown|typogrify }}
+            {{ object.info_formatted|typogrify }}
           {% endif %}
         {% endif %}
       </div>

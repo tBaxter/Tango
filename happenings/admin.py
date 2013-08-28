@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import Image, BulkEventImageUpload, UpdateImage, EventVideo
-from .models import Event, Update, Memories, ExtraInfo, Giveaway, GiveawayResponse, Schedule
+from .models import Event, Update, Memory, ExtraInfo, Giveaway, GiveawayResponse, Schedule
 
 
 class ExtraInfoAdmin(admin.ModelAdmin):
@@ -118,4 +118,4 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(Update, UpdateAdmin)
 admin.site.register(ExtraInfo, ExtraInfoAdmin)
 admin.site.register(Giveaway, GiveawayAdmin)
-admin.site.register(Memories)
+admin.site.register(Memory)

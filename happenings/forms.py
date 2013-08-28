@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, HiddenInput, TextInput
 
-from .models import Event, GiveawayResponse, PlaylistItem, Memories
+from .models import Event, GiveawayResponse, PlaylistItem, Memory
 
 
 class EventForm(ModelForm):
@@ -60,7 +60,7 @@ class PlayListForm(ModelForm):
         }
 
 
-class MemoriesForm(ModelForm):
+class MemoryForm(ModelForm):
     upload = forms.FileField(
         required=False,
         label = "Or upload your photos(s)",
@@ -82,7 +82,7 @@ class MemoriesForm(ModelForm):
         return data
 
     class Meta:
-        model = Memories
+        model = Memory
         widgets = {
             'photos': HiddenInput()
         }

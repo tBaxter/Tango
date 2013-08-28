@@ -65,7 +65,6 @@ class TestHappeningsGeneralViews(TestCase):
             "region": "Pacific",
         }
         response = self.client.post(reverse('add_event'))
-        print response.content
         self.assertEqual(response.status_code, 200)
 
     def test_event_editing(self):
