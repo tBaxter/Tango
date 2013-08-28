@@ -6,8 +6,9 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.html import strip_tags
 
-from tango_shared.utils.maptools import get_geocode
 from tango_shared.models import set_img_path
+from tango_shared.utils.sanetize import sanetize_text
+from tango_shared.utils.maptools import get_geocode
 
 THEME_CHOICES = [(theme, theme.capitalize()) for theme in getattr(settings, 'ALLOWABLE_THEMES', [])]
 
@@ -43,6 +44,7 @@ class Profile(AbstractUser):
     birthday = models.DateField(blank=True, null=True)
     homepage = models.URLField('Your web site', blank=True)
     bio = models.TextField(help_text='Tell us a bit about yourself.', blank=True, null=True)
+    bio_formatted = models.TextField(blank=True, editable=False)
     signature = models.CharField(
         max_length=255,
         blank=True,
@@ -94,6 +96,8 @@ class Profile(AbstractUser):
                 self.geocode = ', '.join(geocode)
         if self.signature:
             self.signature = strip_tags(self.signature)
+        if self.bio:
+            self.bio_formatted = sanetize_text(self.bio)
 
         super(Profile, self).save(*args, **kwargs)
 

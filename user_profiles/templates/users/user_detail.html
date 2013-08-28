@@ -1,6 +1,6 @@
 {% extends "users/base.html" %}
 
-{% load markup cache timesince_filters %}
+{% load cache timesince_filters %}
 
 {% block extra_title %}
   {{ block.super }}: {{ user.display_name }}
@@ -30,7 +30,7 @@
     <dl class="clear">
       {% if user.bio %}
         <dt>About</dt>
-        <dd>{{ user.bio|markdown }}</dd>
+        <dd>{{ user.bio_formatted }}</dd>
       {% endif %}
       <dt>Member since:</dt>
       <dd>{{ user.date_joined|date:"M j, Y"}}</dd>

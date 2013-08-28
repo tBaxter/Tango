@@ -1,6 +1,6 @@
 {% extends "galleries/base.html" %}
 
-{% load cache gallery_tags social_tags markup %}
+{% load cache gallery_tags social_tags %}
 
 {% block title %}{{ gallery.title }}{% endblock %}
 
@@ -52,7 +52,7 @@
 
     <div id="gallery_info">
       <h1>{{ gallery.title }}</h1>
-      {{ gallery.summary|markdown }}
+      {{ gallery.summary_formatted }}
       {% if gallery.gallery_credit %}
         <p class="meta">
           {{ gallery.gallery_credit }}
