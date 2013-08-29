@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .forms import GalleryForm
-from .models import Gallery, GalleryImage
+from .models import Gallery, GalleryImage, supports_articles
 
 
 ##### Actions
@@ -44,7 +44,7 @@ class GalleryAdmin(admin.ModelAdmin):
     actions = [make_published, make_unpublished]
 
     list_display = ('title', 'credit', 'published', 'created',)
-    list_filter = ('published', 'article')
+    list_filter = ['published',]
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ['title', 'summary']
 
@@ -52,10 +52,15 @@ class GalleryAdmin(admin.ModelAdmin):
         #BulkUploadInline,
         GalleryInline,
     ]
+    content = ('Content', {'fields': ('summary', 'bulk_upload')})
+
+    if supports_articles:
+        list_filter.append('article')
+        content = ('Content', {'fields': ('summary', 'article', 'bulk_upload')})
 
     fieldsets = (
         ('Header', {'fields': ('overline', 'title')}),
-        ('Content', {'fields': ('summary', 'article', 'bulk_upload')}),
+        content,
         ('Meta', {'fields': ('credit', 'published')}),
         ('Admin fields', {
             'description': 'You should rarely, if ever, need to touch these fields.',

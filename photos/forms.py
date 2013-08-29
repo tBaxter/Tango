@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Gallery
+from .models import Gallery, supports_articles
 
 
 class GalleryForm(forms.ModelForm):
@@ -14,7 +14,7 @@ class GalleryForm(forms.ModelForm):
 
     class Meta:
         model = Gallery
-        fields = ['overline', 'title', 'slug', 'credit', 'summary', 'published', 'article', 'bulk_upload']
-
-    #def save(self, force_insert=False, force_update=False, commit=True):
-    #    super(GalleryForm, self).save()
+        # to do: append article to fields rather than re-declare
+        fields = ['overline', 'title', 'slug', 'credit', 'summary', 'published', 'bulk_upload']
+        if supports_articles:
+            fields = ['overline', 'title', 'slug', 'credit', 'summary', 'published', 'article', 'bulk_upload']

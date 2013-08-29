@@ -1,17 +1,21 @@
 import datetime
 
+from django.conf import settings
 from django.db import models
 
 from .managers import GalleryManager, PublishedGalleryManager
 from tango_shared.models import ContentImage, BaseContentModel
 
-now = datetime.datetime.now()
+supports_articles = 'articles' in settings.INSTALLED_APPS
 
+now = datetime.datetime.now()
 
 class Gallery(BaseContentModel):
     credit = models.CharField(max_length=200, blank=True)
-    article = models.ForeignKey('articles.Article', null=True, blank=True)
     published = models.BooleanField(default=True)
+    
+    if supports_articles:
+        article = models.ForeignKey('articles.Article', blank=True, null=True)
 
     # Managers
     objects   = GalleryManager()
