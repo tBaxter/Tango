@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -6,7 +7,6 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from django.utils import simplejson
 
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
@@ -97,5 +97,5 @@ def view_profile(request, slug='', pk=''):
             'profile_url': user.get_absolute_url(),
             'contact_url': reverse('contact_member', args=(user.username,)),
         }
-        return HttpResponse(simplejson.dumps(xhr_dict), mimetype='application/javascript')
+        return HttpResponse(json.dumps(xhr_dict), mimetype='application/javascript')
     return render(request, "users/user_detail.html", {'user': user})
