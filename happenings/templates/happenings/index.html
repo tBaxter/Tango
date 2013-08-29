@@ -1,5 +1,5 @@
 {% extends "happenings/base.html" %}
-{% load cache event_tags  %}
+{% load cache event_tags site_tags %}
 
 {% block extra_title %}Happenings {% if cal_date %} for {{ cal_date }}{% endif %}{% endblock %}
 

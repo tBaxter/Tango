@@ -53,7 +53,7 @@ class GiveawayResponseForm(ModelForm):
 class PlayListForm(ModelForm):
     class Meta:
         model = PlaylistItem
-        exclude = ('votes')
+        fields = ('title', 'link')
         widgets = {
             'event': HiddenInput(),
             'user': HiddenInput(),
