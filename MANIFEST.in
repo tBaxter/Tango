@@ -1,6 +1,4 @@
 include INSTALL.md LICENSE README.md
-recursive-include contact_manager *.html
-recursive-include contact_manager *.json
 recursive-include docs *.txt
 recursive-include happenings *.css
 recursive-include happenings *.html
@@ -11,9 +9,6 @@ recursive-include photos *.html
 recursive-include photos *.js
 recursive-include photos *.json
 recursive-include tango_admin *.html
-recursive-include tango_shared *.css
-recursive-include tango_shared *.html
-recursive-include tango_shared *.js
 recursive-include user_profiles *.html
 recursive-include user_profiles *.json
 recursive-include video *.html
