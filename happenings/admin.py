@@ -83,7 +83,7 @@ class EventAdmin(admin.ModelAdmin):
         ('Dates', {'fields': ('start_date', 'end_date',)}),
         ('Venue/Location', {'fields': ('region', 'venue', 'address', 'city', 'state', 'zipcode', 'website', 'phone', )}),
         ('Ticketing', {'fields': ('offsite_tickets', 'ticket_sales_end'), 'classes': ['collapse']}),
-        ('Staff info', {'fields': ('admin_notes', 'approved', 'geocode', 'slug'), 'classes': ['collapse']}),
+        ('Staff info', {'fields': ('admin_notes', 'approved', 'slug'), 'classes': ['collapse']}),
     )
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
