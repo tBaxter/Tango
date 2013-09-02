@@ -2,7 +2,11 @@ import datetime
 import os
 import zipfile
 
-from cStringIO import StringIO
+try:
+    from cStringIO import StringIO as BytesIO
+except ImportError:
+    from six import BytesIO
+
 from itertools import chain
 from PIL import Image as PIL_Image
 
@@ -17,7 +21,7 @@ from tango_shared.models import ContentImage
 from tango_shared.utils.maptools import get_geocode
 from tango_shared.utils.sanetize import sanetize_text
 
-from signals import update_time
+from .signals import update_time
 
 now = datetime.datetime.now()
 offset = now - datetime.timedelta(days=5)
@@ -439,11 +443,11 @@ class BulkEventImageUpload(models.Model):
             # bail if it's not jpg, and skip meta files
             if filename.lower().endswith('.jpg') and not filename.lower().startswith('__'):
                 clean_filename = filename.replace('/', '_').lower()
-                im = PIL_Image.open(StringIO(zfile.read(filename)))
+                im = PIL_Image.open(BytesIO(zfile.read(filename)))
                 if im.mode not in ('L', 'RGB'):
                     im = im.convert('RGB')
                 im.thumbnail((900, 1200))
-                temp_handle = StringIO()
+                temp_handle = BytesIO()
                 im.save(temp_handle, 'jpeg')
                 temp_handle.seek(0)
                 try:

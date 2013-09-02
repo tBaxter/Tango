@@ -1,12 +1,13 @@
 import urllib
-import urlparse
 
 try:
-    import xmltramp
-except:
-    from tango_shared.utils import xmltramp
+    import urllib.parse as urlparse
+except ImportError:
+    import urlparse
 
 from django.template.defaultfilters import slugify
+
+from tango_shared.utils import xmltramp
 
 xml_media = xmltramp.Namespace('http://search.yahoo.com/mrss/')
 

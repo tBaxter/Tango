@@ -1,4 +1,3 @@
-from django.contrib.admin.sites import AdminSite
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.test import TestCase
@@ -64,6 +63,5 @@ class TestGalleries(TestCase):
     def test_admin_actions(self):
         #gallery_admin = GalleryAdmin(Gallery, AdminSite())
         gallery_actions = [action.short_description for action in GalleryAdmin.actions]
-        print gallery_actions
         self.assertTrue('Publish' in gallery_actions)
         self.assertTrue('Unpublish' in gallery_actions)
