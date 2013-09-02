@@ -27,7 +27,7 @@ def get_youtube_data(video):
         video.key = video.url.rsplit('/', 1)[1]
     video.embed_src = 'http://www.youtube.com/embed/'
     #http://gdata.youtube.com/feeds/api/videos/Agdvt9M3NJA
-    api_url = 'http://gdata.youtube.com/feeds/api/videos/%s' % video.key
+    api_url = 'http://gdata.youtube.com/feeds/api/videos/{}'.format(video.key)
     video_data = urllib.urlopen(api_url).read()
     xml = xmltramp.parse(video_data)
 
@@ -47,7 +47,7 @@ def get_vimeo_data(video):
     video.key = video.url.rsplit('/', 1)[1]
     video.embed_src = 'http://player.vimeo.com/video/'
 
-    api_url = 'http://vimeo.com/api/v2/video/%s.xml' % video.key
+    api_url = 'http://vimeo.com/api/v2/video/{}.xml'.format(video.key)
     video_data = urllib.urlopen(api_url).read()
     xml = xmltramp.parse(video_data)
     video.title = unicode(xml.video.title)
@@ -68,5 +68,5 @@ def get_ustream_data(video):
     if 'recorded' in video.url:
         video.embed_src += '/recorded/'
     video.title = "Ustream video"
-    video.slug = 'ustream-%s' % video.key
+    video.slug = 'ustream-{}'.format(video.key)
     return video

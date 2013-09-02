@@ -422,15 +422,15 @@ class BulkEventImageUpload(models.Model):
         zfile = zipfile.ZipFile(self.zip_file, 'r')
         bad_file = zfile.testzip()
         if bad_file:  # how can we pass this error back to the admin form?
-            raise Exception('"%s" in the .zip archive is corrupt.' % bad_file)
+            raise Exception('"{}" in the .zip archive is corrupt.'.format(bad_file))
         # why are we NOT using threading?
         # for a rundown on threading, see: http://www.ibm.com/developerworks/aix/library/au-threadingpython/
         # args are parent, zip file, destination, child
         #t = threading.Thread(target=process_upload, args=[self.event, zfile, "img/events/special/", Image])
         #t.setDaemon(False)
         #t.start()
-        this_dir = '%s/%s/' % (now.year, now.month)  # make sure we have a dir to put these in.
-        dir      = "img/events/special/" + this_dir
+        this_dir = '{}/{}/'.format(now.year, now.month)  # make sure we have a dir to put these in.
+        dir      = "img/events/special/{}".format(this_dir)
 
         dirpath = settings.MEDIA_ROOT + dir
         if not os.path.exists(dirpath):
@@ -448,8 +448,7 @@ class BulkEventImageUpload(models.Model):
                 temp_handle.seek(0)
                 try:
                     img_file = SimpleUploadedFile(clean_filename, temp_handle.read(), 'image/jpeg',)
-                except Exception, inst:
-                    #status = "Error retrieving image file: %s " % (inst)
+                except Exception:
                     img_file = None
                 if img_file is not None:
                     try:

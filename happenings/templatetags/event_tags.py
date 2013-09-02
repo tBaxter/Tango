@@ -75,7 +75,7 @@ def load_event_subnav(event, user=None, use_domain=False):
         'user': user,
     }
     if use_domain:
-        context['domain'] = 'http://%s' % current_site.domain
+        context['domain'] = 'http://{}'.format(current_site.domain)
     return context
 
 

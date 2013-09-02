@@ -10,8 +10,8 @@ def make_published(self, request, queryset):
     if rows_updated == 1:
         message_bit = "1 gallery was"
     else:
-        message_bit = "%s galleries were" % rows_updated
-    self.message_user(request, "%s published." % message_bit)
+        message_bit = "{} galleries were".format(rows_updated)
+    self.message_user(request, "{} published.".format(message_bit))
 make_published.short_description = "Publish"
 
 
@@ -20,8 +20,8 @@ def make_unpublished(self, request, queryset):
     if rows_updated == 1:
         message_bit = "1 gallery was"
     else:
-        message_bit = "%s galleries were" % rows_updated
-    self.message_user(request, "%s unpublished." % message_bit)
+        message_bit = "{} galleries were".format(rows_updated)
+    self.message_user(request, "{} unpublished.".format(message_bit))
 make_unpublished.short_description = "Unpublish"
 
 

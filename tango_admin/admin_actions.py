@@ -39,7 +39,7 @@ def nuke_users(modeladmin, request, queryset):
                 users.append(c.user)
     if not users:
         # we haven't built out a content-type appropriate user list.
-        return HttpResponse("Error finding content type: %s"  % contenttype)
+        return HttpResponse("Error finding content type: {}".format(contenttype))
 
     if 'apply_blacklist' in request.POST:  # we're returning from the intermediate page and are ready to do some work.
         form = BlacklistForm(request.POST)
@@ -87,9 +87,9 @@ def nuke_users(modeladmin, request, queryset):
 
                 count = len(users)
                 if count == 1:
-                    modeladmin.message_user(request, "%s was removed and blocked from the site. %s" % (users[0].username, resp_str))
+                    modeladmin.message_user(request, "{} was removed and blocked from the site. {}".format(users[0].username, resp_str))
                 else:
-                    modeladmin.message_user(request, "%s users were removed and blocked from the site. %s" % (count, resp_str))
+                    modeladmin.message_user(request, "{} users were removed and blocked from the site. {}".format(count, resp_str))
             return HttpResponseRedirect(request.get_full_path())
         else:
             return HttpResponse("error!")

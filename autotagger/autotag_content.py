@@ -76,12 +76,12 @@ def autotag(content_object, text):
                 # add spaces to avoid partial word matches.
                 # note: this totally hoses value match before comma and at end of sentence,
                 # but I'm not sure what to do about it.
-                checkvalues = [' %s ' % value, ' %s, ' % value, ' %s.' % value]
+                checkvalues = [' {} '.format(value), ' {}, '.format(value), ' {}.'.format(value)]
                 # print checkvalues
                 matched = False
                 for checkvalue in checkvalues:
                     if checkvalue in text and matched == False:   # Make sure it's in there, and not done already
-                        replacement = '<a href="%s" title="More on %s">%s</a>' % (obj.get_absolute_url(), value, value)
+                        replacement = '<a href="{}" title="More on {}">{}</a>'.format(obj.get_absolute_url(), value, value)
                         text = text.replace(value, replacement, 1)
                         matched = True
                         #print text
@@ -95,21 +95,18 @@ def autotag(content_object, text):
                             reverse_m2m_values = getattr(content_object, reverse_m2m.name)
                             reverse_m2m_values.add(obj)
                             #print 'established reverse m2m'
-        except Exception, inst:
-            return "Error: %s" % inst
+        except Exception as error:
+            return "Error: {}".format(error)
 
     # now do the phrases defined in autotagger models
-    # print "attempting tag objects"
     for tag in AutoTag.objects.all():
         # print tag.phrase
         if tag.phrase in text and content_object._meta.app_label == 'articles':
-            # print "it's a match"
             tag.articles.add(content_object.id)
             if tag.content_object:  # since we have a content object, go ahead and link over to it.
                 try:  # wrapped in case get_absolute_url doesn't exist.
-                    replacement = '<a href="%s" title="More on %s">%s</a>' % (tag.content_object.get_absolute_url(), tag.phrase, tag.phrase)
+                    replacement = '<a href="{}" title="More on {}">{}</a>'.format(tag.content_object.get_absolute_url(), tag.phrase, tag.phrase)
                     text = text.replace(tag.phrase, replacement, 1)
                 except:
                     pass
-            #print 'added tag'
     return mark_safe(text)

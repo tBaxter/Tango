@@ -327,9 +327,9 @@ def add_memory(request, slug):
             for upload_file in photo_list:
                 process_upload(upload_file, instance, form, event, request)
             if photo_count > 1:
-                msg += "%s images were added and should appear soon." % photo_count
+                msg += "{} images were added and should appear soon.".format(photo_count)
             else:
-                msg += "%s image was added and should appear soon." % photo_count
+                msg += "{} image was added and should appear soon.".format(photo_count)
         messages.success(request, msg)
         return HttpResponseRedirect('../')
     return render(request, 'happenings/add_memories.html', {'form': form, 'event': event})
@@ -373,5 +373,5 @@ def process_upload(upload_file, instance, form, event, request):
             )
             upload.save()
             instance.photos.add(upload)
-        except Exception, inst:
-            messages.error(request, 'Error saving image: %s.' % inst)
+        except Exception as error:
+            messages.error(request, 'Error saving image: {}.'.format(error))

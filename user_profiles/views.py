@@ -87,7 +87,7 @@ def view_profile(request, slug='', pk=''):
     if request.is_ajax():
         location = user.city
         if user.state:
-            location += ", %s" % user.state
+            location += ", {}".format(user.state)
         xhr_dict = {
             'name': user.display_name,
             'username': user.username,

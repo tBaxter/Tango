@@ -49,7 +49,7 @@ class Video(BaseContentModel):
     published = PublishedVideoManager()
 
     def __unicode__(self):
-        return '%s: %s' % (self.source, self.title)
+        return '{}: {}'.format(self.source, self.title)
 
     @models.permalink
     def get_absolute_url(self):
@@ -68,8 +68,8 @@ class Video(BaseContentModel):
 
         if self.key and self.embed_src:
             self.embed_src = """
-                <iframe src="%s%s" height="360" width="100%%"></iframe>
-                """ % (self.embed_src, self.key)
+                <iframe src="{}{}" height="360" width="100%%"></iframe>
+                """.format(self.embed_src, self.key)
         super(Video, self).save()
 
     def get_image(self):

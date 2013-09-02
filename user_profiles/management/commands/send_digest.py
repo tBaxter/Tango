@@ -23,7 +23,7 @@ class Command(BaseCommand):
         count = 0
         site = Site.objects.get_current()
         for user in UserModel.objects.filter(get_digest=1):
-            subject = '%s Digest for %s' % (site.name, today.strftime("%A, %B %e"))
+            subject = '{} Digest for {}'.format(site.name, today.strftime("%A, %B %e"))
 
             watchlist = []
             watch_objects = [w.content_object for w in user.watch_set.all()]
@@ -38,7 +38,7 @@ class Command(BaseCommand):
                 'today': today,
                 'watchlist': watchlist,
                 'site': site,
-                'site_root': 'http://%s' % site.domain,
+                'site_root': 'http://{}'.format(site.domain),
                 'theme': user.theme
             })
             tmpl = get_template('users/digest.html')
@@ -53,5 +53,3 @@ class Command(BaseCommand):
             msg.attach_alternative(body, "text/html")
             msg.send()
             count += 1
-
-        self.stdout.write('Sent %s digest emails' % count)
