@@ -23,6 +23,6 @@ setup(
         'http://github.com/tBaxter/tango-articles/tarball/master#egg=tango-articles-0.3',
         'http://github.com/tBaxter/tango-contact-manager/tarball/master#egg=tango-contact-0.4',
         'http://github.com/tBaxter/django-voting/tarball/master#egg=tango-voting-0.1'
-        'http://github.com/tBaxter/django-happenings/tarball/master#egg=tango-happenings-0.2'
+        'http://github.com/tBaxter/django-happenings/tarball/master#egg=tango-happenings'
     ]
 )
