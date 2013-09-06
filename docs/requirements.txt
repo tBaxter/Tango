@@ -10,5 +10,5 @@ vobject>=0.8.1c
 tango-shared>=0.5
 tango-articles>=0.3
 tango-contact>=0.4
-tango-happenings
+tango-happenings>=0.2
 tango-voting>=0.1
