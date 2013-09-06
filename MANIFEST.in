@@ -1,9 +1,5 @@
 include INSTALL.md LICENSE README.md
 recursive-include docs *.txt
-recursive-include happenings *.css
-recursive-include happenings *.html
-recursive-include happenings *.js
-recursive-include happenings *.json
 recursive-include photos *.css
 recursive-include photos *.html
 recursive-include photos *.js
