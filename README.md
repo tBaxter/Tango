@@ -43,7 +43,7 @@ Before users can register and sign in, you'll also need to configure user regist
 
 ## So what batteries are included?
 * [News/articles/blogs](https://github.com/tBaxter/tango-articles)   
-* Photo galleries  
+* [Photo galleries](https://github.com/tBaxter/tango-photos)   
 * Video integration with Youtube, Hulu and uStream   
 * Robust event calendars and management  
 * Autotagging articles for automatic creation of links from key phrases and cross-linking between apps
