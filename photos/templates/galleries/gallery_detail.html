@@ -21,56 +21,30 @@
 {% endblock %}
 
 {% block content %}
-  {% cache 900 gallery gallery.id gallery.galleryimage_set.count 8 %}
-
-    <div id="gallery_thumbs_hold">
-      <ul id="gallery_thumbs">
-        {% for object in gallery.galleryimage_set.all %}
-          <li id="thumb_{{ forloop.counter }}" data-deferred-thumbs="{{ object.image.thumbnail }}">
-          </li>
-        {% endfor %}
-      </ul>
-    </div><!-- /gallery_thumbs_hold -->
-  
-    <div id="gallery_slides_hold">
-      <div id="gallery_slides">
-        {% for object in gallery.galleryimage_set.all %}
-          {% if forloop.counter == 1 %}{# load the first, defer loading of subsequent #}
-            <figure id="image_{{ forloop.counter }}">
-              <img src="{{ object.image.extra_thumbnails.t_640 }}">
-          {% else %}
-            <figure id="image_{{ forloop.counter }}" data-load-on-demand="{{ object.image.extra_thumbnails.t_640 }}">
-          {% endif %}
+  {% cache 900 gallery gallery.id gallery.galleryimage_set.count 43 %}
+    <h1>{{ gallery.title }}</h1>
+    {{ gallery.summary_formatted }}
+    {% if gallery.gallery_credit %}
+      <p class="meta">
+        {{ gallery.gallery_credit }}
+      </p>
+    {% endif %}
+    <section class="slideshow">
+      {% for object in gallery.galleryimage_set.all %}
+        <figure id="image_{{ forloop.counter }}" class="hmedia {% if object.is_vertical %}vertical{% endif %} {% if object.caption or object.byline %}has-caption{% endif %}">
+          <img src="{{ object.image.t_640.url }}" class="photo">
+          {% if object.has_caption_info %}
             <figcaption>
               <div class="caption">{{ object.caption }}</div>
               <span class="byline">{{ object.byline }}</span>
+              <span class="source-org">{{ object.credit }}</span>
             </figcaption>
-          </figure>
-        {% endfor %}
-      </div>
-    </div> <!-- /slides -->
+          {% endif %}
+        </figure>
+      {% endfor %}
+    </section> <!-- /slides -->
+    {% social_links object %}
 
-    <div id="gallery_info">
-      <h1>{{ gallery.title }}</h1>
-      {{ gallery.summary_formatted }}
-      {% if gallery.gallery_credit %}
-        <p class="meta">
-          {{ gallery.gallery_credit }}
-        </p>
-      {% endif %}
-
-      <nav class="pager">
-        <ul>    
-          <li class="prev" title="Previous"><span>previous</span></li>
-          <li class="current">
-            <span id="gallery_index">1</span> of {{ gallery.image_list|length }}
-          </li>
-          <li class="next" title="Next"><span>next</span></li>
-        </ul>
-      </nav>
-      {% social_links object %}
-      <div id="caption_hold"></div>
-    </div>
     <section class="clear">
       {% get_related_galleries gallery 4 %}
     </section>

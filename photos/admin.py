@@ -82,7 +82,7 @@ class GalleryAdmin(admin.ModelAdmin):
 
 
 class GalleryImageAdmin(admin.ModelAdmin):
-    list_display = ('thumb', 'gallery', 'caption', 'byline', )
+    list_display = ('admin_thumb', 'gallery', 'caption', 'byline', )
     search_fields = ['gallery__title', 'caption', 'byline']
     list_filter = ('gallery',)
 

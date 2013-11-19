@@ -39,7 +39,7 @@ class TestGalleries(TestCase):
         self.assertEquals(self.gallery.get_image(), None)
 
     def test_get_galleries_tag(self):
-        "Test get related galleries"
+        "Test get galleries tag"
         out = Template(
             "{% load gallery_tags %}"
             "{% get_galleries 1 as galleries %}"
@@ -61,7 +61,6 @@ class TestGalleries(TestCase):
         self.assertEqual(out, '\n')
 
     def test_admin_actions(self):
-        #gallery_admin = GalleryAdmin(Gallery, AdminSite())
         gallery_actions = [action.short_description for action in GalleryAdmin.actions]
         self.assertTrue('Publish' in gallery_actions)
         self.assertTrue('Unpublish' in gallery_actions)

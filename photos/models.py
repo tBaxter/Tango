@@ -1,5 +1,3 @@
-import datetime
-
 from django.conf import settings
 from django.db import models
 
@@ -8,7 +6,6 @@ from tango_shared.models import ContentImage, BaseContentModel
 
 supports_articles = 'articles' in settings.INSTALLED_APPS
 
-now = datetime.datetime.now()
 
 class Gallery(BaseContentModel):
     credit = models.CharField(max_length=200, blank=True)
@@ -33,7 +30,7 @@ class Gallery(BaseContentModel):
 
     def get_image(self):
         try:
-            return self.galleryimage_set.all()[0].image
+            return self.galleryimage_set.all()[0]
         except IndexError:
             return None
 
