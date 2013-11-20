@@ -24,7 +24,7 @@ setup(
         'http://github.com/tBaxter/tango-contact-manager/tarball/master#egg=tango-contact-0.4',
         'http://github.com/tBaxter/django-voting/tarball/master#egg=tango-voting-0.1',
         'http://github.com/tBaxter/django-happenings/tarball/master#egg=tango-happenings-0.2',
-        'http://github.com/tBaxter/tango-capo/tarball/master#egg=tango-capo-0.1',
+        'http://github.com/tBaxter/tango-capo/tarball/master#egg=tango-capo-0.2',
         'http://github.com/tBaxter/tango-photos/tarball/master#egg=tango-photos-0.1'
     ]
 )
