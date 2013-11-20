@@ -44,12 +44,12 @@ Before users can register and sign in, you'll also need to configure user regist
 ## So what batteries are included?
 * [News/articles/blogs](https://github.com/tBaxter/tango-articles)   
 * [Photo galleries](https://github.com/tBaxter/tango-photos)   
+* Sophisticated contact and user submissions forms courtesy of [Tango Contact Manager](https://github.com/tBaxter/tango-contact-manager)
 * Video integration with Youtube, Hulu and uStream   
-* Robust event calendars and management  
+* Robust event calendars and management with [Tango Happenings](https://github.com/tBaxter/tango-happenings)  
 * Autotagging articles for automatic creation of links from key phrases and cross-linking between apps
 * A straighforward user profile model (that you're welcome to ignore if you have your own)   
 * Capo, a simple SASS-based framework for quickly styling your site.  
-* Sophisticated contact and user submissions forms.  
 
 
 ### What else?
