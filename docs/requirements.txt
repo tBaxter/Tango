@@ -10,6 +10,7 @@ typogrify>=2.0.0
 vobject>=0.8.1c
 
 tango-shared-core>=0.6
+tango-capo>=0.2
 tango-articles>=0.4
 tango-contact-manager>=0.5
 tango-happenings>=0.3
