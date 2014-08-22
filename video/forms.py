@@ -6,6 +6,7 @@ from .models import Video
 class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
+        fields = ['title', 'summary', 'url', 'video_at_top', 'hide_info',]
 
     def __init__(self, *args, **kwargs):
         super(VideoForm, self).__init__(*args, **kwargs)

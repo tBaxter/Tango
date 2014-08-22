@@ -15,8 +15,8 @@ class VideoManager(models.Manager):
 
     Usage is simply video.objects.all()
     """
-    def get_query_set(self):
-        videos = super(VideoManager, self).get_query_set()
+    def get_queryset(self):
+        videos = super(VideoManager, self).get_queryset()
         if RESTRICT_CONTENT_TO_SITE:
             videos.filter(sites__id__exact=settings.SITE_ID)
         return videos
@@ -30,7 +30,7 @@ class PublishedVideoManager(VideoManager):
 
     Usage is gallery.published.all()
     """
-    def get_query_set(self):
-        videos = super(PublishedVideoManager, self).get_query_set()
+    def get_queryset(self):
+        videos = super(PublishedVideoManager, self).get_queryset()
         videos.filter(published=True, created__lte=now)
         return videos
