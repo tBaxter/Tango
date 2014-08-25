@@ -1,5 +1,8 @@
 # Tango Change Log
 
+## 0.6.0
+Renamed user_profile to tango_user, to help avoid conflicts. Especially with Django 1.7
+
 ## 0.5.2
 Updates for Django 1.7
 
