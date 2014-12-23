@@ -1,5 +1,11 @@
 # Tango Change Log
 
+## 0.6.2
+Incremented tango-contact-manager requirement
+
+## 0.6.1
+Incremented tango-happenings requirement
+
 ## 0.6.0
 Renamed user_profile to tango_user, to help avoid conflicts. Especially with Django 1.7
 
