@@ -1,6 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
+from django.template.defaultfilters import slugify
 
 from .helpers import get_youtube_data, get_vimeo_data, get_ustream_data
 from .managers import VideoManager, PublishedVideoManager
@@ -56,6 +57,8 @@ class Video(BaseContentModel):
         return ('video_detail', [self.slug])
 
     def save(self, *args, **kwargs):
+        if self.title and not self.slug:
+            self.slug = slugify(self.title)
         if not self.embed_src:
             if 'youtube.com/watch' in self.url or 'youtu.be/' in self.url:
                 self = get_youtube_data(self)

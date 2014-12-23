@@ -82,7 +82,6 @@ class TestVideo(TestCase):
     def test_video_form(self):
         fields = VideoForm().fields
         self.assertFalse(fields['title'].required)
-        self.assertFalse(fields['slug'].required)
         self.assertFalse(fields['summary'].required)
 
     def test_video_gallery_detail(self):
