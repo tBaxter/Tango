@@ -3,6 +3,9 @@ SECRET_KEY = "lorem ipsum"
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.auth',
+    'autotagger',
+    'tango_user',
+    'video'
 )
 
 DATABASES = {
