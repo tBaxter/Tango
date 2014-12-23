@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 
@@ -10,16 +11,19 @@ class AutoTag(models.Model):
     Via autotagging, it will establish relationships between content
     matching the given phrase.
     """
-    phrase   = models.CharField(max_length=200, help_text="""
+    phrase = models.CharField(max_length=200, help_text="""
                     The phrase you want to search for.
                     IMPORTANT: be sure your phrase won't create false positives.
                     For example, Attempting to tag 'Django' would also tag 'Django Reinhardt', 'Django Unchained',
                     and any other instance of the phrase.
                     """)
-    articles       = models.ManyToManyField('articles.Article', blank=True, null=True, editable=False)
-    content_type   = models.ForeignKey(ContentType, blank=True, null=True)
-    object_id      = models.PositiveIntegerField(null=True, blank=True)
+    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    if 'articles' in settings.INSTALLED_APPS:
+        articles = models.ManyToManyField('articles.Article', blank=True, null=True, editable=False)
+
 
     def __unicode__(self):
         return self.phrase
