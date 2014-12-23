@@ -20,6 +20,7 @@ DATABASES = {
 SITE_ID = 1
 
 AUTH_USER_MODEL = 'tango_user.Profile'
+ROOT_URLCONF = 'tango,test_urls'
 
 #stripped down middleware
 MIDDLEWARE_CLASSES = (
