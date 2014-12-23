@@ -17,6 +17,8 @@ DATABASES = {
 
 SITE_ID = 1
 
+AUTH_USER_MODEL = 'tango_user.Profile'
+
 #stripped down middleware
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
