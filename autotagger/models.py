@@ -14,7 +14,8 @@ class AutoTag(models.Model):
     phrase = models.CharField(max_length=200, help_text="""
                     The phrase you want to search for.
                     IMPORTANT: be sure your phrase won't create false positives.
-                    For example, Attempting to tag 'Django' would also tag 'Django Reinhardt', 'Django Unchained',
+                    For example, Attempting to tag 'Django' would also tag
+                    'Django Reinhardt', 'Django Unchained',
                     and any other instance of the phrase.
                     """)
     content_type = models.ForeignKey(ContentType, blank=True, null=True)

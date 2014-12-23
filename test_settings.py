@@ -5,6 +5,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.sites',
     'autotagger',
+    'tango_shared',
     'tango_user',
     'video'
 )

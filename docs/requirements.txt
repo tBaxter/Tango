@@ -9,7 +9,7 @@ smartypants>=1.6.0.3
 typogrify>=2.0.0
 vobject>=0.8.1c
 
-tango-shared-core>=0.6
+tango-shared-core>=0.7
 tango-capo>=0.2
 tango-comments>=0.5
 tango-articles>=0.4
