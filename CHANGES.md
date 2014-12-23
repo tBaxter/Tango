@@ -1,5 +1,8 @@
 # Tango Change Log
 
+## 0.7.0
+Travis integration
+
 ## 0.6.2
 Incremented tango-contact-manager requirement
 
