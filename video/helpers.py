@@ -7,7 +7,7 @@ except ImportError:
 
 from django.template.defaultfilters import slugify
 
-from tango_shared.utils import xmltramp
+from xmltramp2 import xmltramp
 
 xml_media = xmltramp.Namespace('http://search.yahoo.com/mrss/')
 

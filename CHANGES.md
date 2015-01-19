@@ -1,5 +1,8 @@
 # Tango Change Log
 
+## 0.7.1
+Update video to use xmltramp2
+
 ## 0.7.0
 Travis integration
 
