@@ -1,5 +1,8 @@
 # Tango Change Log
 
+## 0.7.2
+Replaced init.py that had gone AWOL.
+
 ## 0.7.1
 Update video to use xmltramp2
 
