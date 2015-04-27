@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 urlpatterns = patterns(
-    'user_profiles.views',
+    'tango_user.views',
     url(
         regex=r'^$',
         view='member_index',
