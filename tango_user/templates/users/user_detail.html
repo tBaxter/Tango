@@ -1,6 +1,6 @@
 {% extends "users/base.html" %}
 
-{% load cache timesince_filters %}
+{% load cache tango_time_tags %}
 
 {% block extra_title %}
   {{ block.super }}: {{ user.display_name }}
