@@ -7,7 +7,7 @@ INSTALLED_APPS = (
     'autotagger',
     'tango_shared',
     'tango_user',
-    'video'
+    'tango.video'
 )
 
 DATABASES = {
