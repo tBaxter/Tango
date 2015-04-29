@@ -36,24 +36,6 @@ class TestUserProfileViews(TestCase):
         self.assertEqual(response_user.username, self.user.username)
         self.assertEqual(response_user.get_display_name(), self.user.username)
 
-    def test_edit_profile(self):
-        """
-        Test edit profile form
-        """
-        self.client.login(username=self.user.username, password='test')
-        response = self.client.get(reverse('edit_profile'))
-        #self.assertEqual(response.status_code, 200)
-        self.assertTrue('object' in response.context)
-        self.assertTrue('form' in response.context)
-        self.assertTemplateUsed("users/user_edit_form.html")
-
-    def test_edit_settings(self):
-        self.client.login(username=self.user.username, password='test')
-        response = self.client.get(reverse('edit_settings'))
-        #self.assertEqual(response.status_code, 200)
-        self.assertTrue('object' in response.context)
-        self.assertTrue('form' in response.context)
-        self.assertTemplateUsed("users/user_edit_form.html")
 
     def test_birthdays_tag(self):
         """
