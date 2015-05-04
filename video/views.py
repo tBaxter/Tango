@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.views.generic import ListView, DetailView
 
-from .models import Video, VideoGallery
+from video.models import Video, VideoGallery
 
 paginate_by = getattr(settings, "PAGINATE_BY", 25)
 
