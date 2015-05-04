@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 urlpatterns = patterns(
-    'video.views',
+    'tango.video.views',
     url(
         name="video_list",
         regex=r'^$',
