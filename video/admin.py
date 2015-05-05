@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.contenttypes import generic
 
 from .forms import VideoForm
-from .models import Video, VideoGallery
+from video.models import Video, VideoGallery
 
 
 class VideoInline(generic.GenericTabularInline):

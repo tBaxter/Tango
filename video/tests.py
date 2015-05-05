@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.test import TestCase
 
-from .models import Video, VideoGallery
+from video.models import Video, VideoGallery
 from .forms import VideoForm
 
 
