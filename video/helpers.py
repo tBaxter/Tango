@@ -1,9 +1,12 @@
-import urllib
-
 try:
     import urllib.parse as urlparse
 except ImportError:
     import urlparse
+
+try:
+    import urllib.urlopen as urlopen
+except ImportError:
+    import urllib.request.urlopen as urlopen #py3
 
 from django.template.defaultfilters import slugify
 
@@ -29,7 +32,7 @@ def get_youtube_data(video):
     video.embed_src = 'http://www.youtube.com/embed/'
     #http://gdata.youtube.com/feeds/api/videos/Agdvt9M3NJA
     api_url = 'http://gdata.youtube.com/feeds/api/videos/{}'.format(video.key)
-    video_data = urllib.urlopen(api_url).read()
+    video_data = urlopen(api_url).read()
     xml = xmltramp.parse(video_data)
 
     video.title = unicode(xml.title)
@@ -49,7 +52,7 @@ def get_vimeo_data(video):
     video.embed_src = 'http://player.vimeo.com/video/'
 
     api_url = 'http://vimeo.com/api/v2/video/{}.xml'.format(video.key)
-    video_data = urllib.urlopen(api_url).read()
+    video_data = urlopen(api_url).read()
     xml = xmltramp.parse(video_data)
     video.title = unicode(xml.video.title)
     video.slug = slugify(video.title)
