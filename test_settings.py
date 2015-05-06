@@ -8,7 +8,8 @@ INSTALLED_APPS = (
     'tango_shared',
     'tango_user',
     'video',
-    'typogrify' # installed by shared, keeps templates happy
+    'typogrify', # installed by shared, keeps templates happy
+    'voting'
 )
 
 DATABASES = {
