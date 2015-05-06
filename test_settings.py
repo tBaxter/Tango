@@ -7,7 +7,8 @@ INSTALLED_APPS = (
     'autotagger',
     'tango_shared',
     'tango_user',
-    'video'
+    'video',
+    'typogrify' # installed by shared, keeps templates happy
 )
 
 DATABASES = {
