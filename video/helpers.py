@@ -4,9 +4,9 @@ except ImportError:
     import urlparse
 
 try:
-    import urllib.urlopen as urlopen
+    from urllib import urlopen
 except ImportError:
-    import urllib.request.urlopen as urlopen #py3
+    from urllib.request import urlopen #py3
 
 from django.template.defaultfilters import slugify
 
