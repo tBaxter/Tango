@@ -1,5 +1,5 @@
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db import models
 from django.template.defaultfilters import slugify
 
@@ -38,7 +38,7 @@ class Video(BaseContentModel):
 
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField(blank=True, null=True)
-    content_object = generic.GenericForeignKey()
+    content_object = GenericForeignKey()
 
     key = models.CharField(max_length=20, blank=True, editable=False)
     source = models.CharField(max_length=20, blank=True, editable=False)
@@ -46,7 +46,7 @@ class Video(BaseContentModel):
     thumb_url = models.CharField(max_length=200, blank=True, editable=False)
 
     # Managers
-    objects   = VideoManager()
+    objects = VideoManager()
     published = PublishedVideoManager()
 
     def __unicode__(self):

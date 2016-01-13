@@ -1,11 +1,11 @@
 from django.contrib import admin
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.admin import GenericTabularInline
 
 from .forms import VideoForm
 from video.models import Video, VideoGallery
 
 
-class VideoInline(generic.GenericTabularInline):
+class VideoInline(GenericTabularInline):
     """
     Consistent inlined video for other content admin.
     """

@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
 
@@ -20,11 +20,10 @@ class AutoTag(models.Model):
                     """)
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    content_object = GenericForeignKey('content_type', 'object_id')
 
     if 'articles' in settings.INSTALLED_APPS:
-        articles = models.ManyToManyField('articles.Article', blank=True, null=True, editable=False)
-
+        articles = models.ManyToManyField('articles.Article', blank=True, editable=False)
 
     def __unicode__(self):
         return self.phrase

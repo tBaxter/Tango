@@ -1,5 +1,14 @@
 # Tango Change Log
 
+## 0.7.5
+And one more deprecation warning killed.
+
+## 0.7.4
+Additional small updates to keep Django 1.8+ happy.
+
+## 0.7.3
+Update reference to GenericForeignKey to keep Django 1.8+ happy.
+
 ## 0.7.2
 Replaced init.py that had gone AWOL.
 
