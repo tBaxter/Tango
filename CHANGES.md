@@ -1,5 +1,8 @@
 # Tango Change Log
 
+## 0.8.0
+Removed dependency on Autotagger. It can be installed separately if desired.
+
 ## 0.7.5
 And one more deprecation warning killed.
 

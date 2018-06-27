@@ -6,7 +6,7 @@ with open('docs/requirements.txt') as f:
 
 setup(
     name='django-tango',
-    version='0.7.5',
+    version='0.8',
     author=u'Tim Baxter',
     author_email='mail.baxter@gmail.com',
     url='https://github.com/tBaxter/Tango',
