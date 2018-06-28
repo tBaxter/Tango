@@ -1,5 +1,8 @@
 # Tango Change Log
 
+## 0.8.1
+Updated video module to use on_delete for Django 2.0 compatibility.
+
 ## 0.8.0
 Removed dependency on Autotagger. It can be installed separately if desired.
 
