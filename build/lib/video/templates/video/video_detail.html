@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load typogrify_tags social_tags %}
+
+{% block title %}{{ video.name }}: {% endblock %}
+{% block extra_title %}{{ video.gallery }} Video {% endblock %} 
+
+
+{% block content %}
+  <h1>{{ video.title }}</h1>
+  {% if video.embed_src %}
+    {{ video.embed_src|safe }}
+
+    {{ video.summary_formatted|typogrify }}
+
+  {% else %}
+    <h2>This video can not be shown here.</h2> 
+    <h3>It can be <a href="{{ video.url }}">seen at {{ video.source|capfirst }}</a></h3>
+  {% endif %}
+
+  {% if video.object_id %}
+    <h4>
+      See More: 
+      <a href="{{ video.content_object.get_absolute_url }}">
+        {{ video.content_object }}
+      </a>
+    </h4>
+  {% endif %}
+
+  {% social_links video user %}
+
+{% endblock %}

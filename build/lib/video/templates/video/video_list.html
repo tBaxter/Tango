@@ -1,0 +1,28 @@
+{% extends "video/base.html" %}
+{% load typogrify_tags %}
+
+{% block extra_title %}{{ gallery }} Video {% endblock %} 
+
+{% block content %}
+  <h1>{{ gallery }} Video</h1>
+  <ul class="columned four-col grid">
+    {% if gallery.gallery_credit or gallery.gallery_summary %}
+      <li>
+        {% if gallery.gallery_credit %}
+          <span class="byline">{{ gallery.gallery_credit }}</span>
+        {% endif %}
+        <p>{{ gallery.summary|truncatewords:"30" }}</p>
+      </li>
+    {% endif %}
+
+    {% for object in object_list %}
+      <li>
+        <a href="{{ object.get_absolute_url }}"> 
+          <img src="{{ object.thumb_url }}" alt="view video" title="view video">
+          <h3>{{ object.title|typogrify }}</h3>
+          <p>{{ object.description|truncatewords:"30" }}</p>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

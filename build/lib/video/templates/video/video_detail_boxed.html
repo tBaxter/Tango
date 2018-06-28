@@ -1,0 +1,19 @@
+{% extends "base-plain.html" %}
+{% block title %}{{video.name}}: {%endblock %}
+{% block extrahead %}
+<style type="text/css">
+body {padding: 0 14px; margin:0}</style>
+{% endblock %}
+{%block section %}video{%endblock%}
+
+{% block maincontent %}
+<object type="application/x-shockwave-flash" data="/media/video/player.swf" width="{{video.video_width}}" height="{{video.video_height}}" name="player" id="player">
+    <param name="movie" value="/media/video/player.swf" />
+       <param name="allowfullscreen" value="true" />
+       <param name="allowscriptaccess" value="always" />
+       <param name="flashvars" value="file=/media/{{video.video_file}}&amp;skin=/media/video/playerskin.swf&amp;volume=60&amp;autostart=true" />
+   <param name="flashVersion" value="10" /> 
+	<h4>If you can see this, you probably need to <a href="http://get.adobe.com/flashplayer/">update your Flash player</a> to view the video. You can skip the Google toolbar download.</p>
+              </object>	
+{% endblock %}
+

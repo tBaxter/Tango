@@ -1,0 +1,10 @@
+{% load typogrify_tags %}
+
+<h1>{{ video.title }}</h1>
+{% if video.embed_src %}
+  {{ video.embed_src|safe }}
+  {{ video.summary_formatted|typogrify }}
+{% else %}
+  <h2>This video can not be shown here.</h2> 
+  <h3>It can be <a href="{{ video.url }}">seen at {{ video.source|capfirst }}</a></h3>
+{% endif %}
