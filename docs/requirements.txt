@@ -1,9 +1,10 @@
 # Django and many other dependencies are satisfied by tango-shared-core
 
-tango-shared-core>=1.1
+tango-shared-core>=1.2
 tango-capo>=0.2
-tango-comments>=0.5
-tango-articles>=0.4
-tango-contact-manager>=0.7
-tango-happenings>=0.7.1
-tango-photos>=0.2
+tango-articles>=0.12
+tango-comments>=0.8
+tango-contact-manager>=0.9
+tango-happenings>=0.14
+tango-photos>=0.4
+tango-voting>=0.4

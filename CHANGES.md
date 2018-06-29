@@ -1,5 +1,8 @@
 # Tango Change Log
 
+## 0.9.1
+Updated requirements
+
 ## 0.9.0
 Updated for Django 2.0
 
