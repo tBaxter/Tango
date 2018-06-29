@@ -1,5 +1,8 @@
 # Tango Change Log
 
+## 0.9.2
+Removed deprecated assignement tag
+
 ## 0.9.1
 Updated requirements
 
