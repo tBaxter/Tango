@@ -1,30 +1,11 @@
-from django.conf.urls import patterns, url
+from django.urls import path
 
-urlpatterns = patterns(
-    'tango_user.views',
-    url(
-        regex=r'^$',
-        view='member_index',
-        name="community_index"
-    ),
-    url(
-        regex=r'^edit-profile/$',
-        view='edit_profile',
-        name="edit_profile"
-    ),
-    url(
-        regex=r'^edit-settings/$',
-        view='edit_settings',
-        name="edit_settings"
-    ),
-    url(
-        regex=r'^(?P<pk>\d+)/$',
-        view='view_profile',
-        name="view_profile_by_id"
-    ),
-    url(
-        regex=r'^(?P<slug>[-\w]+)/$',
-        view='view_profile',
-        name='view_profile'
-    ),
-)
+from .views import member_index, edit_profile, edit_settings, view_profile
+
+urlpatterns = [
+    path('', member_index, name="community_index"),
+    path('edit-profile/', edit_profile, name="edit_profile"),
+    path('edit-settings/', edit_settings, name="edit_settings"),
+    path('<int:pk>/', view_profile, name="view_profile_by_id"),
+    path('<slug:slug>/', view_profile, name='view_profile'),
+]

@@ -1,5 +1,8 @@
 # Tango Change Log
 
+## 0.9.0
+Updated for Django 2.0
+
 ## 0.8.1
 Updated video module to use on_delete for Django 2.0 compatibility.
 

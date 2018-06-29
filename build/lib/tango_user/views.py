@@ -4,10 +4,9 @@ import json
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView

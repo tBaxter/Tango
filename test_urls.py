@@ -1,6 +1,6 @@
-from django.conf.urls import patterns, include, url
+from django.urls import include, path
 
-urlpatterns = patterns('',
-    url(r'^profiles/', include('tango_user.urls')),
-    url(r'^video/', include('video.urls')),
-)
+urlpatterns = [
+    path('profiles/', include('tango_user.urls')),
+    path('video/', include('video.urls')),
+]

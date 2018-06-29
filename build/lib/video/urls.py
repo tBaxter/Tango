@@ -1,7 +1,6 @@
-from django.conf.urls import patterns, url
+from django.urls import path
 
 urlpatterns = patterns(
-    'video.views',
     url(
         name="video_list",
         regex=r'^$',
