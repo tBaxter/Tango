@@ -6,7 +6,7 @@ UserModel = get_user_model()
 
 
 class ProfileFilter(django_filters.FilterSet):
-    display_name = django_filters.CharFilter(lookup_type='icontains')
+    display_name = django_filters.CharFilter(lookup_expr='icontains')
 
     class Meta:
         model = UserModel

@@ -9,7 +9,8 @@ INSTALLED_APPS = (
     'video',
     'typogrify', # installed by shared, keeps templates happy
     'voting',
-    'easy_thumbnails'
+    'easy_thumbnails',
+    'django_filters'
 )
 
 DATABASES = {
