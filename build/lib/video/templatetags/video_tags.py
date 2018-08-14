@@ -5,7 +5,7 @@ from video.models import Video
 register = template.Library()
 
 
-@register.assignment_tag()
+@register.simple_tag()
 def get_video_list(count=5):
     """
     Returns recent videos limited to count.
