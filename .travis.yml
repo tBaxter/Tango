@@ -3,6 +3,5 @@ python:
   - "3.4"
   - "3.5"
 install:
-  - "pip install git+https://github.com/tBaxter/vobject.git"
   - "pip install -e . "
 script: django-admin.py test --settings=test_settings
