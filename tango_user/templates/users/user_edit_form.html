@@ -3,7 +3,7 @@
 {% block title %}Edit profile: {% endblock %}
 
 {% block content %}  
-  {% if object.id != user.id %}
+  {% if object.id is not user.id %}
     <h1>Sorry, you cannot edit someone else's profile.</h1>
   {% else %}
 
@@ -25,7 +25,7 @@
       <fieldset>
         <legend>Profile</legend>
         {% for field in form %}
-          {% if field.label = 'Open board links' %}
+          {% if field.label is 'Open board links' %}
             </fieldset>
             <fieldset>
               <legend>Settings</legend>

@@ -17,7 +17,7 @@
     <img src="{{ MEDIA_URL }}{% firstof user.avatar 'img/avatars/default.jpg' %}" class="left noscale">
     {% if authenticated_request %}
       <h2 class="meta button right">
-        {% if user = request.user %}
+        {% if user is request.user %}
           <a href='{% url 'edit_profile' %}' class="edit">✎ Edit profile</a>
         {% else %}
           <a href="{% url 'contact_member' user.username %}">

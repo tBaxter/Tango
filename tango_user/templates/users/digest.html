@@ -18,7 +18,7 @@
   {% if watchlist %}
     {% with watchlist|length as count %}
       <h3>{{ count|apnumber|capfirst }} item{{ count|pluralize }} on your watchlist 
-        {% if count == 1 %}has{% else %}have{% endif %} been updated.
+        {% if count is 1 %}has{% else %}have{% endif %} been updated.
       </h3>
       <ul class="fancy">
         {% for obj in watchlist %}
@@ -43,7 +43,7 @@
     <h3>
       <a href="{{ site_root }}{% url 'events_index' %}">
         {{ count|apnumber|capfirst }} event{{ count|pluralize }} 
-        {% if count == 1 %} is {% else %} are {% endif %} coming up or happening now:</a>
+        {% if count is 1 %} is {% else %} are {% endif %} coming up or happening now:</a>
     </h3>
     {% for event in events %}
       <h4>
