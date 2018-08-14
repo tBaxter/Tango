@@ -52,7 +52,7 @@ class Video(BaseContentModel):
 
     # Managers
     objects = VideoManager()
-    published = PublishedVideoManager()
+    pub_objects = PublishedVideoManager()
 
     def __unicode__(self):
         return '{}: {}'.format(self.source, self.title)
