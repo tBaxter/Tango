@@ -8,4 +8,4 @@ tango-contact-manager>=0.9
 tango-happenings>=0.14
 tango-photos>=0.4
 tango-voting>=0.4
-django-filters>=2.0
+django-filter>=2.0
