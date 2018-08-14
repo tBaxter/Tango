@@ -11,7 +11,7 @@ today = datetime.date.today()
 one_day_ago = datetime.datetime.now() - datetime.timedelta(days=1)
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_birthday_list():
     """
     Returns today's birthdays
@@ -21,7 +21,7 @@ def get_birthday_list():
     return UserModel.objects.filter(is_active=True, birthday__month = today.month, birthday__day = today.day).values()
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_new_members(count=5):
     """
     Returns most recent new members.
