@@ -1,4 +1,4 @@
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlsplit
 from urllib.request import urlopen 
 
 from django.template.defaultfilters import slugify
@@ -14,8 +14,8 @@ def get_youtube_data(video):
     """
     video.source = 'youtube'
     if 'youtube.com/watch' in video.url:
-        parsed = urlparse.urlsplit(video.url)
-        query  = urlparse.parse_qs(parsed.query)
+        parsed = urlsplit(video.url)
+        query  = parse_qs(parsed.query)
         try:
             video.key  = query.get('v')[0]
         except IndexError:
@@ -34,7 +34,7 @@ def get_youtube_data(video):
     video.title = xml.title
     video.slug = slugify(video.title)
     video.summary = xml.content
-    video.thumb_url = xml[xml_media.group][xml_media.thumbnail:][1]('url')
+    #video.thumb_url = xml[xml_media.group][xml_media.thumbnail:][1]('url')
     return video
 
 
