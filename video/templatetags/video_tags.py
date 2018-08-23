@@ -11,7 +11,7 @@ def get_video_list(count=5):
     Returns recent videos limited to count.
     Usage: "{% get_video_list as video_list %}"
     """
-    return Video.published.all()[:count]
+    return Video.pub_objects.all()[:count]
 
 
 @register.inclusion_tag('video/includes/show_video.html')

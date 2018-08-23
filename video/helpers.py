@@ -1,18 +1,12 @@
-try:
-    import urllib.parse as urlparse
-except ImportError:
-    import urlparse
+import urlparse
 
-try:
-    from urllib import urlopen
-except ImportError:
-    from urllib.request import urlopen #py3
+from urllib.request import urlopen 
 
 from django.template.defaultfilters import slugify
 
-from xmltramp2 import xmltramp
+import untangle
 
-xml_media = xmltramp.Namespace('http://search.yahoo.com/mrss/')
+#xml_media = xmltramp.Namespace('http://search.yahoo.com/mrss/')
 
 
 def get_youtube_data(video):
@@ -30,14 +24,17 @@ def get_youtube_data(video):
     else:
         video.key = video.url.rsplit('/', 1)[1]
     video.embed_src = 'http://www.youtube.com/embed/'
-    #http://gdata.youtube.com/feeds/api/videos/Agdvt9M3NJA
+
+    # api docs
+    #          http://gdata.youtube.com/feeds/api/videos/hNRHHRjep3E
+    # https://www.googleapis.com/youtube/v3/videos?id=hNRHHRjep3E&part=snippet,contentDetails,statistics
     api_url = 'http://gdata.youtube.com/feeds/api/videos/{}'.format(video.key)
     video_data = urlopen(api_url).read()
-    xml = xmltramp.parse(video_data)
+    xml = untangle.parse(video_data)
 
-    video.title = unicode(xml.title)
+    video.title = xml.title
     video.slug = slugify(video.title)
-    video.summary = unicode(xml.content)
+    video.summary = xml.content
     video.thumb_url = xml[xml_media.group][xml_media.thumbnail:][1]('url')
     return video
 
@@ -53,11 +50,11 @@ def get_vimeo_data(video):
 
     api_url = 'http://vimeo.com/api/v2/video/{}.xml'.format(video.key)
     video_data = urlopen(api_url).read()
-    xml = xmltramp.parse(video_data)
-    video.title = unicode(xml.video.title)
+    xml = untangle.parse(video_data)
+    video.title = str(xml.video.title)
     video.slug = slugify(video.title)
-    video.summary = unicode(xml.video.description)
-    video.thumb_url = unicode(xml.video.thumbnail_large)
+    video.summary = str(xml.video.description)
+    video.thumb_url = str(xml.video.thumbnail_large)
     return video
 
 
