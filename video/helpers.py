@@ -49,7 +49,7 @@ def get_vimeo_data(video):
 
     api_url = 'http://vimeo.com/api/v2/video/{}.xml'.format(video.key)
     video_data = urlopen(api_url).read()
-    xml = untangle.parse(video_data)
+    xml = untangle.parse(str(video_data))
     video.title = str(xml.video.title)
     video.slug = slugify(video.title)
     video.summary = str(xml.video.description)
