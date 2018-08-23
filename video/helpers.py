@@ -1,5 +1,4 @@
-import urlparse
-
+from urllib import urlparse
 from urllib.request import urlopen 
 
 from django.template.defaultfilters import slugify
