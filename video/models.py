@@ -2,6 +2,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 from .helpers import get_youtube_data, get_vimeo_data, get_ustream_data
 from .managers import VideoManager, PublishedVideoManager
@@ -54,12 +55,11 @@ class Video(BaseContentModel):
     objects = VideoManager()
     pub_objects = PublishedVideoManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return '{}: {}'.format(self.source, self.title)
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('video_detail', [self.slug])
+        return reverse('video_detail', args=(self.slug,))
 
     def save(self, *args, **kwargs):
         if self.title and not self.slug:
@@ -100,9 +100,8 @@ class VideoGallery(models.Model):
     class Meta:
         verbose_name_plural = "video galleries"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('video_gallery_detail', [self.slug])
+        return reverse('video_gallery_detail', args=(self.slug,))
