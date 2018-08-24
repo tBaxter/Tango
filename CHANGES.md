@@ -1,5 +1,11 @@
 # Tango Change Log
 
+## 0.10.0
+Removed permalink decorator
+Removed deprecated xmltramp dependency in favor of untangle.
+Updated imports for Django 2.0 compatibility
+Corrected published objects manager defect
+
 ## 0.9.2
 Removed deprecated assignement tag
 
