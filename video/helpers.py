@@ -51,10 +51,10 @@ def get_vimeo_data(video):
     #video_data = urlopen(api_url).read()
     xml = untangle.parse(api_url)
     xmlvideo = xml.videos.video
-    video.title = xmlvideo.title
+    video.title = xmlvideo.title.cdata
     video.slug = slugify(video.title)
-    video.summary = xmlvideo.description
-    video.thumb_url = xmlvideo.thumbnail_large
+    video.summary = xmlvideo.description.cdata
+    video.thumb_url = xmlvideo.thumbnail_large.cdata
     return video
 
 
